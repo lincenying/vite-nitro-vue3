@@ -65,4 +65,22 @@ export default defineNitroConfig({
             dir: '../dist',
         },
     ],
+    // 开启本地文件K/V存储
+    storage: {
+        fsdb: {
+            driver: 'fs',
+            base: './.data/fsdb',
+        },
+    },
+    // 开启sqlite数据库存储
+    experimental: {
+        database: true,
+    },
+    database: {
+        // 配置SQLite数据库
+        default: {
+            connector: 'sqlite',
+            options: { name: 'db' },
+        },
+    },
 })
