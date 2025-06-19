@@ -9,7 +9,7 @@
     "preview": "node .output/server/index.mjs",
     "build:client": "vite build",
     "build:server": "nitro build",
-    "build": "npm run build:server && npm run build:client",
+    "build": "npm run build:client && npm run build:server",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "preview:vue": "vite preview",
