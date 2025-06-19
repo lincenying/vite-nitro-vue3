@@ -5,7 +5,7 @@
 ## Features
 
 - 💚 [Vue3](https://cn.vuejs.org/) - 易学易用，性能出色，适用场景丰富。
-- 💚 [NBitro](https://nitro.build/guide) - Nitro 是一个开源框架，用于使用 h3 构建网络服务器，并提供大量内置功能。 Nitro 自动使您的代码与任何 部署 提供者和运行时兼容！
+- 💚 [Nitro](https://nitro.build/guide) - Nitro 是一个开源框架，用于使用 h3 构建网络服务器，并提供大量内置功能。 Nitro 自动使您的代码与任何 部署 提供者和运行时兼容！
 - ⚡️ [Vite](https://cn.vitejs.dev/) - 即时 HMR.
 - 🎨 [UnoCSS](https://github.com/unocss/unocss) - 即时按需原子 CSS 引擎
 - 😃 使用纯 CSS 中任何图标集的图标，由 [UnoCSS](https://github.com/unocss/unocss) 驱动.
