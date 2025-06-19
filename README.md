@@ -10,7 +10,7 @@
 - 🎨 [UnoCSS](https://github.com/unocss/unocss) - 即时按需原子 CSS 引擎
 - 😃 使用纯 CSS 中任何图标集的图标，由 [UnoCSS](https://github.com/unocss/unocss) 驱动.
 - 🔥 `<script setup lang="ts">` 语法.
-- 🍍 [通过 Pinia 进行状态管理](https://github.com/vuejs/pinia), 详见 [./stores/use-index-store.ts](./stores/use-product-store.ts).
+- 🍍 [通过 Pinia 进行状态管理](https://github.com/vuejs/pinia), 详见 [./src/stores/use-index-store.ts](./src/stores/use-index-store.ts).
 - 📥 API 自动导入 - 用于 Composition API、VueUse 和自定义可组合项
 - 🏎 零配置云功能和部署
 - 🦾 当然是 TypeScript.
