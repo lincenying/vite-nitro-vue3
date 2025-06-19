@@ -1,0 +1,11 @@
+{
+  "references": [
+    {
+      "path": "./.nitro/types/tsconfig.json"
+    },
+    {
+      "path": "./src/tsconfig.json"
+    }
+  ],
+  "files": []
+}
