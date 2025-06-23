@@ -1,3 +1,8 @@
-@use 'layout';
-@use 'base';
-@use 'main';
+@use 'global/layout';
+@use 'global/element';
+@use 'login/login';
+@use 'pages/wrap';
+@use 'pages/home';
+@use 'pages/cases';
+@use 'pages/news';
+@use 'pages/faqs';

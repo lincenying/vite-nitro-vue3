@@ -1,7 +1,7 @@
 import type { ViteDevServer } from 'vite'
 import { Buffer } from 'node:buffer'
 import { defineLazyEventHandler, fromNodeMiddleware } from 'h3'
-import { defineNitroConfig } from 'nitropack/config'
+import { defineNitroConfig } from 'nitro/config'
 
 import { createServer } from 'vite'
 
@@ -20,13 +20,7 @@ async function getViteServer() {
 export default defineNitroConfig({
     srcDir: 'server',
     serveStatic: true,
-    compatibilityDate: '2025-05-13',
-    publicAssets: [
-        {
-            baseURL: '/assets/',
-            dir: '../dist/assets/',
-        },
-    ],
+    compatibilityDate: '2025-06-23',
     bundledStorage: ['templates'],
     devHandlers: [
         {
@@ -59,10 +53,23 @@ export default defineNitroConfig({
             }),
         },
     ],
+    // 将vite编译后的静态资源文件存入服务端
+    publicAssets: [
+        {
+            baseURL: '/assets/',
+            dir: '../dist/assets/',
+        },
+        {
+            baseURL: '/static/',
+            dir: '../dist/static/',
+        },
+    ],
+    // 将vite编译后的html文件写入服务端资产
     serverAssets: [
         {
             baseName: 'appTemplate',
             dir: '../dist',
+            ignore: ['static', 'assets'],
         },
     ],
     // 开启本地文件K/V存储

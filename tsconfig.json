@@ -1,11 +1,35 @@
 {
-  "references": [
-    {
-      "path": "./.nitro/types/tsconfig.json"
+  "compilerOptions": {
+    "target": "ESNext",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "paths": {
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
-    {
-      "path": "./src/tsconfig.json"
-    }
-  ],
-  "files": []
+    "resolveJsonModule": true,
+    "types": [],
+    "allowJs": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules", "dist/**/*", "public/**/*", "server/**/*"],
+
+  "vueCompilerOptions": {
+    "target": 3, // or 2.7 for Vue 2
+    "plugins": [
+      "@vue-macros/volar/define-props-refs",
+      "@vue-macros/volar/define-props"
+    ]
+  }
 }

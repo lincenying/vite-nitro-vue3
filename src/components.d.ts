@@ -8,15 +8,32 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default']
-    IconsIconCommunity: typeof import('./components/icons/IconCommunity.vue')['default']
-    IconsIconDocumentation: typeof import('./components/icons/IconDocumentation.vue')['default']
-    IconsIconEcosystem: typeof import('./components/icons/IconEcosystem.vue')['default']
-    IconsIconSupport: typeof import('./components/icons/IconSupport.vue')['default']
-    IconsIconTooling: typeof import('./components/icons/IconTooling.vue')['default']
+    ElAffix: typeof import('element-plus/es')['ElAffix']
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElDropdown: typeof import('element-plus/es')['ElDropdown']
+    ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
+    ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
+    ElSkeletonItem: typeof import('element-plus/es')['ElSkeletonItem']
+    EmptyComponents: typeof import('./components/empty-components.vue')['default']
+    GlobalDigital: typeof import('./components/global/digital.tsx')['default']
+    GlobalFooter: typeof import('./components/global/footer.vue')['default']
+    GlobalHeader: typeof import('./components/global/header.vue')['default']
+    HomeCategory: typeof import('./components/home/category.vue')['default']
+    HomeRecommend: typeof import('./components/home/recommend.vue')['default']
+    NewsRecommend: typeof import('./components/news/recommend.vue')['default']
+    OtherCommentPost: typeof import('./components/other/comment-post.vue')['default']
+    OtherComments: typeof import('./components/other/comments.vue')['default']
+    OtherLoading: typeof import('./components/other/loading.vue')['default']
+    OtherRelatedRecom: typeof import('./components/other/related-recom.vue')['default']
+    OtherTopBanner: typeof import('./components/other/top-banner.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheWelcome: typeof import('./components/TheWelcome.vue')['default']
-    WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']
+  }
+  export interface GlobalDirectives {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
