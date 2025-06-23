@@ -1,4 +1,4 @@
-import { useDatabase } from 'nitropack/runtime'
+import { useDatabase } from 'nitro/runtime'
 
 export default defineEventHandler(async () => {
     const db = useDatabase()
