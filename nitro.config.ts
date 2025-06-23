@@ -1,5 +1,6 @@
 import type { ViteDevServer } from 'vite'
 import { Buffer } from 'node:buffer'
+import process from 'node:process'
 import { defineLazyEventHandler, fromNodeMiddleware } from 'h3'
 import { defineNitroConfig } from 'nitro/config'
 
@@ -17,42 +18,21 @@ async function getViteServer() {
     return viteServer
 }
 
+const proxyDomain = process.env.NITRO_ENV_HOST_API_URL || 'https://php.mmxiaowu.com'
+
 export default defineNitroConfig({
     srcDir: 'server',
     serveStatic: true,
     compatibilityDate: '2025-06-23',
-    bundledStorage: ['templates'],
-    devHandlers: [
-        {
-            route: '/',
-            handler: defineLazyEventHandler(async () => {
-                const server = await getViteServer()
-                return fromNodeMiddleware(server.middlewares)
-            }),
+    // 代理
+    routeRules: {
+        '/php/**': {
+            proxy: {
+                to: `${proxyDomain}/api/**`,
+            },
+            swr: false,
         },
-        {
-            route: '/:wsPath(vite|socket.io|ws)?',
-            handler: defineLazyEventHandler(async () => {
-                const server = await getViteServer()
-                return (event) => {
-                    try {
-                        if (event.node.req.headers.upgrade === 'websocket') {
-                            server.httpServer?.emit(
-                                'upgrade',
-                                event.node.req,
-                                event.node.req.socket,
-                                Buffer.alloc(0),
-                            )
-                        }
-                    }
-                    catch (_err) {
-                        event.node.res.statusCode = 500
-                        event.node.res.end('WebSocket upgrade error')
-                    }
-                }
-            }),
-        },
-    ],
+    },
     // 将vite编译后的静态资源文件存入服务端
     publicAssets: [
         {
@@ -90,4 +70,36 @@ export default defineNitroConfig({
             options: { name: 'db' },
         },
     },
+    // 开发环境处理程序
+    devHandlers: [
+        {
+            route: '/',
+            handler: defineLazyEventHandler(async () => {
+                const server = await getViteServer()
+                return fromNodeMiddleware(server.middlewares)
+            }),
+        },
+        {
+            route: '/:wsPath(vite|socket.io|ws)?',
+            handler: defineLazyEventHandler(async () => {
+                const server = await getViteServer()
+                return (event) => {
+                    try {
+                        if (event.node.req.headers.upgrade === 'websocket') {
+                            server.httpServer?.emit(
+                                'upgrade',
+                                event.node.req,
+                                event.node.req.socket,
+                                Buffer.alloc(0),
+                            )
+                        }
+                    }
+                    catch (_err) {
+                        event.node.res.statusCode = 500
+                        event.node.res.end('WebSocket upgrade error')
+                    }
+                }
+            }),
+        },
+    ],
 })
