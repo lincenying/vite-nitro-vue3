@@ -5,8 +5,8 @@
     "jsxImportSource": "vue",
     "lib": ["DOM", "ESNext"],
     "baseUrl": ".",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./src/*"]

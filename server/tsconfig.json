@@ -1,7 +1,7 @@
 {
   "extends": "../.nitro/types/tsconfig.json",
   "compilerOptions": {
-    "allowImportingTsExtensions": false
+    "noEmit": true
   },
   "include": [".", "../.nitro/types/*"],
   "exclude": ["../node_modules", "../dist/**/*", "../public/**/*", "../src/**/*"]
