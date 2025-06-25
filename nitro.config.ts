@@ -37,10 +37,12 @@ export default defineNitroConfig({
     publicAssets: [
         {
             baseURL: '/assets/',
+            // 相对 `srcDir` 文件夹
             dir: '../dist/assets/',
         },
         {
             baseURL: '/static/',
+            // 相对 `srcDir` 文件夹
             dir: '../dist/static/',
         },
     ],
@@ -48,6 +50,7 @@ export default defineNitroConfig({
     serverAssets: [
         {
             baseName: 'appTemplate',
+            // 相对 `srcDir` 文件夹
             dir: '../dist',
             ignore: ['static', 'assets'],
         },
@@ -56,6 +59,7 @@ export default defineNitroConfig({
     storage: {
         fsdb: {
             driver: 'fs',
+            // 相对项目根目录
             base: './.data/fsdb',
         },
     },
@@ -67,7 +71,19 @@ export default defineNitroConfig({
         // 配置SQLite数据库
         default: {
             connector: 'sqlite',
-            options: { name: 'db' },
+            options: {
+                // 相对项目根目录
+                path: './.data/db.sqlite',
+                name: 'db',
+            },
+        },
+        sqlite3: {
+            connector: 'better-sqlite3',
+            options: {
+                // 相对项目根目录
+                path: './.data/db.sqlite3',
+                name: 'db',
+            },
         },
     },
     // 开发环境处理程序
