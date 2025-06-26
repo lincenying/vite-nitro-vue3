@@ -1,29 +1,11 @@
+import type { QueryResult, User } from '~/types'
 import { useDatabase } from 'nitro/runtime'
-
-export interface InsertSucces {
-    success: boolean
-    lastInsertRowid: number
-    changes: number
-}
-
-export interface User {
-    id: string
-    userid: string
-    firstName: string
-    lastName: string
-    email: string
-}
-
-export interface QueryResult {
-    rows: User[]
-    success: boolean
-}
 
 export default defineEventHandler(async () => {
     const db = useDatabase()
 
     // Query for users
-    const { rows } = await db.sql<QueryResult>`SELECT * FROM users`
+    const { rows } = await db.sql<QueryResult<User[]>>`SELECT * FROM users`
 
     return {
         code: 200,

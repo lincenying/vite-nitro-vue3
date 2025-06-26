@@ -2,7 +2,9 @@ import type { ListPageType } from '~/types'
 import Mock from 'mockjs'
 
 export default defineEventHandler(async (event) => {
-    const { page, pageSize } = getQuery<ListPageType>(event)
+    let { page, pageSize } = getQuery<ListPageType>(event)
+    page = page || 1
+    pageSize = pageSize || 10
     const template = {
         list: Array.from({ length: pageSize }, (_, index) => ({
             id: (page - 1) * pageSize + index + 1,
@@ -24,6 +26,7 @@ export default defineEventHandler(async (event) => {
                 content: '@cparagraph(1, 3)',
             })),
         })),
+        hasPrev: page > 1 ? 1 : 0,
         hasNext: 1,
         total: 100,
         pageSize: Number(pageSize),

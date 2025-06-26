@@ -35,12 +35,21 @@
                         </router-link>
                     </li>
                 </template>
+                <template v-if="column === 'article'">
+                    <li v-for="(item, index) in articleRelatedRecom" :key="index" w="[calc((100%-24px)/2)]" mb-24px>
+                        <router-link relative flex="~ items-center" :to="`/article/detail?id=${item.id}`">
+                            <i class="i-carbon-dot-mark" mr-5px></i>
+                            <h3 text="14px" line-1>{{ item.title }}</h3>
+                        </router-link>
+                    </li>
+                </template>
             </ul>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import type { ArticleType } from '~/views/article.types'
 import type { CasesType } from '~/views/cases.types'
 import type { FaqsType } from '~/views/faqs.types'
 import type { ProductsType } from '~/views/home.types'
@@ -60,6 +69,7 @@ const productsRelatedRecom = ref<ProductsType[]>([])
 const casesRelatedRecom = ref<CasesType[]>([])
 const newsRelatedRecom = ref<NewsType[]>([])
 const faqsRelatedRecom = ref<FaqsType[]>([])
+const articleRelatedRecom = ref<ArticleType[]>([])
 
 async function getProductsRelatedRecom() {
     const { code, data } = await $api.get<ProductsType[]>(`/home/relatedRecom?categoryId=${categoryId}`, { })
@@ -85,6 +95,12 @@ async function getFaqsRelatedRecom() {
         faqsRelatedRecom.value = data
     }
 }
+async function getArticleRelatedRecom() {
+    const { code, data } = await $api.get<ArticleType[]>('/sqlite3/article/relatedRecom', { })
+    if (code === 200 && !isEmpty(data)) {
+        articleRelatedRecom.value = data
+    }
+}
 
 if (column === 'products') {
     getProductsRelatedRecom()
@@ -97,5 +113,8 @@ else if (column === 'news') {
 }
 else if (column === 'faqs') {
     getFaqsRelatedRecom()
+}
+else if (column === 'article') {
+    getArticleRelatedRecom()
 }
 </script>

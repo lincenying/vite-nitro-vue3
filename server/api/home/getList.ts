@@ -3,7 +3,9 @@ import Mock from 'mockjs'
 import { imgUrl } from '~/utils/img'
 
 export default defineEventHandler(async (event) => {
-    const { page, pageSize } = getQuery<ListPageType>(event)
+    let { page, pageSize } = getQuery<ListPageType>(event)
+    page = page || 1
+    pageSize = pageSize || 12
     const template = {
         list: Array.from({ length: pageSize }, (_, index) => ({
             id: (page - 1) * pageSize + index + 1,
@@ -13,6 +15,7 @@ export default defineEventHandler(async (event) => {
             date: '@date("yyyy-MM-dd")',
             tag: Array.from({ length: 3 }, () => '@cword(3, 5)'),
         })),
+        hasPrev: page > 1 ? 1 : 0,
         hasNext: 1,
         total: 100,
         pageSize: Number(pageSize),

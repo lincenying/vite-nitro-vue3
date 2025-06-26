@@ -1,4 +1,4 @@
-import type { User } from './lists'
+import type { Article } from '~/types'
 import { useDatabase } from 'nitro/runtime'
 
 export default defineEventHandler(async (event) => {
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     // Query for users
     // const { rows } = await db.sql<QueryResult>`SELECT * FROM users WHERE id = ${id}`
 
-    const data = await db.prepare(`SELECT * FROM users WHERE id = ?`).get(id) as User
+    const data = await db.prepare(`SELECT * FROM article WHERE id = ?`).get(id) as Article
 
     return {
         code: 200,

@@ -1,4 +1,4 @@
-import type { InsertSucces, User } from './lists'
+import type { InsertSucces, User } from '~/types'
 import { useDatabase } from 'nitro/runtime'
 
 export default defineEventHandler(async (event) => {

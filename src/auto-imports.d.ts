@@ -14,6 +14,9 @@ declare global {
   const Post: typeof import('./composables/alova')['Post']
   const Put: typeof import('./composables/alova')['Put']
   const alova: typeof import('./composables/alova')['default']
+  const articleCommentStore: typeof import('./composables/storage')['articleCommentStore']
+  const articleDetailStore: typeof import('./composables/storage')['articleDetailStore']
+  const articleListStore: typeof import('./composables/storage')['articleListStore']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const caseCommentStore: typeof import('./composables/storage')['caseCommentStore']
@@ -376,6 +379,9 @@ declare global {
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
+  export type { GlobalDiaslogInstance, GlobalDialogLayer } from './components/components.types'
+  import('./components/components.types')
+  // @ts-ignore
   export type { GlobalState, ProductCategory, ProductState, UserState } from './stores/pinia.types'
   import('./stores/pinia.types')
 }
@@ -388,10 +394,14 @@ declare module 'vue' {
     readonly $api: UnwrapRef<typeof import('./composables/fetch')['$api']>
     readonly Delete: UnwrapRef<typeof import('./composables/alova')['Delete']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ElMessage: UnwrapRef<typeof import('element-plus/es')['ElMessage']>
     readonly Get: UnwrapRef<typeof import('./composables/alova')['Get']>
     readonly Post: UnwrapRef<typeof import('./composables/alova')['Post']>
     readonly Put: UnwrapRef<typeof import('./composables/alova')['Put']>
     readonly alova: UnwrapRef<typeof import('./composables/alova')['default']>
+    readonly articleCommentStore: UnwrapRef<typeof import('./composables/storage')['articleCommentStore']>
+    readonly articleDetailStore: UnwrapRef<typeof import('./composables/storage')['articleDetailStore']>
+    readonly articleListStore: UnwrapRef<typeof import('./composables/storage')['articleListStore']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly caseCommentStore: UnwrapRef<typeof import('./composables/storage')['caseCommentStore']>

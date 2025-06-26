@@ -1,4 +1,4 @@
-import type { QueryResult, User } from '~/types'
+import type { User } from '~/types'
 import { useDatabase } from 'nitro/runtime'
 
 export default defineEventHandler(async (event) => {
@@ -11,17 +11,16 @@ export default defineEventHandler(async (event) => {
         }
     }
 
-    const db = useDatabase()
+    const db = useDatabase('sqlite3')
 
     // Query for users
-    const { rows } = await db.sql<QueryResult<User[]>>`SELECT * FROM users WHERE id = ${id}`
+    // const { rows } = await db.sql<QueryResult>`SELECT * FROM users WHERE id = ${id}`
 
     const data = await db.prepare(`SELECT * FROM users WHERE id = ?`).get(id) as User
 
     return {
         code: 200,
         message: 'API is working!',
-        data: (rows && rows[0]) || {},
-        data2: data,
+        data,
     }
 })

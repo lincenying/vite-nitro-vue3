@@ -1,8 +1,8 @@
 <template>
-    <div class="global-wrap index-wrap">
-        <OtherTopBanner title="常见问题" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
+    <div v-loading="loading" class="global-wrap index-wrap">
+        <OtherTopBanner title="SQLite文章" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div ref="navigation" class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
-            <div max-w-1293px flex-auto text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » <router-link to="/faqs">常见问题</router-link> » 问题详情</div>
+            <div max-w-1293px flex-auto text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » <router-link to="/article">SQLite文章</router-link> » 文章详情</div>
         </div>
         <div flex="~ justify-center" mt-24px lt-m1360="mx-24px">
             <div flex="~ auto justify-between" max-w-1293px>
@@ -27,38 +27,41 @@
                             </div>
                         </template>
                         <template #default>
-                            <div v-if="faqDetail" b-rd-6px mb-24px p-32px bg="hex-fff">
-                                <h1 font-bold text="center hex-202935 28px">{{ faqDetail.title }}</h1>
+                            <div b-rd-6px mb-24px p-32px bg="hex-fff">
+                                <h1 font-bold text="center hex-202935 28px">{{ articleDetail.title }}</h1>
                                 <div flex="~ justify-center items-center" mt-16px text="hex-8a8a8a">
                                     <i class="i-carbon-user-avatar" w-14px h-14px mr-5px></i>
-                                    <span mr-20px>{{ faqDetail.author }}</span>
+                                    <span mr-20px>{{ articleDetail.author }}</span>
                                     <i class="i-carbon-time" w-14px h-14px mr-5px></i>
-                                    <span mr-20px>{{ faqDetail.date }}</span>
+                                    <span mr-20px>{{ articleDetail.date }}</span>
                                     <i class="i-carbon-collapse-categories" w-14px h-14px mr-5px></i>
-                                    <span mr-20px>{{ faqDetail.category }}</span>
-                                    <span>阅读({{ faqDetail.views }})</span>
+                                    <span mr-20px>{{ articleDetail.category }}</span>
+                                    <span mr-20px>阅读({{ articleDetail.views }})</span>
+                                    <span cursor-pointer @click="handleModify">编辑</span>
                                 </div>
-                                <div class="article-content" pt-24px text="hex-202935 16px" lh-28px v-html="faqDetail.content"></div>
+                                <div class="article-content" pt-24px text="hex-202935 16px" lh-28px v-html="nl2br(articleDetail.content)"></div>
                             </div>
                         </template>
                     </el-skeleton>
-                    <OtherRelatedRecom column="faqs"></OtherRelatedRecom>
-                    <OtherComments :id="faqDetail.id" type="faq"></OtherComments>
-                    <OtherCommentPost :id="faqDetail.id" type="faq"></OtherCommentPost>
+                    <OtherRelatedRecom column="article"></OtherRelatedRecom>
+                    <OtherComments :id="articleDetail.id" type="article"></OtherComments>
+                    <OtherCommentPost :id="articleDetail.id" type="article"></OtherCommentPost>
                 </div>
             </div>
         </div>
+        <article-dialog-post v-if="layer.show" v-model="layer.show" :layer="layer" @get-data="initFn" />
     </div>
 </template>
 
 <script setup lang="ts">
-import type { FaqsType } from '../faqs.types'
+import type { ArticleType } from '../article.types'
 import type { InitType } from '../home.types'
 import { isEmpty } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
+import { articleDetailStore } from '~/composables/storage'
 
 defineOptions({
-    name: 'RouterFaqsDetail',
+    name: 'RouterArticleDetail',
 })
 
 const title = ref('')
@@ -68,13 +71,13 @@ useHead({
 
 const id = $(useRouteQuery<string>('id'))
 
-let faqDetail = $ref<FaqsType>(faqsDetailStore)
+let articleDetail = $ref<ArticleType>(articleDetailStore)
 async function getData() {
-    const { code, data } = await $api.get<FaqsType>('/news/detail', { id })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(faqsDetailStore.value), data)) {
-        faqDetail = data
+    const { code, data } = await $api.get<ArticleType>('/sqlite3/article/detail', { id })
+    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(articleDetailStore.value), data)) {
+        articleDetail = data
         title.value = data.title
-        faqsDetailStore.value = data
+        articleDetailStore.value = data
     }
 }
 
@@ -95,4 +98,22 @@ const { loading } = useFetchData({
 })
 
 useSaveScroll()
+
+function nl2br(str: string) {
+    return str.replace(/\n/g, '<br />')
+}
+
+// 弹窗控制器
+const layer: GlobalDialogLayer<Nullable<ArticleType>> = reactive({
+    show: false,
+    title: '编辑文章',
+    showButton: true,
+    width: '800px',
+    row: null,
+})
+
+function handleModify() {
+    layer.row = articleDetail
+    layer.show = true
+}
 </script>

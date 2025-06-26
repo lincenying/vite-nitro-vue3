@@ -6,6 +6,7 @@ const emitter = mitt<{
     'refresh-case-comment': any
     'refresh-news-comment': any
     'refresh-faq-comment': any
+    'refresh-article-comment': any
 }>()
 
 // 创建并暴露mitt
