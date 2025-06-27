@@ -12,7 +12,12 @@ async function getViteServer() {
         viteServer = await createServer({
             base: '/',
             appType: 'custom',
-            server: { middlewareMode: true },
+            server: {
+                middlewareMode: true,
+                hmr: {
+                    port: 34678,
+                },
+            },
         })
     }
     return viteServer
