@@ -16,10 +16,10 @@ RUN pnpm run build
 FROM $NODE_VERSION AS production
 WORKDIR /app
 COPY --from=builder /app/.output ./.output
-ENV NITRO_HOST=0.0.0.0 \
-    NITRO_APP_VERSION=latest \
-    NODE_ENV=production \
+ENV NODE_ENV=production \
+    HOST=0.0.0.0 \
     PORT=5123 \
+    NITRO_APP_VERSION=latest \
     NITRO_ENV_HOST_API_URL=https://php.mmxiaowu.com
 EXPOSE 5123
 CMD ["node", "./.output/server/index.mjs"]
