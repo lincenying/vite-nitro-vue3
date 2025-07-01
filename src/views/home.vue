@@ -2,10 +2,10 @@
     <div v-loading="loading" class="global-wrap index-wrap">
         <OtherTopBanner title="产品展示" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div ref="navigation" class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
-            <div flex-auto max-w-1293px text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » 产品展示</div>
+            <div flex-auto max-w-1294px text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » 产品展示</div>
         </div>
         <div flex="~ justify-center" mt-24px lt-m1360="mx-24px">
-            <div flex="~ auto justify-between" max-w-1293px>
+            <div flex="~ auto justify-between" max-w-1294px>
                 <div class="sidebar" w-320px>
                     <HomeCategory :category-id="category"></HomeCategory>
                     <el-affix :offset="104">
