@@ -18,7 +18,8 @@ export default defineEventHandler(async (event) => {
         }
     }
 
-    const result = await db.prepare('INSERT INTO article VALUES (null, ?, ?, ?, ?, ?, ?)').run(title, content, date, '央视网', category, 0) as InsertSucces
+    // title content author category views date
+    const result = await db.prepare('INSERT INTO article VALUES (null, ?, ?, ?, ?, ?, ?)').run(title, content, '央视网', category, 0, date) as InsertSucces
 
     const data = await db.prepare('select * from article where id = ?').get(result.lastInsertRowid) as Article
 
