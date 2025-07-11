@@ -46,9 +46,9 @@
 </template>
 
 <script setup lang="ts">
-import type { FaqsType } from './faqs.types'
-import type { InitType } from './home.types'
-import type { ListType } from '~/types'
+import type { FaqsType } from '../types/faqs.types'
+import type { InitType } from '../types/home.types'
+import type { ListType } from '~/types/global.types'
 import { isEmpty } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 
@@ -59,6 +59,8 @@ defineOptions({
 useHead({
     title: 'MMF小屋-常见问题',
 })
+
+emitter.emit('setMenuActive', 'faqs')
 
 let page = $ref<number>(1)
 const pageSize = $ref<number>(12)

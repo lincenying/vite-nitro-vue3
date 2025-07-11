@@ -1,4 +1,4 @@
-import type { ProductCategory, ProductState } from './pinia.types'
+import type { ProductCategory, ProductState } from '../types/pinia.types'
 import { isEmpty } from '@lincy/utils'
 import { StorageSerializers } from '@vueuse/core'
 import { acceptHMRUpdate } from 'pinia'

@@ -14,9 +14,6 @@ async function getViteServer() {
             appType: 'custom',
             server: {
                 middlewareMode: true,
-                hmr: {
-                    port: 34678,
-                },
             },
         })
     }

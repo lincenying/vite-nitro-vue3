@@ -128,8 +128,15 @@ export function useSaveScroll() {
     })
 
     onBeforeRouteLeave((_to, from, next) => {
+        console.log('onBeforeRouteLeave', from.fullPath)
         // 将当前页面的滚动位置保存到本地存储中
-        ls.set(from.fullPath, window.scrollY || 0)
+        const scrollTop = window.scrollY || 0
+        if (scrollTop === 0) {
+            // 如果滚动位置为0，则不保存
+            ls.remove(from.fullPath)
+            return next()
+        }
+        ls.set(from.fullPath, scrollTop)
         // 调用路由导航函数
         next()
     })
@@ -144,7 +151,7 @@ export function useSaveScroll() {
  * @param {number} [adjust] - 可选参数，用于调整滚动位置的偏移量
  * @returns {void}
  */
-export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: number = 0) {
+export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: number = 0): void {
     // 获取导航元素相对于视口的顶部位置
     let top = navigation.value?.getBoundingClientRect().top
     // 如果导航元素存在
@@ -165,7 +172,7 @@ export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: nu
  * @param {number} [adjust] - 可选参数，用于调整滚动位置的偏移量
  * @returns {void}
  */
-export function scrollToComment(commentBox: Ref<HTMLElement | undefined>, adjust: number = 0) {
+export function scrollToComment(commentBox: Ref<HTMLElement | undefined>, adjust: number = 0): void {
     // 获取导航元素相对于视口的顶部位置
     let top = commentBox.value?.getBoundingClientRect().top
     // 如果导航元素存在

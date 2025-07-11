@@ -1,10 +1,11 @@
-import type { CommentType } from '~/components/other/comments.types'
-import type { ListType } from '~/types'
-import type { ArticleType } from '~/views/article.types'
-import type { CasesType } from '~/views/cases.types'
-import type { FaqsType } from '~/views/faqs.types'
-import type { ProductsType } from '~/views/home.types'
-import type { NewsType } from '~/views/news.types'
+import type { ArticleType } from '~/types/article.types'
+import type { CasesType } from '~/types/cases.types'
+import type { CommentType } from '~/types/comments.types'
+import type { FaqsType } from '~/types/faqs.types'
+import type { ListType } from '~/types/global.types'
+import type { ProductsType } from '~/types/home.types'
+import type { NewsType } from '~/types/news.types'
+import type { UserState } from '~/types/pinia.types'
 
 export function defaultList() {
     return {

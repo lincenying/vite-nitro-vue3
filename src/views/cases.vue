@@ -61,9 +61,9 @@
 </template>
 
 <script setup lang="ts">
-import type { CasesType } from './cases.types'
-import type { InitType } from './home.types'
-import type { ListType } from '~/types'
+import type { CasesType } from '../types/cases.types'
+import type { InitType } from '../types/home.types'
+import type { ListType } from '~/types/global.types'
 import { isEmpty } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 
@@ -74,6 +74,8 @@ defineOptions({
 useHead({
     title: 'MMF小屋-案例展示',
 })
+
+emitter.emit('setMenuActive', 'cases')
 
 let page = $ref<number>(1)
 const pageSize = $ref<number>(12)

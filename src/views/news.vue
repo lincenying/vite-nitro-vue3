@@ -52,9 +52,9 @@
 </template>
 
 <script setup lang="ts">
-import type { InitType } from './home.types'
-import type { NewsType } from './news.types'
-import type { ListType } from '~/types'
+import type { InitType } from '../types/home.types'
+import type { NewsType } from '../types/news.types'
+import type { ListType } from '~/types/global.types'
 import { isEmpty, UTC2Date } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 
@@ -65,6 +65,8 @@ defineOptions({
 useHead({
     title: 'MMF小屋-新闻中心',
 })
+
+emitter.emit('setMenuActive', 'news')
 
 let page = $ref<number>(1)
 const pageSize = $ref<number>(12)

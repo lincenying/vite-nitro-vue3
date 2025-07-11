@@ -1,5 +1,5 @@
 import type { AxiosHeaders, AxiosRequestConfig, AxiosResponse } from 'axios'
-import type { LoadedType } from '@/types'
+import type { LoadedType } from '~/types/global.types'
 import axios from 'axios'
 import { userStorage } from './storage'
 

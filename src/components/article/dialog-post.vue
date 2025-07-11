@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import type { FormInstance, FormItemRule } from 'element-plus'
-import type { GlobalDialogLayer, GlobalDiaslogInstance } from '~/components/components.types'
+import type { GlobalDialogLayer, GlobalDiaslogInstance } from '~/types/components.types'
 
 import Rules from '@lincy/async-validation'
 import globalDialog from '~/components/global/dialog.vue'

@@ -1,5 +1,5 @@
 import type { AnyFn } from '@vueuse/core'
-import type { RefOrComputedRef } from '@/types'
+import type { RefOrComputedRef } from '~/types/global.types'
 
 /** 登录 */
 export const onLoginKey = Symbol('onLoginKey') as InjectionKey<AnyFn>

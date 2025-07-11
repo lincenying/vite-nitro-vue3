@@ -56,10 +56,10 @@
 </template>
 
 <script setup lang="ts">
-import type { ArticleType } from './article.types'
-import type { InitType } from './home.types'
-import type { GlobalDialogLayer } from '~/components/components.types'
-import type { ListType } from '~/types'
+import type { ArticleType } from '~/types/article.types'
+import type { GlobalDialogLayer } from '~/types/components.types'
+import type { ListType } from '~/types/global.types'
+import type { InitType } from '~/types/home.types'
 import { isEmpty, UTC2Date } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { articleListStore } from '~/composables/storage'
@@ -71,6 +71,8 @@ defineOptions({
 useHead({
     title: 'MMF小屋-SQLite文章',
 })
+
+emitter.emit('setMenuActive', 'article')
 
 let page = $ref<number>(1)
 const pageSize = $ref<number>(12)

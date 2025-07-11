@@ -75,8 +75,8 @@
 </template>
 
 <script setup lang="ts">
-import type { InitType, ProductsType } from './home.types'
-import type { ListType } from '~/types'
+import type { InitType, ProductsType } from '../types/home.types'
+import type { ListType } from '~/types/global.types'
 import { isEmpty } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 
@@ -87,6 +87,8 @@ defineOptions({
 useHead({
     title: 'MMF小屋-产品展示',
 })
+
+emitter.emit('setMenuActive', 'home')
 
 const { ctx } = useGlobal()
 

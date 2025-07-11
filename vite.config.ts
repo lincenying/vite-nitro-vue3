@@ -24,6 +24,15 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         assetsInclude: [
             '/static/**',
         ],
+        server: {
+            open: true,
+            hmr: {
+                port: 55373,
+            },
+            warmup: {
+                clientFiles: ['./src/main.ts', './src/views/*.vue'],
+            },
+        },
         build: Build.build,
         css: Css,
         plugins: [

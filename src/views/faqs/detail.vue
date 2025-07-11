@@ -52,8 +52,8 @@
 </template>
 
 <script setup lang="ts">
-import type { FaqsType } from '../faqs.types'
-import type { InitType } from '../home.types'
+import type { FaqsType } from '../../types/faqs.types'
+import type { InitType } from '../../types/home.types'
 import { isEmpty } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 
@@ -65,6 +65,8 @@ const title = ref('')
 useHead({
     title,
 })
+
+emitter.emit('setMenuActive', 'faqs')
 
 const id = $(useRouteQuery<string>('id'))
 

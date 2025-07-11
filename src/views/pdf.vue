@@ -36,6 +36,8 @@ useHead({
     title: 'MMF小屋-PDF文件查看',
 })
 
+emitter.emit('setMenuActive', 'pdf')
+
 const loading = ref(true)
 
 const highlightText = ref('技术认证')

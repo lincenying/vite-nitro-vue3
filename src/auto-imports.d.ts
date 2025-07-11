@@ -9,7 +9,6 @@ declare global {
   const $api: typeof import('./composables/fetch')['$api']
   const Delete: typeof import('./composables/alova')['Delete']
   const EffectScope: typeof import('vue')['EffectScope']
-  const ElMessage: typeof import('element-plus/es')['ElMessage']
   const Get: typeof import('./composables/alova')['Get']
   const Post: typeof import('./composables/alova')['Post']
   const Put: typeof import('./composables/alova')['Put']
@@ -245,7 +244,6 @@ declare global {
   const useId: typeof import('vue')['useId']
   const useIdle: typeof import('@vueuse/core')['useIdle']
   const useImage: typeof import('@vueuse/core')['useImage']
-  const useIndexStore: typeof import('./stores/use-index-store')['useIndexStore']
   const useInfiniteScroll: typeof import('@vueuse/core')['useInfiniteScroll']
   const useIntersectionObserver: typeof import('@vueuse/core')['useIntersectionObserver']
   const useInterval: typeof import('@vueuse/core')['useInterval']
@@ -378,12 +376,6 @@ declare global {
   // @ts-ignore
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
-  // @ts-ignore
-  export type { GlobalDiaslogInstance, GlobalDialogLayer } from './components/components.types'
-  import('./components/components.types')
-  // @ts-ignore
-  export type { GlobalState, ProductCategory, ProductState, UserState } from './stores/pinia.types'
-  import('./stores/pinia.types')
 }
 
 // for vue template auto import

@@ -1,4 +1,4 @@
-import type { GlobalState } from './pinia.types'
+import type { GlobalState } from '../types/pinia.types'
 import { acceptHMRUpdate } from 'pinia'
 
 const usePiniaStore = defineStore('globalStore', () => {

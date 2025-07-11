@@ -12,11 +12,11 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0
       '@lincy/utils':
-        specifier: ^0.6.3
-        version: 0.6.3
+        specifier: ^0.6.4
+        version: 0.6.4
       '@tanstack/vue-query':
-        specifier: ^5.81.5
-        version: 5.81.5(vue@3.5.17(typescript@5.8.3))
+        specifier: ^5.82.0
+        version: 5.82.0(vue@3.5.17(typescript@5.8.3))
       '@tato30/vue-pdf':
         specifier: ^1.11.3
         version: 1.11.3(vue@3.5.17(typescript@5.8.3))
@@ -723,8 +723,8 @@ packages:
   '@lincy/unocss-base-config@2.3.0':
     resolution: {integrity: sha512-Ntv2S4qdjzW7CR04fPBvxueqnf13Dx3DCA2Nj9xqVdhP5gRCDSgHh6OlWopw2+dcwHv7wgNGKTOLsmrk6skReQ==}
 
-  '@lincy/utils@0.6.3':
-    resolution: {integrity: sha512-vL+Bn8ezIEj6IZU2lMheaDfidGXd6P+GFxmxIGpiPBbkZfCGPkAiW033hk8wkofyzujc53USJ/wzeWTwWaXqag==}
+  '@lincy/utils@0.6.4':
+    resolution: {integrity: sha512-Bgf7TKdqR3eKctwOGkyGkOdTC4h2CpX9DcrgykKFul2sLw2m140crHP8ewKBQyydU3SNMa41Uc+Vl1CQm9IWxQ==}
 
   '@mapbox/node-pre-gyp@2.0.0':
     resolution: {integrity: sha512-llMXd39jtP0HpQLVI37Bf1m2ADlEb35GYSh1SDSLsBhR+5iCxiNGlT31yqbNtVHygHAtMy6dWFERpU2JgufhPg==}
@@ -1217,11 +1217,11 @@ packages:
     resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
     engines: {node: '>=12'}
 
-  '@tanstack/query-core@5.81.5':
-    resolution: {integrity: sha512-ZJOgCy/z2qpZXWaj/oxvodDx07XcQa9BF92c0oINjHkoqUPsmm3uG08HpTaviviZ/N9eP1f9CM7mKSEkIo7O1Q==}
+  '@tanstack/query-core@5.82.0':
+    resolution: {integrity: sha512-JrjoVuaajBQtnoWSg8iaPHaT4mW73lK2t+exxHNOSMqy0+13eKLqJgTKXKImLejQIfdAHQ6Un0njEhOvUtOd5w==}
 
-  '@tanstack/vue-query@5.81.5':
-    resolution: {integrity: sha512-Ylt2pzRj1KyXOoidRemRoySU8ub3PXLKwGBr+iQxs6lhfvo1JlimTS2CANM2+3Uph+7JIIguFc8w0Mw3vSjVsw==}
+  '@tanstack/vue-query@5.82.0':
+    resolution: {integrity: sha512-e+cb8OFuEetYd7q6U3g3yjqDDrAZ6rzxSlifjOy3tvJdopwTMDAyo65h4df/b+BrwcJRaPjsLk/b9H1gZrhv1g==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -5324,7 +5324,7 @@ snapshots:
 
   '@lincy/async-validation@1.3.0':
     dependencies:
-      '@lincy/utils': 0.6.3
+      '@lincy/utils': 0.6.4
       async-validator: 4.2.5
 
   '@lincy/eslint-config@5.7.0(@unocss/eslint-plugin@66.3.3(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(@vue/compiler-sfc@3.5.17)(eslint-plugin-format@1.0.1(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)':
@@ -5398,7 +5398,7 @@ snapshots:
       - vite
       - vue
 
-  '@lincy/utils@0.6.3': {}
+  '@lincy/utils@0.6.4': {}
 
   '@mapbox/node-pre-gyp@2.0.0':
     dependencies:
@@ -5762,12 +5762,12 @@ snapshots:
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@5.81.5': {}
+  '@tanstack/query-core@5.82.0': {}
 
-  '@tanstack/vue-query@5.81.5(vue@3.5.17(typescript@5.8.3))':
+  '@tanstack/vue-query@5.82.0(vue@3.5.17(typescript@5.8.3))':
     dependencies:
       '@tanstack/match-sorter-utils': 8.19.4
-      '@tanstack/query-core': 5.81.5
+      '@tanstack/query-core': 5.82.0
       '@vue/devtools-api': 6.6.4
       vue: 3.5.17(typescript@5.8.3)
       vue-demi: 0.14.10(vue@3.5.17(typescript@5.8.3))

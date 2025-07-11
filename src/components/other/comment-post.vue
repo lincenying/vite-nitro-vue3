@@ -21,6 +21,8 @@
 </template>
 
 <script setup lang="ts">
+import { ElMessage } from '~/config/element'
+
 type CommentStoreKey = keyof typeof commentStore
 
 defineOptions({

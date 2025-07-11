@@ -54,8 +54,9 @@
 </template>
 
 <script setup lang="ts">
-import type { ArticleType } from '../article.types'
-import type { InitType } from '../home.types'
+import type { ArticleType } from '~/types/article.types'
+import type { GlobalDialogLayer } from '~/types/components.types'
+import type { InitType } from '~/types/home.types'
 import { isEmpty } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { articleDetailStore } from '~/composables/storage'
@@ -68,6 +69,8 @@ const title = ref('')
 useHead({
     title,
 })
+
+emitter.emit('setMenuActive', 'article')
 
 const id = $(useRouteQuery<string>('id'))
 

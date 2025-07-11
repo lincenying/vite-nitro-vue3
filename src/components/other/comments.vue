@@ -38,8 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import type { CommentType } from './comments.types'
-import type { InitType } from '~/views/home.types'
+import type { CommentType } from '../../types/comments.types'
+import type { InitType } from '~/types/home.types'
 import { isEmpty } from '@lincy/utils'
 
 type CommentStoreKey = keyof typeof commentStore

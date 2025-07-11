@@ -1,4 +1,4 @@
-import type globalDialog from './global/dialog.vue'
+import type globalDialog from '~/components/global/dialog.vue'
 
 export type GlobalDiaslogInstance = InstanceType<typeof globalDialog>
 

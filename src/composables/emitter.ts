@@ -7,6 +7,7 @@ const emitter = mitt<{
     'refresh-news-comment': any
     'refresh-faq-comment': any
     'refresh-article-comment': any
+    'setMenuActive': string
 }>()
 
 // 创建并暴露mitt

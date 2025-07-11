@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ProductsType } from '~/views/home.types'
+import type { ProductsType } from '~/types/home.types'
 import { isEmpty } from '@lincy/utils'
 
 defineOptions({

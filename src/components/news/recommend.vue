@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { NewsType } from '~/views/news.types'
+import type { NewsType } from '~/types/news.types'
 import { isEmpty } from '@lincy/utils'
 
 defineOptions({

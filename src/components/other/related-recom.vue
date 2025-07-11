@@ -49,11 +49,11 @@
 </template>
 
 <script setup lang="ts">
-import type { ArticleType } from '~/views/article.types'
-import type { CasesType } from '~/views/cases.types'
-import type { FaqsType } from '~/views/faqs.types'
-import type { ProductsType } from '~/views/home.types'
-import type { NewsType } from '~/views/news.types'
+import type { ArticleType } from '~/types/article.types'
+import type { CasesType } from '~/types/cases.types'
+import type { FaqsType } from '~/types/faqs.types'
+import type { ProductsType } from '~/types/home.types'
+import type { NewsType } from '~/types/news.types'
 import { isEmpty } from '@lincy/utils'
 
 defineOptions({
