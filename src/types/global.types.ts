@@ -1,6 +1,49 @@
 import type { AnyFn, MaybeRef } from '@vueuse/core'
+import type ElAffix from 'element-plus/es/components/affix'
+import type ElScrollbar from 'element-plus/es/components/scrollbar'
+import type { Pinia } from 'pinia'
+import type { RouteComponent, RouteLocationNormalized } from 'vue-router'
 
 export type RefOrComputedRef<T> = Ref<T> | ComputedRef<T>
+
+export type ElScrollbarType = InstanceType<typeof ElScrollbar>
+export type ElAffixType = InstanceType<typeof ElAffix>
+export type ElMessageType = 'success' | 'warning' | 'info' | 'error'
+
+export interface AsyncDataConfig {
+    store: Pinia
+    route: RouteLocationNormalized
+    api: ApiType
+    req?: any
+}
+
+export type CusRouteComponent = RouteComponent & { asyncData: (payload: AsyncDataConfig) => Promise<any> }
+
+/**
+ * 请求参数合集
+ * ```
+ * {
+        all?: number
+        by?: string | string[]
+        from?: string
+        id?: string | string[]
+        limit?: number
+        page?: number
+        path?: string
+        key?: string | string[]
+    }
+ * ```
+ */
+export interface ApiConfig {
+    all?: number
+    by?: string | string[]
+    from?: string
+    id?: string | string[]
+    limit?: number
+    page?: number
+    pathname?: string
+    key?: string | string[]
+}
 
 export interface LoadedType<T, E> {
     /** 观察数据 */

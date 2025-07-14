@@ -22,7 +22,7 @@ defineOptions({
     name: 'Login',
 })
 
-const { ctx } = useGlobal('login')
+const { ctx } = useGlobal()
 
 // pinia 状态管理 ===>
 // const { counter, name } = storeToRefs(globalStore)
@@ -35,7 +35,7 @@ const { ctx } = useGlobal('login')
 // pinia 状态管理 <===
 
 // 全局组件通信 ===>
-const onLogin = inject(onLoginKey, () => {})
+// const onLogin = inject(onLoginKey, () => {})
 // 全局组件通信 <===
 
 const [loading, toggleLoading] = useToggle(false)
@@ -63,7 +63,8 @@ async function handleLogin() {
         password: form.password,
     }
     toggleLoading(true)
-    const token = await login(config)
-    onLogin(token)
+    await login(config)
+    window.location.href = '/'
+    // onLogin(token)
 }
 </script>

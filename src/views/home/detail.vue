@@ -44,8 +44,8 @@
                         </template>
                     </el-skeleton>
                     <OtherRelatedRecom column="products" :category-id="productDetail.category_id"></OtherRelatedRecom>
-                    <OtherComments :id="productDetail.id" type="product"></OtherComments>
-                    <OtherCommentPost :id="productDetail.id" type="product"></OtherCommentPost>
+                    <OtherComments v-if="productDetail.id" :id="productDetail.id" type="product"></OtherComments>
+                    <OtherCommentPost v-if="productDetail.id" :id="productDetail.id" type="product"></OtherCommentPost>
                 </div>
             </div>
         </div>
@@ -53,48 +53,62 @@
 </template>
 
 <script setup lang="ts">
-import type { InitType } from '../../types/home.types'
-import type { NewsType } from '../../types/news.types'
-import { isEmpty } from '@lincy/utils'
+import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
+import { appName } from '~/constants'
 
 defineOptions({
     name: 'RouterHomeDetail',
-})
-
-const title = ref('')
-useHead({
-    title,
+    asyncData(ctx) {
+        console.log('RouterHomeDetail-asyncData')
+        const { store, route, api } = ctx
+        const {
+            query: { id },
+        } = route
+        const productStore = useProductStore(store)
+        const newsStore = useNewsStore(store)
+        const commentStore = useCommentStore(store)
+        return Promise.all([
+            productStore.getDetail(id as string, api),
+            productStore.getRecommend(api),
+            productStore.getRelatedRecom(api),
+            newsStore.getRecommend(api),
+            commentStore.getComment({ type: 'product', id: id as string, page: 1 }, api),
+        ])
+    },
 })
 
 emitter.emit('setMenuActive', 'home')
 
 const id = $(useRouteQuery<string>('id'))
 
-let productDetail = $ref<NewsType>(productDetailStore)
-async function getData() {
-    const { code, data } = await $api.get<NewsType>('/news/detail', { id })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(productDetailStore.value), data)) {
-        productDetail = data
-        title.value = data.title
-        productDetailStore.value = data
-    }
-}
+const productStore = useProductStore()
+const { detail } = storeToRefs(productStore)
+
+const productDetail = computed(() => detail.value[id] || {})
 
 const navigation = ref<HTMLElement>()
-async function initFn(action: InitType = 'init-data') {
-    await Promise.all([getData()])
-    if (action === 'change-data')
-        scrollToNav(navigation, -80)
+
+const loading = ref(false)
+
+async function initFunc() {
+    loading.value = true
+    await productStore.getDetail(id)
+    loading.value = false
+    scrollToNav(navigation, -80)
 }
 
-const watchData = computed(() => ({ id }))
-const { loading } = useFetchData({
-    watchData,
-    dataHasError: false,
-    initFn,
-    errorFn: () => {},
-    immediate: true,
+watch(() => id, () => {
+    initFunc()
+})
+
+const affix = ref<ElAffixType>()
+onActivated(() => {
+    affix.value?.updateRoot()
+})
+
+useHead({
+    title: `${productDetail.value.title} - 产品展示 - ${appName}`,
 })
 
 useSaveScroll()

@@ -1,6 +1,7 @@
-import type { Article, InsertSucces } from '~/types'
+import type { Article, InsertSucces } from '../../../types'
 import { UTC2Date } from '@lincy/utils'
-import { useDatabase } from 'nitro/runtime'
+import { defineEventHandler, readBody } from 'h3'
+import { useDatabase } from 'nitropack/runtime'
 
 export default defineEventHandler(async (event) => {
     const db = useDatabase('sqlite3')
@@ -18,6 +19,7 @@ export default defineEventHandler(async (event) => {
         }
     }
 
+    // id title content author category views date
     const result = await db.prepare('UPDATE article SET title = ?, content = ?, category = ?, date = ? where id = ?').run(title, content, category, date, id) as InsertSucces
 
     return {

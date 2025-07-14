@@ -1,3 +1,4 @@
+import { defineEventHandler } from 'h3'
 import Mock from 'mockjs'
 
 export default defineEventHandler(async (_event) => {

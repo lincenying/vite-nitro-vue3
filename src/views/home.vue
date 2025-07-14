@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="loading" class="global-wrap index-wrap">
+    <div class="global-wrap index-wrap">
         <OtherTopBanner title="产品展示" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div ref="navigation" class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
             <div flex-auto max-w-1294px text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » 产品展示</div>
@@ -16,9 +16,9 @@
                 <div class="main" w-1px ml-24px flex="auto">
                     <el-skeleton
                         flex="~ wrap justify-between"
-                        :loading="loading"
                         animated
                         :count="9"
+                        :loading="loading"
                     >
                         <template #template>
                             <div w="[calc((100%-48px)/3)]" bg="hex-fff" mb-24px>
@@ -75,75 +75,86 @@
 </template>
 
 <script setup lang="ts">
-import type { InitType, ProductsType } from '../types/home.types'
-import type { ListType } from '~/types/global.types'
-import { isEmpty } from '@lincy/utils'
+import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
+import { appName } from '~/constants'
 
 defineOptions({
     name: 'RouterHome',
+    asyncData(ctx) {
+        const { store, route, api } = ctx
+        const {
+            params: { category, tag },
+        } = route
+        const productStore = useProductStore(store)
+        const newsStore = useNewsStore(store)
+        return Promise.all([
+            productStore.getIndex({ page: 1, pageSize: 12, category, tag }, api),
+            productStore.getRecommend(api),
+            newsStore.getRecommend(api),
+        ])
+    },
 })
-
-useHead({
-    title: 'MMF小屋-产品展示',
-})
-
-emitter.emit('setMenuActive', 'home')
 
 const { ctx } = useGlobal()
 
-let page = $ref<number>(1)
-const pageSize = $ref<number>(12)
-const category = $(useRouteQuery<number>('category'))
-const tag = $(useRouteQuery<string>('tag'))
-
-let dataHasError = $ref<boolean>(false)
-let productLists = $ref<ListType<ProductsType>>(productListStore)
-async function getData() {
-    const { code, data } = await $api.get<ListType<ProductsType>>('/home/getList', { page, pageSize, category, tag })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(productListStore.value), data)) {
-        productLists = data
-        productListStore.value = data
-    }
-    else {
-        dataHasError = true
-    }
-}
+emitter.emit('setMenuActive', 'home')
 
 const navigation = ref<HTMLElement>()
-async function initFn(action: InitType = 'init-data') {
-    if (action === 'change-data' || action === 'change-page') {
-        scrollToNav(navigation, -80)
+
+let page = $ref<number>(1)
+const pageSize = $ref<number>(12)
+const category = $(useRouteQuery<string | undefined>('category'))
+const tag = $(useRouteQuery<string | undefined>('tag'))
+
+const productStore = useProductStore()
+const { index: productLists } = storeToRefs(productStore)
+
+const payload = computed(() => {
+    return {
+        category,
+        tag,
+        page,
     }
-    if (action === 'change-data') {
-        page = 1
-    }
-    await Promise.all([getData()])
+})
+
+watch(() => [category, tag], () => {
+    page = 1
+    productStore.getIndex(payload.value)
+    scrollToNav(navigation, -80)
+})
+
+const loading = ref<boolean>(false)
+
+async function currentChange(newPage: number) {
+    loading.value = true
+    page = newPage
+    await productStore.getIndex(payload.value)
+    loading.value = false
+    scrollToNav(navigation, -80)
 }
 
-const watchData = computed(() => ({ category, tag }))
-const { loading } = useFetchData({
-    watchData,
-    dataHasError,
-    initFn,
-    errorFn: () => {},
-    immediate: true,
+const affix = ref<ElAffixType>()
+onActivated(() => {
+    affix.value?.updateRoot()
 })
 
 emitter.on('change-category', (newCategoryId) => {
     console.log('%c[newCategoryId] >> ', 'color: red', newCategoryId)
 })
 
+useHead({
+    title: `产品展示 - ${appName}`,
+})
+
+useSaveScroll()
+
 onUnmounted(() => {
     emitter.off('change-category')
 })
 
-async function currentChange(newPage: number) {
-    page = newPage
-    initFn('change-page')
-}
-
-useSaveScroll()
-
-ctx.$notify.success('This is a success message.')
+onMounted(() => {
+    console.log(`onMounted`)
+    ctx.$notify.success('This is a success message.')
+})
 </script>

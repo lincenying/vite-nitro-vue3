@@ -21,15 +21,13 @@
 </template>
 
 <script setup lang="ts">
-import { ElMessage } from '~/config/element'
-
-type CommentStoreKey = keyof typeof commentStore
+import type { CommentCategoryType } from '~/types/components.types'
 
 defineOptions({
     name: 'CommentPost',
 })
 const props = defineProps<{
-    type: CommentStoreKey
+    type: CommentCategoryType
     id: string | number
 }>()
 

@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="loading" class="global-wrap index-wrap">
+    <div class="global-wrap index-wrap">
         <OtherTopBanner title="SQLite文章" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div ref="navigation" class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
             <div max-w-1294px flex-auto text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » <router-link to="/article">SQLite文章</router-link> » 文章详情</div>
@@ -44,60 +44,75 @@
                         </template>
                     </el-skeleton>
                     <OtherRelatedRecom column="article"></OtherRelatedRecom>
-                    <OtherComments :id="articleDetail.id" type="article"></OtherComments>
-                    <OtherCommentPost :id="articleDetail.id" type="article"></OtherCommentPost>
+                    <OtherComments v-if="articleDetail.id" :id="articleDetail.id" type="article"></OtherComments>
+                    <OtherCommentPost v-if="articleDetail.id" :id="articleDetail.id" type="article"></OtherCommentPost>
                 </div>
             </div>
         </div>
-        <article-dialog-post v-if="layer.show" v-model="layer.show" :layer="layer" @get-data="initFn" />
+        <article-dialog-post v-if="layer.show" v-model="layer.show" :layer="layer" @get-data="initFunc" />
     </div>
 </template>
 
 <script setup lang="ts">
 import type { ArticleType } from '~/types/article.types'
 import type { GlobalDialogLayer } from '~/types/components.types'
-import type { InitType } from '~/types/home.types'
-import { isEmpty } from '@lincy/utils'
+import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
-import { articleDetailStore } from '~/composables/storage'
+import { appName } from '~/constants'
 
 defineOptions({
     name: 'RouterArticleDetail',
-})
-
-const title = ref('')
-useHead({
-    title,
+    asyncData(ctx) {
+        console.log('RouterArticleDetail-asyncData')
+        const { store, route, api } = ctx
+        const {
+            query: { id },
+        } = route
+        const articleStore = useArticleStore(store)
+        const productStore = useProductStore(store)
+        const newsStore = useNewsStore(store)
+        const commentStore = useCommentStore(store)
+        return Promise.all([
+            articleStore.getDetail(id as string, api),
+            articleStore.getRelatedRecom(api),
+            productStore.getRecommend(api),
+            newsStore.getRecommend(api),
+            commentStore.getComment({ type: 'article', id: id as string, page: 1 }, api),
+        ])
+    },
 })
 
 emitter.emit('setMenuActive', 'article')
 
 const id = $(useRouteQuery<string>('id'))
 
-let articleDetail = $ref<ArticleType>(articleDetailStore)
-async function getData() {
-    const { code, data } = await $api.get<ArticleType>('/sqlite3/article/detail', { id })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(articleDetailStore.value), data)) {
-        articleDetail = data
-        title.value = data.title
-        articleDetailStore.value = data
-    }
-}
+const articleStore = useArticleStore()
+const { detail } = storeToRefs(articleStore)
+
+const articleDetail = computed(() => detail.value[id] || {})
 
 const navigation = ref<HTMLElement>()
-async function initFn(action: InitType = 'init-data') {
-    await Promise.all([getData()])
-    if (action === 'change-data')
-        scrollToNav(navigation, -80)
+
+const loading = ref(false)
+
+async function initFunc() {
+    loading.value = true
+    await articleStore.getDetail(id)
+    loading.value = false
+    scrollToNav(navigation, -80)
 }
 
-const watchData = computed(() => ({ id }))
-const { loading } = useFetchData({
-    watchData,
-    dataHasError: false,
-    initFn,
-    errorFn: () => {},
-    immediate: true,
+watch(() => id, () => {
+    initFunc()
+})
+
+const affix = ref<ElAffixType>()
+onActivated(() => {
+    affix.value?.updateRoot()
+})
+
+useHead({
+    title: `${articleDetail.value.title} - SQLite文章 - ${appName}`,
 })
 
 useSaveScroll()
@@ -116,7 +131,7 @@ const layer: GlobalDialogLayer<Nullable<ArticleType>> = reactive({
 })
 
 function handleModify() {
-    layer.row = articleDetail
+    layer.row = articleDetail.value
     layer.show = true
 }
 </script>

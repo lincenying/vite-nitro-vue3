@@ -43,8 +43,8 @@
                         </template>
                     </el-skeleton>
                     <OtherRelatedRecom column="faqs"></OtherRelatedRecom>
-                    <OtherComments :id="faqDetail.id" type="faq"></OtherComments>
-                    <OtherCommentPost :id="faqDetail.id" type="faq"></OtherCommentPost>
+                    <OtherComments v-if="faqDetail.id" :id="faqDetail.id" type="faq"></OtherComments>
+                    <OtherCommentPost v-if="faqDetail.id" :id="faqDetail.id" type="faq"></OtherCommentPost>
                 </div>
             </div>
         </div>
@@ -52,48 +52,62 @@
 </template>
 
 <script setup lang="ts">
-import type { FaqsType } from '../../types/faqs.types'
-import type { InitType } from '../../types/home.types'
-import { isEmpty } from '@lincy/utils'
+import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
+import { appName } from '~/constants'
 
 defineOptions({
     name: 'RouterFaqsDetail',
-})
-
-const title = ref('')
-useHead({
-    title,
+    asyncData(ctx) {
+        console.log('RouterFaqsDetail-asyncData')
+        const { store, route, api } = ctx
+        const {
+            query: { id },
+        } = route
+        const faqsStore = useFaqsStore(store)
+        const productStore = useProductStore(store)
+        const newsStore = useNewsStore(store)
+        const commentStore = useCommentStore(store)
+        return Promise.all([
+            faqsStore.getDetail(id as string, api),
+            productStore.getRecommend(api),
+            newsStore.getRecommend(api),
+            commentStore.getComment({ type: 'faqs', id: id as string, page: 1 }, api),
+        ])
+    },
 })
 
 emitter.emit('setMenuActive', 'faqs')
 
 const id = $(useRouteQuery<string>('id'))
 
-let faqDetail = $ref<FaqsType>(faqsDetailStore)
-async function getData() {
-    const { code, data } = await $api.get<FaqsType>('/news/detail', { id })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(faqsDetailStore.value), data)) {
-        faqDetail = data
-        title.value = data.title
-        faqsDetailStore.value = data
-    }
-}
+const faqsStore = useFaqsStore()
+const { detail } = storeToRefs(faqsStore)
+
+const faqDetail = computed(() => detail.value[id] || {})
 
 const navigation = ref<HTMLElement>()
-async function initFn(action: InitType = 'init-data') {
-    await Promise.all([getData()])
-    if (action === 'change-data')
-        scrollToNav(navigation, -80)
+
+const loading = ref(false)
+
+async function initFunc() {
+    loading.value = true
+    await faqsStore.getDetail(id)
+    loading.value = false
+    scrollToNav(navigation, -80)
 }
 
-const watchData = computed(() => ({ id }))
-const { loading } = useFetchData({
-    watchData,
-    dataHasError: false,
-    initFn,
-    errorFn: () => {},
-    immediate: true,
+watch(() => id, () => {
+    initFunc()
+})
+
+const affix = ref<ElAffixType>()
+onActivated(() => {
+    affix.value?.updateRoot()
+})
+
+useHead({
+    title: `${faqDetail.value.title} - 常见问题 - ${appName}`,
 })
 
 useSaveScroll()

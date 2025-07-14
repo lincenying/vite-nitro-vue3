@@ -19,11 +19,3 @@ export interface CommentList {
     content: string
     children: CommentChildren[]
 }
-
-export interface CommentType {
-    list: CommentList[]
-    total: number
-    hasNext: number
-    pageSize: number
-    currPage: number
-}

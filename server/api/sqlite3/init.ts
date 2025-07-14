@@ -1,4 +1,5 @@
-import { useDatabase } from 'nitro/runtime'
+import { defineEventHandler } from 'h3'
+import { useDatabase } from 'nitropack/runtime'
 
 export default defineEventHandler(async () => {
     const db = useDatabase('sqlite3')
@@ -27,7 +28,7 @@ export default defineEventHandler(async () => {
             "date" VARCHAR(20)
         )`,
     )
-    const result = []
+    const result: { [key: string]: any }[] = []
 
     for (const sql of sqlArray) {
         const data = await db.prepare(sql).run()

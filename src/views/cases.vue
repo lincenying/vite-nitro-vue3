@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="loading" class="global-wrap cases-wrap">
+    <div class="global-wrap cases-wrap">
         <OtherTopBanner title="案例展示" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div ref="navigation" class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
             <div flex-auto max-w-1294px text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » 案例展示</div>
@@ -61,60 +61,71 @@
 </template>
 
 <script setup lang="ts">
-import type { CasesType } from '../types/cases.types'
-import type { InitType } from '../types/home.types'
-import type { ListType } from '~/types/global.types'
-import { isEmpty } from '@lincy/utils'
+import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
+import { appName } from '~/constants'
 
 defineOptions({
     name: 'RouterCases',
-})
-
-useHead({
-    title: 'MMF小屋-案例展示',
+    asyncData(ctx) {
+        const { store, route, api } = ctx
+        const {
+            params: { category, tag },
+        } = route
+        const productStore = useProductStore(store)
+        const newsStore = useNewsStore(store)
+        const casesStore = useCasesStore(store)
+        return Promise.all([
+            casesStore.getIndex({ page: 1, pageSize: 12, category, tag }, api),
+            productStore.getRecommend(api),
+            newsStore.getRecommend(api),
+        ])
+    },
 })
 
 emitter.emit('setMenuActive', 'cases')
 
 let page = $ref<number>(1)
 const pageSize = $ref<number>(12)
-const category = $(useRouteQuery<number>('category'))
+const category = $(useRouteQuery<string>('category'))
 const tag = $(useRouteQuery<string>('tag'))
 
-let casesLists = $ref<ListType<CasesType>>(casesListStore)
-async function getData() {
-    const { code, data } = await $api.get<ListType<CasesType>>('/cases/getList', { page, pageSize, category, tag })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(casesListStore.value), data)) {
-        casesLists = data
-        casesListStore.value = data
-    }
-}
+const casesStore = useCasesStore()
+const { index: casesLists } = storeToRefs(casesStore)
 
-const navigation = ref<HTMLElement>()
-async function initFn(action: InitType = 'init-data') {
-    if (action === 'change-data' || action === 'change-page') {
-        scrollToNav(navigation, -80)
+const payload = computed(() => {
+    return {
+        category,
+        tag,
+        page,
     }
-    if (action === 'change-data') {
-        page = 1
-    }
-    await Promise.all([getData()])
-}
-
-const watchData = computed(() => ({ category, tag }))
-const { loading } = useFetchData({
-    watchData,
-    dataHasError: false,
-    initFn,
-    errorFn: () => {},
-    immediate: true,
 })
 
+const navigation = ref<HTMLElement>()
+
+watch(() => [category, tag], () => {
+    page = 1
+    scrollToNav(navigation, -80)
+})
+
+const loading = ref<boolean>(false)
+
 async function currentChange(newPage: number) {
+    loading.value = true
     page = newPage
-    initFn('change-page')
+    await casesStore.getIndex(payload.value)
+    loading.value = false
+    scrollToNav(navigation, -80)
 }
+
+const affix = ref<ElAffixType>()
+onActivated(() => {
+    affix.value?.updateRoot()
+})
+
+useHead({
+    title: `案例展示 - ${appName}`,
+})
 
 useSaveScroll()
 </script>

@@ -8,6 +8,7 @@ const usePiniaStore = defineStore('globalStore', () => {
         ISDEV: import.meta.env.VITE_APP_ENV === 'development',
         ISPRE: import.meta.env.VITE_APP_ENV === 'pre-release',
         ISPROD: import.meta.env.VITE_APP_ENV === 'production',
+        cookies: {},
     })
 
     /**
@@ -25,11 +26,19 @@ const usePiniaStore = defineStore('globalStore', () => {
     const setRouterLoading = (payload: boolean) => {
         state.routerLoading = payload
     }
+    /**
+     * 设置Cookies
+     * @param cookies
+     */
+    const setCookies = (cookies: Record<string, string | number | boolean>) => {
+        state.cookies = cookies
+    }
 
     return {
         ...toRefs(state),
         setGlobalLoading,
         setRouterLoading,
+        setCookies,
     }
 })
 export default usePiniaStore

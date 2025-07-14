@@ -12,7 +12,7 @@ type ConfigType = string | { content: string, type: MessageType }
  * ```
  */
 export function showMsg(config: ConfigType) {
-    let content, type: MessageType
+    let content: string, type: MessageType
     if (!config) {
         content = '接口返回数据错误'
         type = 'error'

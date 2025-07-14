@@ -6,7 +6,7 @@ export interface UserListType {
     role: string
     isAdmin: number | string
     status?: number | string
-    token?: string
+    token: string
     info?: {
         name: string
     }

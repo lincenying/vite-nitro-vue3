@@ -35,14 +35,14 @@ const alovaInstance = createAlova({
         // 请求失败的拦截器
         // 请求错误时将会进入该拦截器。
         // 第二个参数为当前请求的method实例，你可以用它同步请求前后的配置信息
-        onError: (err, _method) => {
+        onError: (err) => {
             console.warn(err.message)
         },
 
         // 请求完成的拦截器
         // 当你需要在请求不论是成功、失败、还是命中缓存都需要执行的逻辑时，可以在创建alova实例时指定全局的`onComplete`拦截器，例如关闭请求 loading 状态。
         // 接收当前请求的method实例
-        onComplete: async (_method) => {
+        onComplete: async () => {
             // 处理请求完成逻辑
         },
     },

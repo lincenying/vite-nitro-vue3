@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="loading" class="global-wrap news-wrap">
+    <div class="global-wrap news-wrap">
         <OtherTopBanner title="新闻中心" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div ref="navigation" class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
             <div flex-auto max-w-1294px text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » 新闻中心</div>
@@ -52,60 +52,71 @@
 </template>
 
 <script setup lang="ts">
-import type { InitType } from '../types/home.types'
-import type { NewsType } from '../types/news.types'
-import type { ListType } from '~/types/global.types'
-import { isEmpty, UTC2Date } from '@lincy/utils'
+import type { ElAffixType } from '~/types/global.types'
+import { UTC2Date } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
+import { appName } from '~/constants'
 
 defineOptions({
     name: 'RouterNews',
-})
-
-useHead({
-    title: 'MMF小屋-新闻中心',
+    asyncData(ctx) {
+        const { store, route, api } = ctx
+        const {
+            params: { category, tag },
+        } = route
+        const productStore = useProductStore(store)
+        const newsStore = useNewsStore(store)
+        return Promise.all([
+            productStore.getRecommend(api),
+            newsStore.getIndex({ page: 1, pageSize: 12, category, tag }, api),
+            newsStore.getRecommend(api),
+        ])
+    },
 })
 
 emitter.emit('setMenuActive', 'news')
 
 let page = $ref<number>(1)
 const pageSize = $ref<number>(12)
-const category = $(useRouteQuery<number>('category'))
+const category = $(useRouteQuery<string>('category'))
 const tag = $(useRouteQuery<string>('tag'))
 
-let newsLists = $ref<ListType<NewsType>>(newsListStore)
-async function getData() {
-    const { code, data } = await $api.get<ListType<NewsType>>('/news/getList', { page, pageSize, category, tag })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(newsListStore.value), data)) {
-        newsLists = data
-        newsListStore.value = data
-    }
-}
+const newsStore = useNewsStore()
+const { index: newsLists } = storeToRefs(newsStore)
 
-const navigation = ref<HTMLElement>()
-async function initFn(action: InitType = 'init-data') {
-    if (action === 'change-data' || action === 'change-page') {
-        scrollToNav(navigation, -80)
+const payload = computed(() => {
+    return {
+        category,
+        tag,
+        page,
     }
-    if (action === 'change-data') {
-        page = 1
-    }
-    await Promise.all([getData()])
-}
-
-const watchData = computed(() => ({ category, tag }))
-const { loading } = useFetchData({
-    watchData,
-    dataHasError: false,
-    initFn,
-    errorFn: () => {},
-    immediate: true,
 })
 
+const navigation = ref<HTMLElement>()
+
+watch(() => [category, tag], () => {
+    page = 1
+    scrollToNav(navigation, -80)
+})
+
+const loading = ref<boolean>(false)
+
 async function currentChange(newPage: number) {
+    loading.value = true
     page = newPage
-    initFn('change-page')
+    await newsStore.getIndex(payload.value)
+    loading.value = false
+    scrollToNav(navigation, -80)
 }
+
+const affix = ref<ElAffixType>()
+onActivated(() => {
+    affix.value?.updateRoot()
+})
+
+useHead({
+    title: `新闻中心 - ${appName}`,
+})
 
 useSaveScroll()
 </script>

@@ -1,6 +1,8 @@
+import { defineEventHandler, setCookie } from 'h3'
 import Mock from 'mockjs'
 
-export default defineEventHandler(async (_event) => {
+export default defineEventHandler(async (event) => {
+    setCookie(event, 'category', `${+new Date()}`, { maxAge: 60 * 60 * 24 * 7 })
     return {
         code: 200,
         message: 'ok',

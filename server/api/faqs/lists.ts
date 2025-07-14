@@ -1,4 +1,5 @@
-import type { ListPageType } from '~/types'
+import type { ListPageType } from '../../types'
+import { defineEventHandler, getQuery } from 'h3'
 import Mock from 'mockjs'
 
 export default defineEventHandler(async (event) => {

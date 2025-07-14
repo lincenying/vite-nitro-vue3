@@ -64,9 +64,7 @@ declare interface ApiType {
     put: <T, U = Objable>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T> & U>
     delete: <T>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T>>
     delete: <T, U = Objable>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T> & U>
-    downFile: (url: string, method: Methods, data?: Objable) => Promise<any>
     RESTful: <T>(url: string, method: Methods, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T>>
-    $RESTful: <T>(url: string, method: Methods, data?: Objable, header?: Objable) => Promise<ResponseData<T>>
 }
 
 declare interface Window {
@@ -76,7 +74,7 @@ declare interface Window {
     $$lock?: boolean
     $$api: ApiType
     $$time: NodeJS.Timeout
-    axios: import('axios').AxiosStatic
+    __INITIAL_STATE__: Record<string, any>
 }
 
 declare interface ImportMeta {
@@ -86,5 +84,6 @@ declare interface ImportMeta {
         VITE_APP_API: string
         VITE_APP_API_DOMAIN: string
         BASE_URL: string
+        SSR: boolean
     }
 }

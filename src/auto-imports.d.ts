@@ -9,6 +9,7 @@ declare global {
   const $api: typeof import('./composables/fetch')['$api']
   const Delete: typeof import('./composables/alova')['Delete']
   const EffectScope: typeof import('vue')['EffectScope']
+  const ElMessage: typeof import('element-plus/es')['ElMessage']
   const Get: typeof import('./composables/alova')['Get']
   const Post: typeof import('./composables/alova')['Post']
   const Put: typeof import('./composables/alova')['Put']
@@ -16,12 +17,16 @@ declare global {
   const articleCommentStore: typeof import('./composables/storage')['articleCommentStore']
   const articleDetailStore: typeof import('./composables/storage')['articleDetailStore']
   const articleListStore: typeof import('./composables/storage')['articleListStore']
+  const articleStoreWithout: typeof import('./stores/use-article-store')['articleStoreWithout']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const caseCommentStore: typeof import('./composables/storage')['caseCommentStore']
   const casesDetailStore: typeof import('./composables/storage')['casesDetailStore']
   const casesListStore: typeof import('./composables/storage')['casesListStore']
+  const casesStoreWithout: typeof import('./stores/use-cases-store')['casesStoreWithout']
+  const commentStorage: typeof import('./composables/storage')['commentStorage']
   const commentStore: typeof import('./composables/storage')['commentStore']
+  const commentStoreWithout: typeof import('./stores/use-comment-store')['commentStoreWithout']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -66,6 +71,7 @@ declare global {
   const faqCommentStore: typeof import('./composables/storage')['faqCommentStore']
   const faqsDetailStore: typeof import('./composables/storage')['faqsDetailStore']
   const faqsListStore: typeof import('./composables/storage')['faqsListStore']
+  const faqsStoreWithout: typeof import('./stores/use-faqs-store')['faqsStoreWithout']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const globalStoreWithout: typeof import('./stores/use-global-store')['globalStoreWithout']
@@ -84,6 +90,7 @@ declare global {
   const newsCommentStore: typeof import('./composables/storage')['newsCommentStore']
   const newsDetailStore: typeof import('./composables/storage')['newsDetailStore']
   const newsListStore: typeof import('./composables/storage')['newsListStore']
+  const newsStoreWithout: typeof import('./stores/use-news-store')['newsStoreWithout']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
@@ -166,6 +173,7 @@ declare global {
   const urlToBase64: typeof import('./composables/download')['urlToBase64']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
+  const useApi: typeof import('./composables/fetch')['useApi']
   const useArrayDifference: typeof import('@vueuse/core')['useArrayDifference']
   const useArrayEvery: typeof import('@vueuse/core')['useArrayEvery']
   const useArrayFilter: typeof import('@vueuse/core')['useArrayFilter']
@@ -178,6 +186,7 @@ declare global {
   const useArrayReduce: typeof import('@vueuse/core')['useArrayReduce']
   const useArraySome: typeof import('@vueuse/core')['useArraySome']
   const useArrayUnique: typeof import('@vueuse/core')['useArrayUnique']
+  const useArticleStore: typeof import('./stores/use-article-store')['default']
   const useAsyncQueue: typeof import('@vueuse/core')['useAsyncQueue']
   const useAsyncState: typeof import('@vueuse/core')['useAsyncState']
   const useAttrs: typeof import('vue')['useAttrs']
@@ -190,10 +199,12 @@ declare global {
   const useBrowserLocation: typeof import('@vueuse/core')['useBrowserLocation']
   const useCached: typeof import('@vueuse/core')['useCached']
   const useCaseStore: typeof import('./stores/use-case-store')['useCaseStore']
+  const useCasesStore: typeof import('./stores/use-cases-store')['default']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
   const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
+  const useCommentStore: typeof import('./stores/use-comment-store')['default']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCountdown: typeof import('@vueuse/core')['useCountdown']
   const useCounter: typeof import('@vueuse/core')['useCounter']
@@ -224,6 +235,7 @@ declare global {
   const useEventListener: typeof import('@vueuse/core')['useEventListener']
   const useEventSource: typeof import('@vueuse/core')['useEventSource']
   const useEyeDropper: typeof import('@vueuse/core')['useEyeDropper']
+  const useFaqsStore: typeof import('./stores/use-faqs-store')['default']
   const useFavicon: typeof import('@vueuse/core')['useFavicon']
   const useFetch: typeof import('@vueuse/core')['useFetch']
   const useFetchData: typeof import('./composables/fetch')['useFetchData']
@@ -267,6 +279,7 @@ declare global {
   const useMutationObserver: typeof import('@vueuse/core')['useMutationObserver']
   const useNavigatorLanguage: typeof import('@vueuse/core')['useNavigatorLanguage']
   const useNetwork: typeof import('@vueuse/core')['useNetwork']
+  const useNewsStore: typeof import('./stores/use-news-store')['default']
   const useNow: typeof import('@vueuse/core')['useNow']
   const useObjectUrl: typeof import('@vueuse/core')['useObjectUrl']
   const useOffsetPagination: typeof import('@vueuse/core')['useOffsetPagination']
@@ -386,6 +399,7 @@ declare module 'vue' {
     readonly $api: UnwrapRef<typeof import('./composables/fetch')['$api']>
     readonly Delete: UnwrapRef<typeof import('./composables/alova')['Delete']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ElMessage: UnwrapRef<typeof import('element-plus/es')['ElMessage']>
     readonly Get: UnwrapRef<typeof import('./composables/alova')['Get']>
     readonly Post: UnwrapRef<typeof import('./composables/alova')['Post']>
     readonly Put: UnwrapRef<typeof import('./composables/alova')['Put']>
@@ -393,12 +407,15 @@ declare module 'vue' {
     readonly articleCommentStore: UnwrapRef<typeof import('./composables/storage')['articleCommentStore']>
     readonly articleDetailStore: UnwrapRef<typeof import('./composables/storage')['articleDetailStore']>
     readonly articleListStore: UnwrapRef<typeof import('./composables/storage')['articleListStore']>
+    readonly articleStoreWithout: UnwrapRef<typeof import('./stores/use-article-store')['articleStoreWithout']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly caseCommentStore: UnwrapRef<typeof import('./composables/storage')['caseCommentStore']>
     readonly casesDetailStore: UnwrapRef<typeof import('./composables/storage')['casesDetailStore']>
     readonly casesListStore: UnwrapRef<typeof import('./composables/storage')['casesListStore']>
-    readonly commentStore: UnwrapRef<typeof import('./composables/storage')['commentStore']>
+    readonly casesStoreWithout: UnwrapRef<typeof import('./stores/use-cases-store')['casesStoreWithout']>
+    readonly commentStorage: UnwrapRef<typeof import('./composables/storage')['commentStorage']>
+    readonly commentStoreWithout: UnwrapRef<typeof import('./stores/use-comment-store')['commentStoreWithout']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -428,7 +445,6 @@ declare module 'vue' {
     readonly deepClone: UnwrapRef<typeof import('@lincy/utils')['deepClone']>
     readonly deepEqual: UnwrapRef<typeof import('@lincy/utils')['deepEqual']>
     readonly deepMerge: UnwrapRef<typeof import('@lincy/utils')['deepMerge']>
-    readonly defaultList: UnwrapRef<typeof import('./composables/storage')['defaultList']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
@@ -443,6 +459,7 @@ declare module 'vue' {
     readonly faqCommentStore: UnwrapRef<typeof import('./composables/storage')['faqCommentStore']>
     readonly faqsDetailStore: UnwrapRef<typeof import('./composables/storage')['faqsDetailStore']>
     readonly faqsListStore: UnwrapRef<typeof import('./composables/storage')['faqsListStore']>
+    readonly faqsStoreWithout: UnwrapRef<typeof import('./stores/use-faqs-store')['faqsStoreWithout']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly globalStoreWithout: UnwrapRef<typeof import('./stores/use-global-store')['globalStoreWithout']>
@@ -461,6 +478,7 @@ declare module 'vue' {
     readonly newsCommentStore: UnwrapRef<typeof import('./composables/storage')['newsCommentStore']>
     readonly newsDetailStore: UnwrapRef<typeof import('./composables/storage')['newsDetailStore']>
     readonly newsListStore: UnwrapRef<typeof import('./composables/storage')['newsListStore']>
+    readonly newsStoreWithout: UnwrapRef<typeof import('./stores/use-news-store')['newsStoreWithout']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
@@ -543,6 +561,7 @@ declare module 'vue' {
     readonly urlToBase64: UnwrapRef<typeof import('./composables/download')['urlToBase64']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
+    readonly useApi: UnwrapRef<typeof import('./composables/fetch')['useApi']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
     readonly useArrayEvery: UnwrapRef<typeof import('@vueuse/core')['useArrayEvery']>
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>
@@ -555,6 +574,7 @@ declare module 'vue' {
     readonly useArrayReduce: UnwrapRef<typeof import('@vueuse/core')['useArrayReduce']>
     readonly useArraySome: UnwrapRef<typeof import('@vueuse/core')['useArraySome']>
     readonly useArrayUnique: UnwrapRef<typeof import('@vueuse/core')['useArrayUnique']>
+    readonly useArticleStore: UnwrapRef<typeof import('./stores/use-article-store')['default']>
     readonly useAsyncQueue: UnwrapRef<typeof import('@vueuse/core')['useAsyncQueue']>
     readonly useAsyncState: UnwrapRef<typeof import('@vueuse/core')['useAsyncState']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
@@ -567,10 +587,12 @@ declare module 'vue' {
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useCaseStore: UnwrapRef<typeof import('./stores/use-case-store')['useCaseStore']>
+    readonly useCasesStore: UnwrapRef<typeof import('./stores/use-cases-store')['default']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
+    readonly useCommentStore: UnwrapRef<typeof import('./stores/use-comment-store')['default']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCountdown: UnwrapRef<typeof import('@vueuse/core')['useCountdown']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
@@ -601,9 +623,9 @@ declare module 'vue' {
     readonly useEventListener: UnwrapRef<typeof import('@vueuse/core')['useEventListener']>
     readonly useEventSource: UnwrapRef<typeof import('@vueuse/core')['useEventSource']>
     readonly useEyeDropper: UnwrapRef<typeof import('@vueuse/core')['useEyeDropper']>
+    readonly useFaqsStore: UnwrapRef<typeof import('./stores/use-faqs-store')['default']>
     readonly useFavicon: UnwrapRef<typeof import('@vueuse/core')['useFavicon']>
     readonly useFetch: UnwrapRef<typeof import('@vueuse/core')['useFetch']>
-    readonly useFetchData: UnwrapRef<typeof import('./composables/fetch')['useFetchData']>
     readonly useFetcher: UnwrapRef<typeof import('./composables/alova')['useFetcher']>
     readonly useFileDialog: UnwrapRef<typeof import('@vueuse/core')['useFileDialog']>
     readonly useFileSystemAccess: UnwrapRef<typeof import('@vueuse/core')['useFileSystemAccess']>
@@ -644,6 +666,7 @@ declare module 'vue' {
     readonly useMutationObserver: UnwrapRef<typeof import('@vueuse/core')['useMutationObserver']>
     readonly useNavigatorLanguage: UnwrapRef<typeof import('@vueuse/core')['useNavigatorLanguage']>
     readonly useNetwork: UnwrapRef<typeof import('@vueuse/core')['useNetwork']>
+    readonly useNewsStore: UnwrapRef<typeof import('./stores/use-news-store')['default']>
     readonly useNow: UnwrapRef<typeof import('@vueuse/core')['useNow']>
     readonly useObjectUrl: UnwrapRef<typeof import('@vueuse/core')['useObjectUrl']>
     readonly useOffsetPagination: UnwrapRef<typeof import('@vueuse/core')['useOffsetPagination']>

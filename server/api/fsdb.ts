@@ -1,3 +1,6 @@
+import { defineEventHandler } from 'h3'
+import { useStorage } from 'nitropack/runtime'
+
 export default defineEventHandler(async (_event) => {
     const dataStorage = useStorage('fsdb')
     await dataStorage.setItem('test', 'works')

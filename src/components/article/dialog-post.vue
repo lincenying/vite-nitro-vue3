@@ -23,11 +23,11 @@
 
 <script lang="ts" setup>
 import type { FormInstance, FormItemRule } from 'element-plus'
+
 import type { GlobalDialogLayer, GlobalDiaslogInstance } from '~/types/components.types'
 
 import Rules from '@lincy/async-validation'
 import globalDialog from '~/components/global/dialog.vue'
-
 import { ElMessage } from '~/config/element'
 
 defineOptions({
@@ -39,7 +39,7 @@ const { layer } = defineProps<{
 }>()
 
 const emit = defineEmits<{
-    getData: [value: string]
+    getData: [value: number]
 }>()
 
 const modelValue = defineModel<boolean>()
@@ -95,7 +95,7 @@ async function addForm(body: object) {
             type: 'success',
             message: '新增成功',
         })
-        emit('getData', 'change-data')
+        emit('getData', 1)
         layerDom.value?.close()
     }
 }
@@ -107,7 +107,7 @@ async function updateForm(body: object) {
             type: 'success',
             message: '编辑成功',
         })
-        emit('getData', 'init-data')
+        emit('getData', 1)
         layerDom.value?.close()
     }
 }

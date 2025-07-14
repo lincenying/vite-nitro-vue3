@@ -1,5 +1,6 @@
-import type { QueryResult, User } from '~/types'
-import { useDatabase } from 'nitro/runtime'
+import type { QueryResult, User } from '../../types'
+import { defineEventHandler } from 'h3'
+import { useDatabase } from 'nitropack/runtime'
 
 export default defineEventHandler(async () => {
     const db = useDatabase()

@@ -1,5 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { createRouter } from 'vue-router'
+import type { CusRouteComponent } from '~/types/global.types'
+import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
 
 const views = import.meta.glob('../views/**/*.vue')
 
@@ -20,8 +21,34 @@ Object.keys(views).forEach((path: string) => {
 routes = routes.concat([{ path: '/:pathMatch(.*)', redirect: '/' }])
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
     routes,
+})
+
+router.beforeResolve(async (to, from) => {
+    let diffed = false
+    const activated = to.matched.filter((c, i) => {
+        return diffed || (diffed = from.matched[i] !== c) || from.path !== to.path
+    })
+
+    if (!activated.length && to.fullPath === from.fullPath) {
+        return false
+    }
+
+    await Promise.all(
+        activated.map((c) => {
+            const routeComponent = c.components?.default as CusRouteComponent
+            if (routeComponent.asyncData) {
+                return routeComponent.asyncData({
+                    store: piniaInit,
+                    route: to,
+                    api: $api,
+                })
+            }
+
+            return true
+        }),
+    )
 })
 
 export default router

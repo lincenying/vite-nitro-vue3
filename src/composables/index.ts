@@ -2,17 +2,8 @@ import type { AnyFn } from '@vueuse/core'
 import { isInt } from '@lincy/utils'
 import ls from 'store2'
 
-export function useGlobal(key?: string) {
-    let ins = getCurrentInstance()!
-    if (key) {
-        if (!ins) {
-            ins = (window as any)[`$$${key}`] || {}
-        }
-
-        else {
-            (window as any)[`$$${key}`] = ins
-        }
-    }
+export function useGlobal() {
+    const ins = getCurrentInstance()!
 
     const ctx = ins.appContext.config.globalProperties
     const options = ins.type
@@ -122,7 +113,8 @@ export function useSaveScroll() {
         // 从本地存储中获取当前路由的滚动位置，如果没有则默认为0
         const scrollTop = ls.get(route.fullPath) || 0
         // 将页面滚动到获取到的滚动位置
-        window.scrollTo({ top: scrollTop || 0, behavior: 'smooth' })
+        if (typeof window !== 'undefined')
+            window.scrollTo({ top: scrollTop || 0, behavior: 'smooth' })
         // 从本地存储中移除当前路由的滚动位置
         ls.remove(route.fullPath)
     })
@@ -160,6 +152,7 @@ export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: nu
         top += window.scrollY + adjust
     }
     // 平滑滚动到计算出的位置
+    console.log(top)
     window.scrollTo({ top: top || 0, behavior: 'smooth' })
 }
 

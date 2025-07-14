@@ -49,72 +49,27 @@
 </template>
 
 <script setup lang="ts">
-import type { ArticleType } from '~/types/article.types'
-import type { CasesType } from '~/types/cases.types'
-import type { FaqsType } from '~/types/faqs.types'
-import type { ProductsType } from '~/types/home.types'
-import type { NewsType } from '~/types/news.types'
-import { isEmpty } from '@lincy/utils'
-
 defineOptions({
     name: 'RelatedRecom',
 })
 
-const { column, categoryId } = defineProps<{
+const { column } = defineProps<{
     column: string
     categoryId?: number
 }>()
 
-const productsRelatedRecom = ref<ProductsType[]>([])
-const casesRelatedRecom = ref<CasesType[]>([])
-const newsRelatedRecom = ref<NewsType[]>([])
-const faqsRelatedRecom = ref<FaqsType[]>([])
-const articleRelatedRecom = ref<ArticleType[]>([])
+const articleStore = useArticleStore()
+const { relatedRecom: articleRelatedRecom } = storeToRefs(articleStore)
 
-async function getProductsRelatedRecom() {
-    const { code, data } = await $api.get<ProductsType[]>(`/home/relatedRecom?categoryId=${categoryId}`, { })
-    if (code === 200 && !isEmpty(data)) {
-        productsRelatedRecom.value = data
-    }
-}
-async function getCasesRelatedRecom() {
-    const { code, data } = await $api.get<CasesType[]>('/cases/relatedRecom', { })
-    if (code === 200 && !isEmpty(data)) {
-        casesRelatedRecom.value = data
-    }
-}
-async function getNewsRelatedRecom() {
-    const { code, data } = await $api.get<NewsType[]>('/news/relatedRecom', { })
-    if (code === 200 && !isEmpty(data)) {
-        newsRelatedRecom.value = data
-    }
-}
-async function getFaqsRelatedRecom() {
-    const { code, data } = await $api.get<FaqsType[]>('/faqs/relatedRecom', { })
-    if (code === 200 && !isEmpty(data)) {
-        faqsRelatedRecom.value = data
-    }
-}
-async function getArticleRelatedRecom() {
-    const { code, data } = await $api.get<ArticleType[]>('/sqlite3/article/relatedRecom', { })
-    if (code === 200 && !isEmpty(data)) {
-        articleRelatedRecom.value = data
-    }
-}
+const casesStore = useCasesStore()
+const { relatedRecom: casesRelatedRecom } = storeToRefs(casesStore)
 
-if (column === 'products') {
-    getProductsRelatedRecom()
-}
-else if (column === 'cases') {
-    getCasesRelatedRecom()
-}
-else if (column === 'news') {
-    getNewsRelatedRecom()
-}
-else if (column === 'faqs') {
-    getFaqsRelatedRecom()
-}
-else if (column === 'article') {
-    getArticleRelatedRecom()
-}
+const faqsStore = useFaqsStore()
+const { relatedRecom: faqsRelatedRecom } = storeToRefs(faqsStore)
+
+const newsStore = useNewsStore()
+const { relatedRecom: newsRelatedRecom } = storeToRefs(newsStore)
+
+const productStore = useProductStore()
+const { relatedRecom: productsRelatedRecom } = storeToRefs(productStore)
 </script>

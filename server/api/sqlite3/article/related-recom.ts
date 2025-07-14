@@ -1,5 +1,6 @@
-import type { Article } from '~/types'
-import { useDatabase } from 'nitro/runtime'
+import type { Article } from '../../../types'
+import { defineEventHandler } from 'h3'
+import { useDatabase } from 'nitropack/runtime'
 
 export default defineEventHandler(async (_event) => {
     const db = useDatabase('sqlite3')

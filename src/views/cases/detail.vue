@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="loading" class="global-wrap index-wrap">
+    <div class="global-wrap index-wrap">
         <OtherTopBanner title="案例展示" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div ref="navigation" class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
             <div max-w-1294px flex-auto text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » <router-link to="/cases">案例展示</router-link> » 案例详情</div>
@@ -43,8 +43,8 @@
                         </template>
                     </el-skeleton>
                     <OtherRelatedRecom column="cases"></OtherRelatedRecom>
-                    <OtherComments :id="caseDetail.id" type="case"></OtherComments>
-                    <OtherCommentPost :id="caseDetail.id" type="case"></OtherCommentPost>
+                    <OtherComments v-if="caseDetail.id" :id="caseDetail.id" type="case"></OtherComments>
+                    <OtherCommentPost v-if="caseDetail.id" :id="caseDetail.id" type="case"></OtherCommentPost>
                 </div>
             </div>
         </div>
@@ -52,48 +52,63 @@
 </template>
 
 <script setup lang="ts">
-import type { CasesType } from '../../types/cases.types'
-import type { InitType } from '../../types/home.types'
-import { isEmpty } from '@lincy/utils'
+import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
+import { appName } from '~/constants'
 
 defineOptions({
     name: 'RouterCasesDetail',
-})
-
-const title = ref('')
-useHead({
-    title,
+    asyncData(ctx) {
+        console.log('RouterCasesDetail-asyncData')
+        const { store, route, api } = ctx
+        const {
+            query: { id },
+        } = route
+        const casesStore = useCasesStore(store)
+        const productStore = useProductStore(store)
+        const newsStore = useNewsStore(store)
+        const commentStore = useCommentStore(store)
+        return Promise.all([
+            casesStore.getDetail(id as string, api),
+            casesStore.getRelatedRecom(api),
+            productStore.getRecommend(api),
+            newsStore.getRecommend(api),
+            commentStore.getComment({ type: 'cases', id: id as string, page: 1 }, api),
+        ])
+    },
 })
 
 emitter.emit('setMenuActive', 'cases')
 
 const id = $(useRouteQuery<string>('id'))
 
-let caseDetail = $ref<CasesType>(casesDetailStore)
-async function getData() {
-    const { code, data } = await $api.get<CasesType>('/news/detail', { id })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(casesDetailStore.value), data)) {
-        caseDetail = data
-        title.value = data.title
-        casesDetailStore.value = data
-    }
-}
+const casesStore = useCasesStore()
+const { detail } = storeToRefs(casesStore)
+
+const caseDetail = computed(() => detail.value[id] || {})
 
 const navigation = ref<HTMLElement>()
-async function initFn(action: InitType = 'init-data') {
-    await Promise.all([getData()])
-    if (action === 'change-data')
-        scrollToNav(navigation, -80)
+
+const loading = ref(false)
+
+async function initFunc() {
+    loading.value = true
+    await casesStore.getDetail(id)
+    loading.value = false
+    scrollToNav(navigation, -80)
 }
 
-const watchData = computed(() => ({ id }))
-const { loading } = useFetchData({
-    watchData,
-    dataHasError: false,
-    initFn,
-    errorFn: () => {},
-    immediate: true,
+watch(() => id, () => {
+    initFunc()
+})
+
+const affix = ref<ElAffixType>()
+onActivated(() => {
+    affix.value?.updateRoot()
+})
+
+useHead({
+    title: `${caseDetail.value.title} - 案例展示 - ${appName}`,
 })
 
 useSaveScroll()

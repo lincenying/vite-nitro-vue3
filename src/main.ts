@@ -1,10 +1,9 @@
-import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createHead } from '@unhead/vue/client'
 import { createApp } from 'vue'
 
-import App from '@/app.vue'
-import globalPlugin from '@/plugin/global'
+import App from '@/App.vue'
 
+import globalPlugin from '@/plugin/global'
 import router from './router'
 
 //                            _ooOoo_
@@ -52,8 +51,16 @@ const head = createHead()
 
 const app = createApp(App)
 
-setupPinia(app).use(head).use(router).use(VueQueryPlugin).use(globalPlugin).mount('#app')
+setupPinia(app).use(router).use(globalPlugin)
 
-// router.isReady().then(() => {
-//     app.mount('#app')
-// })
+const productStore = useProductStore()
+productStore.getCategory()
+
+router.isReady().then(() => {
+    app.use(head).mount('#app')
+    console.log('client router ready')
+})
+
+if (window.__INITIAL_STATE__) {
+    piniaInit.state.value = window.__INITIAL_STATE__
+}

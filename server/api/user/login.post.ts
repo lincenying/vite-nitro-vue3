@@ -1,4 +1,5 @@
 import type { UserListType } from '../../types'
+import { defineEventHandler, readBody, setCookie } from 'h3'
 
 export default defineEventHandler(async (event) => {
     const users: UserListType[] = [{
@@ -39,11 +40,10 @@ export default defineEventHandler(async (event) => {
         return body.name === user.name && body.password === user.password
     })
     if (user) {
+        setCookie(event, 'token', user.token, { maxAge: 60 * 60 * 24 * 7 })
         return {
             code: 200,
-            data: {
-                token: user.token,
-            },
+            data: user,
             message: 'success',
         }
     }

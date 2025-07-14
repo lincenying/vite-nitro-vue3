@@ -1,9 +1,9 @@
 <template>
-    <div ref="commnetBox" v-loading="loading" class="global-box" w="full" mb-24px p-24px bg="hex-fff" b-rd-6px>
+    <div ref="commnetBox" class="global-box" w="full" mb-24px p-24px bg="hex-fff" b-rd-6px>
         <div class="global-box-title" m="0 b-24px" pl-16px text="1rem hex-202935" font-bold b-l="6px bolid hex-007bff">评论列表</div>
         <div class="global-box-content">
             <ul>
-                <li v-for="(item, index) in commentList.list" :key="index">
+                <li v-for="(item, index) in commentList?.list" :key="index">
                     <div flex="~" p="y-20px" b-b="1px solid hex-f7f7f7">
                         <img w-40px h-40px b="rd-50%" :src="item.user.avatar" alt="">
                         <div ml-16px>
@@ -38,57 +38,45 @@
 </template>
 
 <script setup lang="ts">
-import type { CommentType } from '../../types/comments.types'
+import type { CommentList } from '~/types/comments.types'
+import type { CommentCategoryType } from '~/types/components.types'
+import type { ListType } from '~/types/global.types'
 import type { InitType } from '~/types/home.types'
-import { isEmpty } from '@lincy/utils'
-
-type CommentStoreKey = keyof typeof commentStore
+import { defaultList } from '~/constants'
 
 defineOptions({
     name: 'CommentLists',
 })
 const props = defineProps<{
-    type: CommentStoreKey
+    type: CommentCategoryType
     id: string | number
 }>()
 
 const { id, type } = $(toRefs(props))
 
+const commentStore = useCommentStore()
+const { detail } = storeToRefs(commentStore)
+
 let page = $ref<number>(1)
 
-let commentList = $ref<CommentType>(commentStore[props.type])
-async function getData() {
-    const { code, data } = await $api.get<CommentType>('/comment/getList', { id, page, type })
-    if (code === 200 && !isEmpty(data) && !deepEqual(toRaw(commentStore[props.type].value), data)) {
-        commentList = data
-        commentStore[props.type].value = data
-    }
-}
+const commentList = computed<ListType<CommentList>>(() => detail.value[`${type}-${id}`] || defaultList())
 
 const commnetBox = ref<HTMLElement>()
 async function initFn(action: InitType = 'init-data') {
     if (action === 'change-data' || action === 'change-page') {
         scrollToComment(commnetBox, -104)
     }
-    await Promise.all([getData()])
 }
-
-const watchData = computed(() => ({ id }))
-const { loading } = useFetchData({
-    watchData,
-    dataHasError: false,
-    initFn,
-    errorFn: () => {},
-    immediate: true,
-})
 
 async function currentChange(newPage: number) {
     page = newPage
+    commentStore.getComment({ type, id, page }, $api)
     initFn('change-page')
 }
 
 function emitterFn() {
     page = 1
+    commentStore.getComment({ type, id, page }, $api)
     initFn('change-data')
 }
 
