@@ -1,13 +1,13 @@
 import type { InsertSucces, User } from '../../types'
 import { defineEventHandler, readBody } from 'h3'
-import { useDatabase } from 'nitropack/runtime'
+import { useDatabase } from 'nitro/runtime'
 
 export default defineEventHandler(async (event) => {
     const db = useDatabase()
 
     const body = await readBody<User>(event)
 
-    const { firstName, lastName, email } = body
+    const { firstName, lastName, email } = body!
 
     if (!firstName || !lastName || !email) {
         return {
