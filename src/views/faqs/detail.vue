@@ -43,8 +43,8 @@
                         </template>
                     </el-skeleton>
                     <OtherRelatedRecom column="faqs"></OtherRelatedRecom>
-                    <OtherComments v-if="faqDetail.id" :id="faqDetail.id" type="faq"></OtherComments>
-                    <OtherCommentPost v-if="faqDetail.id" :id="faqDetail.id" type="faq"></OtherCommentPost>
+                    <OtherComments v-if="faqDetail.id" :id="faqDetail.id" type="faqs"></OtherComments>
+                    <OtherCommentPost v-if="faqDetail.id" :id="faqDetail.id" type="faqs"></OtherCommentPost>
                 </div>
             </div>
         </div>
@@ -70,6 +70,7 @@ defineOptions({
         const commentStore = useCommentStore(store)
         return Promise.all([
             faqsStore.getDetail(id as string, api),
+            faqsStore.getRelatedRecom(api),
             productStore.getRecommend(api),
             newsStore.getRecommend(api),
             commentStore.getComment({ type: 'faqs', id: id as string, page: 1 }, api),

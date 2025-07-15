@@ -1,4 +1,5 @@
 import type { CommentList } from '~/types/comments.types'
+import type { CommentCategoryType } from '~/types/components.types'
 import type { ListType } from '~/types/global.types'
 import type { CommentState } from '~/types/pinia.types'
 import { isEmpty } from '@lincy/utils'
@@ -7,7 +8,7 @@ import { acceptHMRUpdate } from 'pinia'
 interface PayloadType {
     page: number
     id: string | number
-    type: string
+    type: CommentCategoryType
 }
 
 const usePiniaStore = defineStore('commentStore', () => {

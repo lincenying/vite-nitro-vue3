@@ -43,8 +43,8 @@
                         </template>
                     </el-skeleton>
                     <OtherRelatedRecom column="cases"></OtherRelatedRecom>
-                    <OtherComments v-if="caseDetail.id" :id="caseDetail.id" type="case"></OtherComments>
-                    <OtherCommentPost v-if="caseDetail.id" :id="caseDetail.id" type="case"></OtherCommentPost>
+                    <OtherComments v-if="caseDetail.id" :id="caseDetail.id" type="cases"></OtherComments>
+                    <OtherCommentPost v-if="caseDetail.id" :id="caseDetail.id" type="cases"></OtherCommentPost>
                 </div>
             </div>
         </div>

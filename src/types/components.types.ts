@@ -1,6 +1,6 @@
 import type globalDialog from '~/components/global/dialog.vue'
 
-export type CommentCategoryType = 'article' | 'product' | 'case' | 'faq' | 'news'
+export type CommentCategoryType = 'article' | 'product' | 'cases' | 'faqs' | 'news'
 
 export type GlobalDiaslogInstance = InstanceType<typeof globalDialog>
 
