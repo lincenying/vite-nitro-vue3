@@ -33,8 +33,8 @@ export const articleCommentStore = useStorage<ListType<CommentList>>('article-co
 
 export const commentStorage = {
     product: productCommentStore,
-    case: caseCommentStore,
+    cases: caseCommentStore,
     news: newsCommentStore,
-    faq: faqCommentStore,
+    faqs: faqCommentStore,
     article: articleCommentStore,
 }

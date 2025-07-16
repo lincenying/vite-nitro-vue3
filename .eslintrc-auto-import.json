@@ -206,7 +206,6 @@
     "useBroadcastChannel": true,
     "useBrowserLocation": true,
     "useCached": true,
-    "useCaseStore": true,
     "useCasesStore": true,
     "useClipboard": true,
     "useClipboardItems": true,

@@ -103,18 +103,22 @@ export default defineNitroConfig({
                 const server = await getViteServer()
                 return (event) => {
                     try {
-                        if (event.node.req.headers.upgrade === 'websocket') {
+                        if (event.node?.req.headers.upgrade === 'websocket') {
                             server.httpServer?.emit(
                                 'upgrade',
-                                event.node.req,
-                                event.node.req.socket,
+                                event.node?.req,
+                                event.node?.req.socket,
                                 Buffer.alloc(0),
                             )
                         }
                     }
                     catch (_err) {
-                        event.node.res.statusCode = 500
-                        event.node.res.end('WebSocket upgrade error')
+                        // 如果发生错误，返回400状态码
+                        const res = event.node?.res
+                        if (res) {
+                            res.statusCode = 400
+                            res.end('WebSocket upgrade error')
+                        }
                     }
                 }
             }),

@@ -1,5 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 import type { CusRouteComponent } from '~/types/global.types'
+
+import ls from 'store2'
 import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
 
 const views = import.meta.glob('../views/**/*.vue')
@@ -26,6 +28,14 @@ const router = createRouter({
 })
 
 router.beforeResolve(async (to, from) => {
+    const token = ls.get('token')
+    if (!token && to.path !== '/login') {
+        return { path: '/login' }
+    }
+    if (token && to.path === '/login') {
+        return { path: '/' }
+    }
+
     let diffed = false
     const activated = to.matched.filter((c, i) => {
         return diffed || (diffed = from.matched[i] !== c) || from.path !== to.path

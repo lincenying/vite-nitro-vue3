@@ -1,4 +1,5 @@
 import type { ConfigEnv } from 'vite'
+// import events from 'node:events'
 import path from 'node:path'
 import process from 'node:process'
 
@@ -15,6 +16,8 @@ import Macros from './vite.config.macros'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
+    // events.EventEmitter.defaultMaxListeners = 0
+
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     console.log(`当前编译环境: ${process.env.VITE_APP_ENV}`)

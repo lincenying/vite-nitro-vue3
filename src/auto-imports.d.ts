@@ -583,7 +583,6 @@ declare module 'vue' {
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
-    readonly useCaseStore: UnwrapRef<typeof import('./stores/use-case-store')['useCaseStore']>
     readonly useCasesStore: UnwrapRef<typeof import('./stores/use-cases-store')['default']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>

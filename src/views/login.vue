@@ -18,6 +18,8 @@
 </template>
 
 <script setup lang="ts">
+import ls from 'store2'
+
 defineOptions({
     name: 'Login',
 })
@@ -63,8 +65,17 @@ async function handleLogin() {
         password: form.password,
     }
     toggleLoading(true)
-    await login(config)
-    window.location.href = '/'
-    // onLogin(token)
+    const token = await login(config)
+    if (!token) {
+        toggleLoading(false)
+        ctx.$message.error('用户名或密码错误!')
+        return
+    }
+    ls.set('token', token)
+    ctx.$message.success('登录成功!')
+    setTimeout(() => {
+        toggleLoading(false)
+        window.location.href = '/'
+    }, 500)
 }
 </script>

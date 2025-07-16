@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { FetchOptions } from 'ofetch'
+import { objToCookies } from '@lincy/utils'
 import { appendResponseHeader } from 'h3'
 import { ofetch } from 'ofetch'
 import { normalizeCookiePath } from '~/utils'
@@ -13,7 +14,7 @@ import { normalizeCookiePath } from '~/utils'
     delete<T>(url: string, data?: Objable, header?: Objable, checkCode?: boolean): Promise<ResponseData<T>>
  * ```
  */
-export const useApi: (cookies?: string, H3Event?: H3Event) => ApiType = (cookies, H3Event) => {
+export const useApi: (cookies?: Record<string, string | number | boolean>, H3Event?: H3Event) => ApiType = (cookies, H3Event) => {
     const isSSR = !!import.meta.env.SSR
 
     const apiFetch = ofetch.create({
@@ -21,7 +22,7 @@ export const useApi: (cookies?: string, H3Event?: H3Event) => ApiType = (cookies
         headers: {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
-            'Cookie': cookies || '',
+            'Cookie': (cookies && objToCookies(cookies)) || '',
         },
     })
 
@@ -54,7 +55,7 @@ export const useApi: (cookies?: string, H3Event?: H3Event) => ApiType = (cookies
                 },
                 onResponse({ response }) {
                     const setCookies = response.headers.getSetCookie()
-                    if (H3Event && cookies && cookies.length > 0) {
+                    if (H3Event && setCookies && setCookies.length > 0) {
                         for (const cookie of setCookies) {
                             appendResponseHeader(H3Event, 'set-cookie', normalizeCookiePath(cookie))
                         }
