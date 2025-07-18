@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "#imports": ["./.nitro/types/nitro-imports"],
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"],
+      "~server/*": ["./server/*"],
+      "@server/*": ["./server/*"]
+    },
+    "resolveJsonModule": true,
+    "types": [],
+    "allowJs": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["server/**/*.ts", ".nitro/types/*.ts"],
+  "exclude": ["./node_modules", "./dist/**/*", "./public/**/*", "./src/**/*"]
+}

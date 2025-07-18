@@ -1,4 +1,4 @@
-import type { UserListType } from '../../types'
+import type { UserListType } from '~server/types'
 import { defineEventHandler, readBody, setCookie } from 'h3'
 
 export default defineEventHandler(async (event) => {

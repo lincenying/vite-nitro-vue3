@@ -1,4 +1,4 @@
-import type { InsertSucces, User } from '../../../types'
+import type { InsertSucces, User } from '~server/types'
 import { defineEventHandler, readBody } from 'h3'
 import { useDatabase } from 'nitro/runtime'
 

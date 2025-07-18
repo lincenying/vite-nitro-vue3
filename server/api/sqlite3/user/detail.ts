@@ -1,4 +1,4 @@
-import type { User } from '../../../types'
+import type { User } from '~server/types'
 import { defineEventHandler, getQuery } from 'h3'
 import { useDatabase } from 'nitro/runtime'
 

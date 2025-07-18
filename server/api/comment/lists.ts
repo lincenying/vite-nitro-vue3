@@ -1,7 +1,7 @@
-import type { ListPageType } from '../../types'
+import type { ListPageType } from '~server/types'
 import { defineEventHandler, getQuery } from 'h3'
 import Mock from 'mockjs'
-import { getRandomNumber } from '../../utils'
+import { getRandomNumber } from '~server/utils'
 
 export default defineEventHandler(async (event) => {
     let { page, pageSize } = getQuery<ListPageType>(event)

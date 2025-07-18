@@ -1,9 +1,10 @@
 import type { ViteDevServer } from 'vite'
 import { Buffer } from 'node:buffer'
+import path from 'node:path'
 import process from 'node:process'
 import { defineLazyEventHandler, fromNodeMiddleware } from 'h3'
-import { defineNitroConfig } from 'nitro/config'
 
+import { defineNitroConfig } from 'nitro/config'
 import { createServer } from 'vite'
 
 let viteServer: ViteDevServer | undefined
@@ -23,6 +24,12 @@ async function getViteServer() {
 const proxyDomain = process.env.NITRO_ENV_HOST_API_URL || 'https://php.mmxiaowu.com'
 
 export default defineNitroConfig({
+    alias: {
+        '~': path.join(__dirname, './src'),
+        '@': path.join(__dirname, './src'),
+        '~server': path.join(__dirname, './server'),
+        '@server': path.join(__dirname, './server'),
+    },
     srcDir: 'server',
     serveStatic: true,
     compatibilityDate: '2025-06-23',

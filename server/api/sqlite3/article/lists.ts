@@ -1,4 +1,4 @@
-import type { Article, ListPageType } from '../../../types'
+import type { Article, ListPageType } from '~server/types'
 import { defineEventHandler, getQuery } from 'h3'
 import { useDatabase } from 'nitro/runtime'
 

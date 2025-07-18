@@ -1,4 +1,4 @@
-import type { Article, InsertSucces } from '../../../types'
+import type { Article, InsertSucces } from '~server/types'
 import { UTC2Date } from '@lincy/utils'
 import { defineEventHandler, readBody } from 'h3'
 import { useDatabase } from 'nitro/runtime'

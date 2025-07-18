@@ -1,4 +1,4 @@
-import type { Article } from '../../../types'
+import type { Article } from '~server/types'
 import { defineEventHandler } from 'h3'
 import { useDatabase } from 'nitro/runtime'
 
