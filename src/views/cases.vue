@@ -72,18 +72,20 @@ defineOptions({
         const {
             params: { category, tag },
         } = route
+
+        const globalStore = useGlobalStore(store)
         const productStore = useProductStore(store)
         const newsStore = useNewsStore(store)
         const casesStore = useCasesStore(store)
+
         return Promise.all([
             casesStore.getIndex({ page: 1, pageSize: 12, category, tag }, api),
             productStore.getRecommend(api),
             newsStore.getRecommend(api),
+            globalStore.setMenuActive('cases'),
         ])
     },
 })
-
-emitter.emit('setMenuActive', 'cases')
 
 let page = $ref<number>(1)
 const pageSize = $ref<number>(12)

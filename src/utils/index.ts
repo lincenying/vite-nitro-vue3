@@ -10,7 +10,7 @@ import { ElMessage } from 'element-plus'
  * ```
  */
 export function showMsg(config: Objable | string) {
-    let content, type: 'success' | 'warning' | 'info' | 'error'
+    let content: string, type: 'success' | 'warning' | 'info' | 'error'
     if (!config) {
         content = '接口返回数据错误'
         type = 'error'
@@ -93,7 +93,7 @@ export function normalizeCookiePath(cookieStr: string): string {
  * @param {number} [adjust] - 可选参数，用于调整滚动位置的偏移量
  * @returns {void}
  */
-export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: number = 0) {
+export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: number = 0): void {
     // 获取导航元素相对于视口的顶部位置
     let top = navigation.value?.getBoundingClientRect().top
     // 如果导航元素存在
@@ -114,7 +114,7 @@ export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: nu
  * @param {number} [adjust] - 可选参数，用于调整滚动位置的偏移量
  * @returns {void}
  */
-export function scrollToComment(commentBox: Ref<HTMLElement | undefined>, adjust: number = 0) {
+export function scrollToComment(commentBox: Ref<HTMLElement | undefined>, adjust: number = 0): void {
     // 获取导航元素相对于视口的顶部位置
     let top = commentBox.value?.getBoundingClientRect().top
     // 如果导航元素存在

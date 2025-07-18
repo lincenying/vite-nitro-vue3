@@ -68,21 +68,23 @@ defineOptions({
         const {
             query: { id },
         } = route
+
+        const globalStore = useGlobalStore(store)
         const articleStore = useArticleStore(store)
         const productStore = useProductStore(store)
         const newsStore = useNewsStore(store)
         const commentStore = useCommentStore(store)
+
         return Promise.all([
             articleStore.getDetail(id as string, api),
             articleStore.getRelatedRecom(api),
             productStore.getRecommend(api),
             newsStore.getRecommend(api),
             commentStore.getComment({ type: 'article', id: id as string, page: 1 }, api),
+            globalStore.setMenuActive('article'),
         ])
     },
 })
-
-emitter.emit('setMenuActive', 'article')
 
 const id = $(useRouteQuery<string>('id'))
 

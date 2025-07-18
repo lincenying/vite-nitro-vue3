@@ -12,7 +12,8 @@ export interface GlobalState {
     ISDEV: boolean
     ISPRE: boolean
     ISPROD: boolean
-    cookies: any
+    cookies: Objable
+    menuActive: string
 }
 
 export interface ProductCategory {

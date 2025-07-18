@@ -9,6 +9,7 @@ const usePiniaStore = defineStore('globalStore', () => {
         ISPRE: import.meta.env.VITE_APP_ENV === 'pre-release',
         ISPROD: import.meta.env.VITE_APP_ENV === 'production',
         cookies: {},
+        menuActive: '',
     })
 
     /**
@@ -34,11 +35,16 @@ const usePiniaStore = defineStore('globalStore', () => {
         state.cookies = cookies
     }
 
+    const setMenuActive = (menu: string) => {
+        state.menuActive = menu
+    }
+
     return {
         ...toRefs(state),
         setGlobalLoading,
         setRouterLoading,
         setCookies,
+        setMenuActive,
     }
 })
 export default usePiniaStore

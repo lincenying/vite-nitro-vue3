@@ -36,7 +36,8 @@ useHead({
     title: 'MMF小屋-PDF文件查看',
 })
 
-emitter.emit('setMenuActive', 'pdf')
+const globalStore = useGlobalStore()
+globalStore.setMenuActive('pdf')
 
 const loading = ref(true)
 

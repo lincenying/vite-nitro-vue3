@@ -37,13 +37,10 @@ defineOptions({
     name: 'GlobalHeader',
 })
 
-const menuActive = ref('home')
-
-emitter.on('setMenuActive', (menu: string) => {
-    menuActive.value = menu
-})
-
 const router = useRouter()
+
+const globalStore = useGlobalStore()
+const { menuActive } = storeToRefs(globalStore)
 
 const productStore = useProductStore()
 const { category } = storeToRefs(productStore)

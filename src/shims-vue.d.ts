@@ -15,6 +15,8 @@ declare module '@vue/runtime-core' {
         $prompt: typeof ElMessageBox.prompt
         $message: typeof ElMessage
         $notify: typeof ElNotification
+        initialState: Record<string, any>
+        globalState: Record<string, any>
     }
 }
 

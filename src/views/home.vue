@@ -76,6 +76,7 @@
 
 <script setup lang="ts">
 import type { ElAffixType } from '~/types/global.types'
+import type { ProductCategory } from '~/types/pinia.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { appName } from '~/constants'
 
@@ -86,19 +87,21 @@ defineOptions({
         const {
             params: { category, tag },
         } = route
+
+        const globalStore = useGlobalStore(store)
         const productStore = useProductStore(store)
         const newsStore = useNewsStore(store)
+
         return Promise.all([
             productStore.getIndex({ page: 1, pageSize: 12, category, tag }, api),
             productStore.getRecommend(api),
             newsStore.getRecommend(api),
+            globalStore.setMenuActive('home'),
         ])
     },
 })
 
 const { ctx } = useGlobal()
-
-emitter.emit('setMenuActive', 'home')
 
 const navigation = ref<HTMLElement>()
 
@@ -117,6 +120,14 @@ const payload = computed(() => {
         page,
     }
 })
+
+const { data } = await useAsyncData('productLists', () => {
+    return $api.get<ProductCategory[]>('/home/category')
+})
+
+console.log('%c[data.value] >> ', 'color: red')
+console.log(data.value)
+console.log('%c<< [data.value]', 'color: red')
 
 watch(() => [category, tag], () => {
     page = 1

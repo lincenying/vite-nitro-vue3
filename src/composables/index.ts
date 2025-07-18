@@ -1,5 +1,4 @@
 import type { AnyFn } from '@vueuse/core'
-import { isInt } from '@lincy/utils'
 import ls from 'store2'
 
 export function useGlobal() {
@@ -53,54 +52,6 @@ export function useLockFn(fn: AnyFn, autoUnlock: boolean | 'auto' = 'auto') {
     }
 }
 
-export function useAutoRefresh(fn: AnyFn, timer: number) {
-    const ins = getCurrentInstance()!
-    const options = ins.type
-    const log = (text: string, color = 'blue') => {
-        const formatted = useDateFormat(useNow(), 'YYYY-MM-DD HH:mm:ss')
-        console.log(`%c[${options.name}]  >> `, `color: ${color}`, `${text} <<-- (${formatted.value})`)
-    }
-
-    if (!timer) {
-        return null
-    }
-    if (!isInt(timer)) {
-        console.warn(`[${options.name}]  >> 定时器配置必须为数值型`)
-        return null
-    }
-    log(`定时器计时开始: ${timer}秒`)
-    const $$timer = useTimeoutFn(async () => {
-        log('定时器计时结束, 开始刷新数据')
-        await fn()
-        log(`定时器计时开始: ${timer}秒`)
-        $$timer.start()
-    }, timer * 1000)
-
-    const visibility = useDocumentVisibility()
-    const stopWatch = watch(visibility, (current, previous) => {
-        if (current === 'visible' && previous === 'hidden') {
-            log(`定时器计时开始: ${timer}秒`)
-            $$timer.stop()
-            $$timer.start()
-        }
-        else {
-            log('定时器已清理')
-            $$timer.stop()
-        }
-    })
-
-    onUnmounted(() => {
-        if ($$timer) {
-            log('定时器已清理')
-            $$timer.stop()
-        }
-        if (stopWatch) {
-            stopWatch()
-        }
-    })
-    return $$timer
-}
-
 /**
  * 保存和恢复滚动位置的钩子函数
  *
@@ -109,12 +60,14 @@ export function useAutoRefresh(fn: AnyFn, timer: number) {
 export function useSaveScroll() {
     const route = useRoute()
 
+    if (import.meta.env.SSR)
+        return
+
     onMounted(() => {
         // 从本地存储中获取当前路由的滚动位置，如果没有则默认为0
         const scrollTop = ls.get(route.fullPath) || 0
         // 将页面滚动到获取到的滚动位置
-        if (typeof window !== 'undefined')
-            window.scrollTo({ top: scrollTop || 0, behavior: 'smooth' })
+        window.scrollTo({ top: scrollTop || 0, behavior: 'smooth' })
         // 从本地存储中移除当前路由的滚动位置
         ls.remove(route.fullPath)
     })
@@ -144,6 +97,9 @@ export function useSaveScroll() {
  * @returns {void}
  */
 export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: number = 0): void {
+    if (import.meta.env.SSR)
+        return
+
     // 获取导航元素相对于视口的顶部位置
     let top = navigation.value?.getBoundingClientRect().top
     // 如果导航元素存在
@@ -152,7 +108,6 @@ export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: nu
         top += window.scrollY + adjust
     }
     // 平滑滚动到计算出的位置
-    console.log(top)
     window.scrollTo({ top: top || 0, behavior: 'smooth' })
 }
 
@@ -166,6 +121,9 @@ export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: nu
  * @returns {void}
  */
 export function scrollToComment(commentBox: Ref<HTMLElement | undefined>, adjust: number = 0): void {
+    if (import.meta.env.SSR)
+        return
+
     // 获取导航元素相对于视口的顶部位置
     let top = commentBox.value?.getBoundingClientRect().top
     // 如果导航元素存在

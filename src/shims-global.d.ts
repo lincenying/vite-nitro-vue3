@@ -74,7 +74,9 @@ declare interface Window {
     $$lock?: boolean
     $$api: ApiType
     $$time: NodeJS.Timeout
-    __INITIAL_STATE__: Record<string, any>
+    __initialState__: Record<string, any>
+    __globalState__: Record<string, any>
+    __piniaState__: Record<string, any>
 }
 
 declare interface ImportMeta {

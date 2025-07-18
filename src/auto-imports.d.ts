@@ -24,6 +24,7 @@ declare global {
   const casesDetailStore: typeof import('./composables/storage')['casesDetailStore']
   const casesListStore: typeof import('./composables/storage')['casesListStore']
   const casesStoreWithout: typeof import('./stores/use-cases-store')['casesStoreWithout']
+  const clearState: typeof import('./composables/asyncData')['clearState']
   const commentStorage: typeof import('./composables/storage')['commentStorage']
   const commentStoreWithout: typeof import('./stores/use-comment-store')['commentStoreWithout']
   const computed: typeof import('vue')['computed']
@@ -58,6 +59,7 @@ declare global {
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
   const defineStore: typeof import('pinia')['defineStore']
+  const deserializeState: typeof import('./composables/asyncData')['deserializeState']
   const downloadByBase64: typeof import('./composables/download')['downloadByBase64']
   const downloadByData: typeof import('./composables/download')['downloadByData']
   const downloadByOnlineUrl: typeof import('./composables/download')['downloadByOnlineUrl']
@@ -70,6 +72,8 @@ declare global {
   const faqsDetailStore: typeof import('./composables/storage')['faqsDetailStore']
   const faqsListStore: typeof import('./composables/storage')['faqsListStore']
   const faqsStoreWithout: typeof import('./stores/use-faqs-store')['faqsStoreWithout']
+  const getAppInstance: typeof import('./composables/asyncData')['getAppInstance']
+  const getContext: typeof import('./composables/asyncData')['getContext']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const globalStoreWithout: typeof import('./stores/use-global-store')['globalStoreWithout']
@@ -134,12 +138,14 @@ declare global {
   const refDefault: typeof import('@vueuse/core')['refDefault']
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
+  const resetSSRInstanceProperties: typeof import('./composables/asyncData')['resetSSRInstanceProperties']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
   const routerKey: typeof import('./composables/provide')['routerKey']
   const scrollToComment: typeof import('./composables/index')['scrollToComment']
   const scrollToNav: typeof import('./composables/index')['scrollToNav']
+  const setClientInstanceProperties: typeof import('./composables/asyncData')['setClientInstanceProperties']
   const setupPinia: typeof import('./stores/index')['setupPinia']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
@@ -185,6 +191,7 @@ declare global {
   const useArraySome: typeof import('@vueuse/core')['useArraySome']
   const useArrayUnique: typeof import('@vueuse/core')['useArrayUnique']
   const useArticleStore: typeof import('./stores/use-article-store')['default']
+  const useAsyncData: typeof import('./composables/asyncData')['useAsyncData']
   const useAsyncQueue: typeof import('@vueuse/core')['useAsyncQueue']
   const useAsyncState: typeof import('@vueuse/core')['useAsyncState']
   const useAttrs: typeof import('vue')['useAttrs']
@@ -322,6 +329,7 @@ declare global {
   const useSorted: typeof import('@vueuse/core')['useSorted']
   const useSpeechRecognition: typeof import('@vueuse/core')['useSpeechRecognition']
   const useSpeechSynthesis: typeof import('@vueuse/core')['useSpeechSynthesis']
+  const useState: typeof import('./composables/asyncData')['useState']
   const useStepper: typeof import('@vueuse/core')['useStepper']
   const useStorage: typeof import('@vueuse/core')['useStorage']
   const useStorageAsync: typeof import('@vueuse/core')['useStorageAsync']
@@ -411,6 +419,7 @@ declare module 'vue' {
     readonly casesDetailStore: UnwrapRef<typeof import('./composables/storage')['casesDetailStore']>
     readonly casesListStore: UnwrapRef<typeof import('./composables/storage')['casesListStore']>
     readonly casesStoreWithout: UnwrapRef<typeof import('./stores/use-cases-store')['casesStoreWithout']>
+    readonly clearState: UnwrapRef<typeof import('./composables/asyncData')['clearState']>
     readonly commentStorage: UnwrapRef<typeof import('./composables/storage')['commentStorage']>
     readonly commentStoreWithout: UnwrapRef<typeof import('./stores/use-comment-store')['commentStoreWithout']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
@@ -445,6 +454,7 @@ declare module 'vue' {
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
+    readonly deserializeState: UnwrapRef<typeof import('./composables/asyncData')['deserializeState']>
     readonly downloadByBase64: UnwrapRef<typeof import('./composables/download')['downloadByBase64']>
     readonly downloadByData: UnwrapRef<typeof import('./composables/download')['downloadByData']>
     readonly downloadByOnlineUrl: UnwrapRef<typeof import('./composables/download')['downloadByOnlineUrl']>
@@ -457,6 +467,8 @@ declare module 'vue' {
     readonly faqsDetailStore: UnwrapRef<typeof import('./composables/storage')['faqsDetailStore']>
     readonly faqsListStore: UnwrapRef<typeof import('./composables/storage')['faqsListStore']>
     readonly faqsStoreWithout: UnwrapRef<typeof import('./stores/use-faqs-store')['faqsStoreWithout']>
+    readonly getAppInstance: UnwrapRef<typeof import('./composables/asyncData')['getAppInstance']>
+    readonly getContext: UnwrapRef<typeof import('./composables/asyncData')['getContext']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly globalStoreWithout: UnwrapRef<typeof import('./stores/use-global-store')['globalStoreWithout']>
@@ -521,12 +533,14 @@ declare module 'vue' {
     readonly refDefault: UnwrapRef<typeof import('@vueuse/core')['refDefault']>
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
+    readonly resetSSRInstanceProperties: UnwrapRef<typeof import('./composables/asyncData')['resetSSRInstanceProperties']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly routerKey: UnwrapRef<typeof import('./composables/provide')['routerKey']>
     readonly scrollToComment: UnwrapRef<typeof import('./composables/index')['scrollToComment']>
     readonly scrollToNav: UnwrapRef<typeof import('./composables/index')['scrollToNav']>
+    readonly setClientInstanceProperties: UnwrapRef<typeof import('./composables/asyncData')['setClientInstanceProperties']>
     readonly setupPinia: UnwrapRef<typeof import('./stores/index')['setupPinia']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
@@ -572,10 +586,10 @@ declare module 'vue' {
     readonly useArraySome: UnwrapRef<typeof import('@vueuse/core')['useArraySome']>
     readonly useArrayUnique: UnwrapRef<typeof import('@vueuse/core')['useArrayUnique']>
     readonly useArticleStore: UnwrapRef<typeof import('./stores/use-article-store')['default']>
+    readonly useAsyncData: UnwrapRef<typeof import('./composables/asyncData')['useAsyncData']>
     readonly useAsyncQueue: UnwrapRef<typeof import('@vueuse/core')['useAsyncQueue']>
     readonly useAsyncState: UnwrapRef<typeof import('@vueuse/core')['useAsyncState']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useAutoRefresh: UnwrapRef<typeof import('./composables/index')['useAutoRefresh']>
     readonly useBase64: UnwrapRef<typeof import('@vueuse/core')['useBase64']>
     readonly useBattery: UnwrapRef<typeof import('@vueuse/core')['useBattery']>
     readonly useBluetooth: UnwrapRef<typeof import('@vueuse/core')['useBluetooth']>
@@ -708,6 +722,7 @@ declare module 'vue' {
     readonly useSorted: UnwrapRef<typeof import('@vueuse/core')['useSorted']>
     readonly useSpeechRecognition: UnwrapRef<typeof import('@vueuse/core')['useSpeechRecognition']>
     readonly useSpeechSynthesis: UnwrapRef<typeof import('@vueuse/core')['useSpeechSynthesis']>
+    readonly useState: UnwrapRef<typeof import('./composables/asyncData')['useState']>
     readonly useStepper: UnwrapRef<typeof import('@vueuse/core')['useStepper']>
     readonly useStorage: UnwrapRef<typeof import('@vueuse/core')['useStorage']>
     readonly useStorageAsync: UnwrapRef<typeof import('@vueuse/core')['useStorageAsync']>

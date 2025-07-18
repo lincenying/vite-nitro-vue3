@@ -1,10 +1,9 @@
 import { createHead } from '@unhead/vue/client'
-import { createApp } from 'vue'
-
-import App from '@/App.vue'
 
 import globalPlugin from '@/plugin/global'
-import router from './router'
+
+import { createApp } from './app'
+import { getContext, setClientInstanceProperties } from './composables/asyncData'
 
 //                            _ooOoo_
 //                           o8888888o
@@ -38,8 +37,8 @@ import router from './router'
 //                  不见满街漂亮妹，哪个归得程序员？
 
 import 'default-passive-events'
-import '@/polyfill/toFixed'
 
+import '@/polyfill/toFixed'
 import 'uno.css'
 import './assets/icon-font/icon-font.css'
 import './assets/scss/global/animate.min.css'
@@ -48,20 +47,18 @@ import './assets/scss/style.scss'
 
 console.log(`VITE_APP_ENV: ${import.meta.env.VITE_APP_ENV}`)
 
+const { app, router } = createApp()
+
 const head = createHead()
 
-const app = createApp(App)
+const context = getContext()
 
-setupPinia(app).use(router).use(globalPlugin)
+setClientInstanceProperties(app, context)
 
 const productStore = useProductStore()
 productStore.getCategory()
 
 router.isReady().then(() => {
-    app.use(head).mount('#app')
+    app.use(head).use(globalPlugin).mount('#app')
     console.log('client router ready')
 })
-
-if (window.__INITIAL_STATE__) {
-    piniaInit.state.value = window.__INITIAL_STATE__
-}
