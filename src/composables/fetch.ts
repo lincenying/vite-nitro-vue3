@@ -1,6 +1,6 @@
 import type { H3Event } from 'h3'
 import type { FetchOptions } from 'ofetch'
-import { objToCookies } from '@lincy/utils'
+import { isFormData, objToCookies } from '@lincy/utils'
 import { appendResponseHeader } from 'h3'
 import { ofetch } from 'ofetch'
 import { normalizeCookiePath } from '~/utils'
@@ -20,7 +20,6 @@ export const useApi: (cookies?: Record<string, string | number | boolean>, H3Eve
     const apiFetch = ofetch.create({
         baseURL: `${import.meta.env.VITE_APP_API}`,
         headers: {
-            'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
             'Cookie': (cookies && objToCookies(cookies)) || '',
         },
@@ -45,7 +44,12 @@ export const useApi: (cookies?: Record<string, string | number | boolean>, H3Eve
                 method,
                 query: method === 'get' ? data : undefined,
                 body: method === 'get' ? undefined : data,
-                timeout: 3000, // Timeout after 3 seconds
+                timeout: 10000, // Timeout after 10 seconds
+                ...options,
+                headers: {
+                    ...options?.headers,
+                    ...isFormData(data) ? { } : { 'Content-Type': 'application/json' },
+                },
                 onRequestError({ error }) {
                     if (!isSSR) {
                         ElMessage.closeAll()
@@ -71,8 +75,6 @@ export const useApi: (cookies?: Record<string, string | number | boolean>, H3Eve
                     // Log error
                     console.log('[fetch response error]', response.status)
                 },
-                ...options,
-
             })
             return response
         },

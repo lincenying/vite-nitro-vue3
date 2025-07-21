@@ -55,16 +55,18 @@ declare interface ResponseData<T> {
 
 type Methods = 'get' | 'post' | 'delete' | 'put'
 
+type FetchOptions = import('ofetch').FetchOptions
+
 declare interface ApiType {
-    get: <T>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T>>
-    get: <T, U = Objable>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T> & U>
-    post: <T>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T>>
-    post: <T, U = Objable>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T> & U>
-    put: <T>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T>>
-    put: <T, U = Objable>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T> & U>
-    delete: <T>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T>>
-    delete: <T, U = Objable>(url: string, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T> & U>
-    RESTful: <T>(url: string, method: Methods, data?: Objable, header?: Objable, checkCode?: boolean) => Promise<ResponseData<T>>
+    get: <T>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
+    get: <T, U = Objable>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T> & U>
+    post: <T>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
+    post: <T, U = Objable>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T> & U>
+    put: <T>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
+    put: <T, U = Objable>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T> & U>
+    delete: <T>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
+    delete: <T, U = Objable>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T> & U>
+    RESTful: <T>(url: string, method: Methods, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
 }
 
 declare interface Window {
