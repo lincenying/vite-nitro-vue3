@@ -15,7 +15,12 @@ export default defineEventHandler(async (event) => {
     }
 
     const file = files[0]
-    const filepath = path.join(process.cwd(), '/public/upload', file.filename!)
+    const dir = '/public/upload'
+    const dirPath = path.join(process.cwd(), dir)
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true })
+    }
+    const filepath = path.join(dirPath, file.filename!)
     fs.writeFileSync(filepath, file.data)
 
     return {
