@@ -68,6 +68,9 @@ importers:
       store2:
         specifier: ^2.14.4
         version: 2.14.4
+      twig:
+        specifier: ^1.17.1
+        version: 1.17.1
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
@@ -108,6 +111,9 @@ importers:
       '@types/qs':
         specifier: ^6.14.0
         version: 6.14.0
+      '@types/twig':
+        specifier: ^1.12.17
+        version: 1.12.17
       '@unocss/eslint-plugin':
         specifier: ^66.3.3
         version: 66.3.3(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
@@ -293,6 +299,10 @@ packages:
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
+
+  '@babel/runtime@7.28.2':
+    resolution: {integrity: sha512-KHp2IflsnGywDjBWDkR9iEqiWSpc8GIi0lgTT3mOElT0PP1tG26P4tmFI2YvAdzgq9RGyoHZQEIEdZy6Ec5xCA==}
+    engines: {node: '>=6.9.0'}
 
   '@babel/template@7.27.2':
     resolution: {integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==}
@@ -1428,6 +1438,9 @@ packages:
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
+
+  '@types/twig@1.12.17':
+    resolution: {integrity: sha512-Lxcjgzt4mlDrv1xp1EdoBLPTxpjLAt9vtN3/qoblC5D6hMCYgZJOQHfaT/0gwCcAZENnKQ7Sga28DSsckPWa0g==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -2927,6 +2940,9 @@ packages:
       debug:
         optional: true
 
+  foreachasync@3.0.0:
+    resolution: {integrity: sha512-J+ler7Ta54FwwNcx6wQRDhTIbNeyDcARMkOcguEqnEdtm0jKvN3Li3PDAb2Du3ubJYEWfYL83XMROXdsXAXycw==}
+
   foreground-child@3.3.1:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
     engines: {node: '>=14'}
@@ -3380,6 +3396,10 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
+  locutus@2.0.32:
+    resolution: {integrity: sha512-fr7OCpbE4xeefhHqfh6hM2/l9ZB3XvClHgtgFnQNImrM/nqL950o6FO98vmUH8GysfQRCcyBYtZ4C8GcY52Edw==}
+    engines: {node: '>= 10', yarn: '>= 1'}
+
   lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
@@ -3664,6 +3684,9 @@ packages:
   min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
+
+  minimatch@3.0.8:
+    resolution: {integrity: sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -4569,6 +4592,11 @@ packages:
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
+  twig@1.17.1:
+    resolution: {integrity: sha512-atxccyr/BHtb1gPMA7Lvki0OuU17XBqHsNH9lzDHt9Rr1293EVZOosSZabEXz/DPVikIW8ZDqSkEddwyJnQN2w==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -4949,6 +4977,9 @@ packages:
   w3c-keyname@2.2.8:
     resolution: {integrity: sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ==}
 
+  walk@2.3.15:
+    resolution: {integrity: sha512-4eRTBZljBfIISK1Vnt69Gvr2w/wc3U6Vtrw7qiN5iqYJPH7LElcYh/iU4XWhdCy2dZqv1ToMyYlybDylfG/5Vg==}
+
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
@@ -5198,6 +5229,8 @@ snapshots:
       '@babel/plugin-syntax-typescript': 7.27.1(@babel/core@7.27.7)
     transitivePeerDependencies:
       - supports-color
+
+  '@babel/runtime@7.28.2': {}
 
   '@babel/template@7.27.2':
     dependencies:
@@ -6396,6 +6429,8 @@ snapshots:
   '@types/qs@6.14.0': {}
 
   '@types/resolve@1.20.2': {}
+
+  '@types/twig@1.12.17': {}
 
   '@types/unist@3.0.3': {}
 
@@ -8227,6 +8262,8 @@ snapshots:
 
   follow-redirects@1.15.9: {}
 
+  foreachasync@3.0.0: {}
+
   foreground-child@3.3.1:
     dependencies:
       cross-spawn: 7.0.6
@@ -8686,6 +8723,8 @@ snapshots:
   locate-path@6.0.0:
     dependencies:
       p-locate: 5.0.0
+
+  locutus@2.0.32: {}
 
   lodash-es@4.17.21: {}
 
@@ -9148,6 +9187,10 @@ snapshots:
   mimic-response@3.1.0: {}
 
   min-indent@1.0.1: {}
+
+  minimatch@3.0.8:
+    dependencies:
+      brace-expansion: 1.1.12
 
   minimatch@3.1.2:
     dependencies:
@@ -10173,6 +10216,13 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
+  twig@1.17.1:
+    dependencies:
+      '@babel/runtime': 7.28.2
+      locutus: 2.0.32
+      minimatch: 3.0.8
+      walk: 2.3.15
+
   type-check@0.4.0:
     dependencies:
       prelude-ls: 1.2.1
@@ -10572,6 +10622,10 @@ snapshots:
       typescript: 5.8.3
 
   w3c-keyname@2.2.8: {}
+
+  walk@2.3.15:
+    dependencies:
+      foreachasync: 3.0.0
 
   webidl-conversions@3.0.1: {}
 

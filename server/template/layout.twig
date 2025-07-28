@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ seo.title }}</title>
+		<meta charset="utf-8">
+		<meta name="google" content="notranslate">
+		<meta name="keyword" content="{{ seo.keyword }}">
+		<meta name="description" content="{{ seo.desc }}">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.15.0/lib/theme-chalk/index.css">
+		{% block css %}
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+		{% endblock %}
+	</head>
+	<body>
+		<div class="container">
+			<div id="content">
+				{% block content %}
+					<div></div>
+				{% endblock %}
+			</div>
+		</div>
+	</body>
+</html>
