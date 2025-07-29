@@ -28,14 +28,14 @@ CMD ["node", "./.output/server/index.mjs"]
 # docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
 # docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
 # 构建镜像
-# docker build -t nitro-vue3:1.0.0623 -f ./Dockerfile .
+# docker build -t vite-nitro-vue3:1.0.0623 -f ./Dockerfile .
 # 运行镜像
-# docker run -d -p 5123:5123 --add-host=host.docker.internal:host-gateway --name nitro-vue3 nitro-vue3:1.0.0623
+# docker run -d -p 5123:5123 --add-host=host.docker.internal:host-gateway --name vite-nitro-vue3 vite-nitro-vue3:1.0.0623
 # 进入镜像
-# docker exec -it nitro-vue3 /bin/sh
+# docker exec -it vite-nitro-vue3 /bin/sh
 # 停止容器
-# docker stop nitro-vue3
+# docker stop vite-nitro-vue3
 # 删除容器
-# docker rm nitro-vue3
+# docker rm vite-nitro-vue3
 # 删除镜像
-# docker rmi nitro-vue3
+# docker rmi vite-nitro-vue3
