@@ -131,4 +131,12 @@ export default defineNitroConfig({
             }),
         },
     ],
+    typescript: {
+        tsConfig: {
+            compilerOptions: {
+                noEmit: false,
+                outDir: 'dist',
+            },
+        },
+    },
 })
