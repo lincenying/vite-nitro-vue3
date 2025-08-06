@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
         },
     }, {
         name: 'editor',
-        nickName: 'admin',
+        nickName: 'editor',
         role: '系统管理员',
         password: '123456',
         isAdmin: '1',
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
         },
     }, {
         name: 'test',
-        nickName: 'admin',
+        nickName: 'test',
         role: '系统管理员',
         password: '123456',
         isAdmin: '1',
@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
         },
     }]
 
-    const body = await readBody(event)
+    const body = await readBody<{ name: string, password: string }>(event)
 
     const user = users.find((user) => {
         return body.name === user.name && body.password === user.password
