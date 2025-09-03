@@ -93,9 +93,14 @@ const navigation = ref<HTMLElement>()
 
 const loading = ref(false)
 
+const commentStore = useCommentStore()
+
 async function initFunc() {
     loading.value = true
-    await faqsStore.getDetail(id)
+    await Promise.all([
+        faqsStore.getDetail(id),
+        commentStore.getComment({ type: 'faqs', id: id as string, page: 1 }),
+    ])
     loading.value = false
     scrollToNav(navigation, -80)
 }

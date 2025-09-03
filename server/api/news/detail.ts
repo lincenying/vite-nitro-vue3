@@ -1,9 +1,10 @@
-import { defineEventHandler } from 'h3'
+import { defineEventHandler, getQuery } from 'h3'
 import Mock from 'mockjs'
 
-export default defineEventHandler(async (_event) => {
+export default defineEventHandler(async (event) => {
+    const { id } = getQuery<{ id: string }>(event)
     const template = {
-        id: 1,
+        id,
         title: '@ctitle(10, 20)',
         author: '@cname',
         date: '@date("yyyy-MM-dd")',
