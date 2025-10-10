@@ -1,5 +1,6 @@
 import process from 'node:process'
 import { defineEventHandler } from 'h3'
+import { useStorage } from 'nitro/runtime'
 
 const isProd = process.env.NODE_ENV === 'production'
 

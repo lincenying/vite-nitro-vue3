@@ -6,6 +6,8 @@ import type { ListType } from '~/types/global.types'
 import type { ProductsType } from '~/types/home.types'
 import type { NewsType } from '~/types/news.types'
 import type { UserState } from '~/types/pinia.types'
+
+import { useStorage } from '@vueuse/core'
 import { defaultList } from '~/constants'
 
 export const userStorage = useStorage<Nullable<UserState>>('user-info', { token: '', info: {} })
