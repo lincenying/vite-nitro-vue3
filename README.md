@@ -37,8 +37,8 @@
 如果您更喜欢使用更干净的 git 历史记录手动执行此操作
 
 ```bash
-npx degit lincenying/nitro-vue3 nitro-vue3
-cd nitro-vue3
+npx degit lincenying/vite-nitro-vue3 vite-nitro-vue3
+cd vite-nitro-vue3
 pnpm i # 如果您没有安装 pnpm，请运行：npm install -g pnpm
 ```
 
