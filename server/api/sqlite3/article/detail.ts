@@ -1,6 +1,6 @@
 import type { Article } from '~server/types'
 import { defineEventHandler, getQuery } from 'h3'
-import { useDatabase } from 'nitro/runtime'
+import { useDatabase } from 'nitropack/runtime'
 
 export default defineEventHandler(async (event) => {
     const id = getQuery<{ id: number }>(event).id

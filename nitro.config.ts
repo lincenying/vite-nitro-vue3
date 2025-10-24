@@ -4,7 +4,7 @@ import path from 'node:path'
 import process from 'node:process'
 import { defineLazyEventHandler, fromNodeMiddleware } from 'h3'
 
-import { defineNitroConfig } from 'nitro/config'
+import { defineNitroConfig } from 'nitropack/config'
 import { createServer } from 'vite'
 
 let viteServer: ViteDevServer | undefined

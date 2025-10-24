@@ -1,6 +1,6 @@
 import type { InsertSucces, User } from '~server/types'
 import { defineEventHandler, readBody } from 'h3'
-import { useDatabase } from 'nitro/runtime'
+import { useDatabase } from 'nitropack/runtime'
 
 export default defineEventHandler(async (event) => {
     const db = useDatabase('sqlite3')
