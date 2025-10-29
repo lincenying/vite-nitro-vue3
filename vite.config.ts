@@ -7,7 +7,6 @@ import { fileURLToPath } from 'node:url'
 import UnoCSS from 'unocss/vite'
 import { defineConfig, loadEnv } from 'vite'
 import Inspect from 'vite-plugin-inspect'
-import Progress from 'vite-plugin-progress'
 
 import Build from './vite.config.build'
 import Components from './vite.config.components'
@@ -47,11 +46,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
              * @see https://github.com/antfu/vite-plugin-inspect#readme
              */
             Inspect(),
-            /**
-             * 打包时展示进度条的插件
-             * @see https://github.com/jeddygong/vite-plugin-progress/blob/main/README.zh-CN.md
-             */
-            Progress(),
         ],
         resolve: {
             alias: {

@@ -38,8 +38,8 @@
     "lodash": "^4.17.21",
     "md-editor-v3": "^6.1.0",
     "mitt": "^3.0.1",
-    "nitropack": "^2.12.8",
-    "ofetch": "^1.4.1",
+    "nitropack": "^2.12.9",
+    "ofetch": "^1.5.0",
     "pinia": "^3.0.3",
     "qs": "^6.14.0",
     "store2": "^2.14.4",
@@ -48,6 +48,7 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "@iconify-json/carbon": "^1.2.14",
     "@iconify-json/fad": "^1.2.1",
     "@iconify-json/svg-spinners": "^1.2.4",
@@ -56,13 +57,16 @@
     "@lincy/stylelint-config": "^2.2.0",
     "@lincy/unocss-base-config": "^2.3.0",
     "@types/mockjs": "^1.0.10",
-    "@types/node": "^24.9.1",
+    "@types/node": "^24.9.2",
     "@types/polyfill-library": "^3.108.4",
     "@types/qs": "^6.14.0",
     "@types/twig": "^1.12.17",
     "@unocss/eslint-plugin": "^66.5.4",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vitejs/plugin-vue-jsx": "^5.1.1",
+    "@vue-macros/define-props": "^3.1.1",
+    "@vue-macros/define-props-refs": "^3.1.1",
+    "@vue-macros/reactivity-transform": "^3.1.1",
     "@vue-macros/volar": "^3.1.1",
     "cross-env": "^10.1.0",
     "eslint": "^9.38.0",
@@ -82,7 +86,7 @@
     "vite-plugin-inspect": "^11.3.3",
     "vite-plugin-progress": "^0.0.7",
     "vue-macros": "^3.1.1",
-    "vue-tsc": "^3.1.1"
+    "vue-tsc": "^3.1.2"
   },
   "resolutions": {
     "h3": "1.15.4"

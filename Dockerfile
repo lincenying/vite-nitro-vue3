@@ -7,8 +7,8 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN npm config set registry https://registry.npmmirror.com && npm install -g pnpm && mkdir -p $PNPM_HOME
 
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile --ignore-scripts --store-dir $PNPM_HOME
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+RUN pnpm install --frozen-lockfile --store-dir $PNPM_HOME
 COPY . .
 RUN pnpm run build
 
@@ -19,19 +19,19 @@ COPY --from=builder /app/.output ./.output
 COPY --from=builder /app/.data ./.data
 ENV NODE_ENV=production \
     HOST=0.0.0.0 \
-    PORT=5123 \
+    PORT=5222 \
     NITRO_APP_VERSION=latest \
     NITRO_ENV_HOST_API_URL=https://php.mmxiaowu.com
-EXPOSE 5123
+EXPOSE 5222
 CMD ["node", "./.output/server/index.mjs"]
 
 # 第一次执行时, 如果node镜像拉不下来, 可以执行以下命令:
 # docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
 # docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
 # 构建镜像
-# docker build -t vite-nitro-vue3:1.0.0623 -f ./Dockerfile .
+# docker build -t vite-nitro-vue3:1.25.1029 -f ./Dockerfile .
 # 运行镜像
-# docker run -d -p 5123:5123 --add-host=host.docker.internal:host-gateway --name vite-nitro-vue3 vite-nitro-vue3:1.0.0623
+# docker run -d -p 5222:5222 --add-host=host.docker.internal:host-gateway --name vite-nitro-vue3 vite-nitro-vue3:1.25.1029
 # 进入镜像
 # docker exec -it vite-nitro-vue3 /bin/sh
 # 停止容器
@@ -39,4 +39,4 @@ CMD ["node", "./.output/server/index.mjs"]
 # 删除容器
 # docker rm vite-nitro-vue3
 # 删除镜像
-# docker rmi vite-nitro-vue3
+# docker rmi vite-nitro-vue3:1.25.1029

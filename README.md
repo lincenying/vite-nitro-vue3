@@ -76,6 +76,26 @@ pnpm lint:css # css 检测并修复
 
 ```
 
+### Docker
+
+```bash
+# 第一次执行时, 如果node镜像拉不下来, 可以执行以下命令:
+docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
+# 构建镜像
+docker build -t vite-nitro-vue3:1.25.1029 -f ./Dockerfile .
+# 运行镜像
+docker run -d -p 5222:5222 --add-host=host.docker.internal:host-gateway --name vite-nitro-vue3 vite-nitro-vue3:1.25.1029
+# 进入镜像
+docker exec -it vite-nitro-vue3 /bin/sh
+# 停止容器
+docker stop vite-nitro-vue3
+# 删除容器
+docker rm vite-nitro-vue3
+# 删除镜像
+docker rmi vite-nitro-vue3:1.25.1029
+```
+
 ## Nitro
 
 使用 [Nitro](https://nitro.unjs.io/) 来构建 API 服务器。
