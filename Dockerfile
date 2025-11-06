@@ -17,6 +17,7 @@ FROM $NODE_VERSION AS production
 WORKDIR /app
 COPY --from=builder /app/.output ./.output
 COPY --from=builder /app/.data ./.data
+COPY --from=builder /app/template ./template
 ENV NODE_ENV=production \
     HOST=0.0.0.0 \
     PORT=5222 \

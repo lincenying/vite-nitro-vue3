@@ -544,8 +544,6 @@ declare module 'vue' {
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly routerKey: UnwrapRef<typeof import('./composables/provide')['routerKey']>
-    readonly scrollToComment: UnwrapRef<typeof import('./composables/index')['scrollToComment']>
-    readonly scrollToNav: UnwrapRef<typeof import('./composables/index')['scrollToNav']>
     readonly setClientInstanceProperties: UnwrapRef<typeof import('./composables/asyncData')['setClientInstanceProperties']>
     readonly setupPinia: UnwrapRef<typeof import('./stores/index')['setupPinia']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>

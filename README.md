@@ -63,6 +63,7 @@ pnpm preview
 ### 生产环境部署
 
 ```bash
+# 复制 .output, .data, template 文件夹到服务器
 node .output/server/index.mjs
 ```
 

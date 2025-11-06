@@ -157,8 +157,6 @@
     "resolveComponent": true,
     "resolveRef": true,
     "routerKey": true,
-    "scrollToComment": true,
-    "scrollToNav": true,
     "setClientInstanceProperties": true,
     "setupPinia": true,
     "shallowReactive": true,
