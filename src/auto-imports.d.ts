@@ -20,6 +20,7 @@ declare global {
   const articleStoreWithout: typeof import('./stores/use-article-store')['articleStoreWithout']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const baseURL: typeof import('./composables/index')['baseURL']
   const caseCommentStore: typeof import('./composables/storage')['caseCommentStore']
   const casesDetailStore: typeof import('./composables/storage')['casesDetailStore']
   const casesListStore: typeof import('./composables/storage')['casesListStore']
@@ -87,6 +88,7 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const isSSR: typeof import('./composables/index')['isSSR']
   const isShallow: typeof import('vue')['isShallow']
   const loginMsgBox: typeof import('./composables/message')['loginMsgBox']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
@@ -418,6 +420,7 @@ declare module 'vue' {
     readonly articleStoreWithout: UnwrapRef<typeof import('./stores/use-article-store')['articleStoreWithout']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly baseURL: UnwrapRef<typeof import('./composables/index')['baseURL']>
     readonly caseCommentStore: UnwrapRef<typeof import('./composables/storage')['caseCommentStore']>
     readonly casesDetailStore: UnwrapRef<typeof import('./composables/storage')['casesDetailStore']>
     readonly casesListStore: UnwrapRef<typeof import('./composables/storage')['casesListStore']>
@@ -485,6 +488,7 @@ declare module 'vue' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isSSR: UnwrapRef<typeof import('./composables/index')['isSSR']>
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
     readonly loginMsgBox: UnwrapRef<typeof import('./composables/message')['loginMsgBox']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>

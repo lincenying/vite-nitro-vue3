@@ -1,6 +1,11 @@
 import type { AnyFn } from '@vueuse/core'
 import ls from 'store2'
 
+/** 是否服务端渲染阶段 */
+export const isSSR = !!import.meta.env.SSR
+
+export const baseURL = isSSR ? import.meta.env.VITE_APP_SSR_API : import.meta.env.VITE_APP_API
+
 export function useGlobal() {
     const ins = getCurrentInstance()!
 
