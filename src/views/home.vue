@@ -79,6 +79,7 @@ import type { ElAffixType } from '~/types/global.types'
 import type { ProductCategory } from '~/types/pinia.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { appName } from '~/constants'
+import { scrollToNav } from '~/utils'
 
 defineOptions({
     name: 'RouterHome',

@@ -56,6 +56,7 @@
 import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { appName } from '~/constants'
+import { scrollToNav } from '~/utils'
 
 defineOptions({
     name: 'RouterHomeDetail',
@@ -99,15 +100,13 @@ async function initFunc() {
     loading.value = true
     await Promise.all([
         productStore.getDetail(id),
-        commentStore.getComment({ type: 'product', id: id as string, page: 1 }),
+        commentStore.getComment({ type: 'product', id, page: 1 }),
     ])
     loading.value = false
     scrollToNav(navigation, -80)
 }
 
-watch(() => id, () => {
-    initFunc()
-})
+watch(() => id, initFunc)
 
 const affix = ref<ElAffixType>()
 onActivated(() => {

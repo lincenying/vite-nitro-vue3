@@ -55,6 +55,7 @@
 import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { appName } from '~/constants'
+import { scrollToNav } from '~/utils'
 
 defineOptions({
     name: 'RouterCasesDetail',
@@ -99,15 +100,13 @@ async function initFunc() {
     loading.value = true
     await Promise.all([
         casesStore.getDetail(id),
-        commentStore.getComment({ type: 'cases', id: id as string, page: 1 }),
+        commentStore.getComment({ type: 'cases', id, page: 1 }),
     ])
     loading.value = false
     scrollToNav(navigation, -80)
 }
 
-watch(() => id, () => {
-    initFunc()
-})
+watch(() => id, initFunc)
 
 const affix = ref<ElAffixType>()
 onActivated(() => {

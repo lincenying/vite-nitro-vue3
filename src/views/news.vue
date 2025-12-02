@@ -56,6 +56,7 @@ import type { ElAffixType } from '~/types/global.types'
 import { UTC2Date } from '@lincy/utils'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { appName } from '~/constants'
+import { scrollToNav } from '~/utils'
 
 defineOptions({
     name: 'RouterNews',

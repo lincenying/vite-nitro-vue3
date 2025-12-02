@@ -59,6 +59,7 @@ import type { GlobalDialogLayer } from '~/types/components.types'
 import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { appName } from '~/constants'
+import { nl2br, scrollToNav } from '~/utils'
 
 defineOptions({
     name: 'RouterArticleDetail',
@@ -103,15 +104,13 @@ async function initFunc() {
     loading.value = true
     await Promise.all([
         articleStore.getDetail(id),
-        commentStore.getComment({ type: 'article', id: id as string, page: 1 }),
+        commentStore.getComment({ type: 'article', id, page: 1 }),
     ])
     loading.value = false
     scrollToNav(navigation, -80)
 }
 
-watch(() => id, () => {
-    initFunc()
-})
+watch(() => id, initFunc)
 
 const affix = ref<ElAffixType>()
 onActivated(() => {
@@ -123,10 +122,6 @@ useHead({
 })
 
 useSaveScroll()
-
-function nl2br(str: string) {
-    return str.replace(/\n/g, '<br />')
-}
 
 // 弹窗控制器
 const layer: GlobalDialogLayer<Nullable<ArticleType>> = reactive({

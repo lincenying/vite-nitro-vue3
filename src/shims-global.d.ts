@@ -58,6 +58,10 @@ type Methods = 'get' | 'post' | 'delete' | 'put'
 type FetchOptions = import('ofetch').FetchOptions
 
 declare interface ApiType {
+    abortKey: string
+    getAbourtKey: () => string
+    abortRequest: (abortKey?: string) => void
+    generateRequestKey: (config: ServiceType) => string
     get: <T>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
     get: <T, U = Objable>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T> & U>
     post: <T>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
@@ -67,6 +71,7 @@ declare interface ApiType {
     delete: <T>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
     delete: <T, U = Objable>(url: string, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T> & U>
     RESTful: <T>(url: string, method: Methods, data?: Objable, options?: FetchOptions) => Promise<ResponseData<T>>
+    fetch: (url: string, method: Methods, data?: Objable, options?: FetchOptions) => Promise<any>
 }
 
 declare interface Window {
@@ -79,6 +84,7 @@ declare interface Window {
     __initialState__: Record<string, any>
     __globalState__: Record<string, any>
     __piniaState__: Record<string, any>
+    __ASYNC_DATA_CTX__?: Record<string, any>
 }
 
 declare interface ImportMeta {
@@ -88,6 +94,6 @@ declare interface ImportMeta {
         VITE_APP_API: string
         VITE_APP_SSR_API: string
         BASE_URL: string
-        SSR: boolean
+        SSR: string
     }
 }

@@ -1,11 +1,19 @@
-/** 将换行符替换为 \<br\> */
+/**
+ * 将换行符替换为br
+ * @param str 输入字符串
+ * @returns 替换后的字符串
+ */
 export function nl2br(str: string) {
     if (!str)
         return ''
     return str.replace(/\n/g, '<br>')
 }
 
-/** 将cookies中的Path替换成'/' */
+/**
+ * 将cookies中的Path替换成'/'
+ * @param cookieStr 输入的Cookie字符串
+ * @returns 处理后的Cookie字符串
+ */
 export function normalizeCookiePath(cookieStr: string): string {
     // 拆分 Cookie 字符串为键值对数组
     const parts = cookieStr.split('; ')
@@ -58,9 +66,7 @@ export function normalizeCookiePath(cookieStr: string): string {
 
 /**
  * 滚动到导航元素的位置
- *
- * 该函数用于平滑滚动页面，使指定的导航元素滚动到可视区域的顶部，并可进行额外的位置调整。
- *
+ * @description 该函数用于平滑滚动页面，使指定的导航元素滚动到可视区域的顶部，并可进行额外的位置调整。
  * @param {Ref<HTMLElement | undefined>} navigation - 一个响应式引用，指向要滚动到的导航元素
  * @param {number} [adjust] - 可选参数，用于调整滚动位置的偏移量
  * @returns {void}
@@ -79,9 +85,7 @@ export function scrollToNav(navigation: Ref<HTMLElement | undefined>, adjust: nu
 
 /**
  * 滚动到评论的位置
- *
- * 该函数用于平滑滚动页面，使指定的导航元素滚动到可视区域的顶部，并可进行额外的位置调整。
- *
+ * @description 该函数用于平滑滚动页面，使指定的评论元素滚动到可视区域的顶部，并可进行额外的位置调整。
  * @param {Ref<HTMLElement | undefined>} commentBox - 一个响应式引用，指向要滚动到的导航元素
  * @param {number} [adjust] - 可选参数，用于调整滚动位置的偏移量
  * @returns {void}
