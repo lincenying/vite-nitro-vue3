@@ -6,26 +6,32 @@
         </div>
         <div flex="~ justify-center" my-24px lt-m1360="mx-24px">
             <div w-1294px flex="~ justify-between col">
-                <h5 text-16px hex-202935 mb-16px>Markdown编辑器</h5>
-                <div h-700px>
-                    <MdEditor v-model="text" @on-upload-img="onUploadImg" />
-                </div>
-                <h5 text-16px hex-202935 mt-24px mb-16px>Markdown内容预览</h5>
-                <div flex="~ justify-between" bg-hex-fff rounded="10px">
-                    <div flex-auto w-1px p-20px b-r="1px solid hex-ccc">
-                        <MdPreview :id="id" :model-value="text" />
+                <global-client-only>
+                    <h5 text-16px hex-202935 mb-16px>Markdown编辑器</h5>
+                    <div h-700px>
+                        <MdEditor
+                            v-model="text" :toolbars-exclude="['github', 'mermaid', 'katex']" theme="light" code-theme="atom"
+                            @on-upload-img="onUploadImg" @on-html-changed="onHtmlChanged" @on-get-catalog="onGetCatalog"
+                        />
                     </div>
-                    <div w-200px flex-none>
-                        <MdCatalog :editor-id="id" :scroll-element="scrollElement" />
+                    <h5 text-16px hex-202935 mt-24px mb-16px>Markdown内容预览</h5>
+                    <div flex="~ justify-between" bg-hex-fff rounded="10px">
+                        <div flex-auto w-1px p-20px b-r="1px solid hex-ccc">
+                            <MdPreview :id="id" :model-value="text" code-theme="atom" />
+                        </div>
+                        <div w-200px flex-none>
+                            <MdCatalog :editor-id="id" :scroll-element="scrollElement" />
+                        </div>
                     </div>
-                </div>
+                </global-client-only>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { MdCatalog, MdEditor, MdPreview } from 'md-editor-v3'
+import LinkAttr from 'markdown-it-link-attributes'
+import { MdCatalog, config as MdConfig, MdEditor, MdPreview } from 'md-editor-v3'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 
 defineOptions({
@@ -44,6 +50,28 @@ useHead({
     title: 'MMF小屋-编辑器',
 })
 
+MdConfig({
+    markdownItPlugins(plugins) {
+        return [
+            ...plugins,
+            {
+                type: 'linkAttr',
+                plugin: LinkAttr,
+                options: {
+                    matcher(href: string) {
+                        // 如果使用了markdown-it-anchor
+                        // 应该忽略标题头部的锚点链接
+                        return !href.startsWith('#')
+                    },
+                    attrs: {
+                        target: '_blank',
+                    },
+                },
+            },
+        ]
+    },
+})
+
 const scrollElement = ref<HTMLElement | undefined>(undefined)
 const id = 'preview-only'
 const text = ref(`# 标题1
@@ -52,6 +80,32 @@ Hello Editor!
 # 标题2
 Hello Editor!
 `)
+
+const html = ref('')
+
+interface TocType {
+    level: number
+    line: number
+    text: string
+    currentToken?: any[]
+    nextToken?: any[]
+}
+
+const toc = ref<TocType[]>([])
+
+function onHtmlChanged(payload: string) {
+    html.value = payload
+}
+
+function onGetCatalog(payload: TocType[]) {
+    toc.value = payload.map((item) => {
+        return {
+            level: item.level,
+            line: item.line,
+            text: item.text,
+        }
+    })
+}
 
 onMounted(() => {
     scrollElement.value = document.documentElement

@@ -63,10 +63,10 @@ export function useLockFn(fn: AnyFn, autoUnlock: boolean | 'auto' = 'auto') {
  * 该函数在组件挂载时恢复滚动位置，并在路由离开时保存滚动位置。
  */
 export function useSaveScroll() {
-    const route = useRoute()
-
-    if (import.meta.env.SSR)
+    if (isSSR)
         return
+
+    const route = useRoute()
 
     onMounted(() => {
         // 从本地存储中获取当前路由的滚动位置，如果没有则默认为0

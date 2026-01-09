@@ -1,5 +1,5 @@
 import { toArray } from '@lincy/utils'
-import { type App, hasInjectionContext } from 'vue'
+import { type App, hasInjectionContext, type WatchSource } from 'vue'
 
 type AppInstance = App | null
 
@@ -7,8 +7,19 @@ interface ConextType {
     [key: string]: Record<string, any>
 }
 
-interface AsyncDataOptions {
+interface AsyncDataOptions<T = any> {
+    /** 是否在服务器端获取数据 */
     server?: boolean
+    /** 若设置为 false，将阻止请求立即触发。（默认为 true） */
+    immediate?: boolean
+    /** 一个工厂函数，用于在异步函数解析之前设置 data 的默认值——在使用 immediate: false 时很有用 */
+    default?: () => T
+    /** 一个用于在解析后修改 handler 函数结果的函数 */
+    transform?: (data: T) => any
+    /** 仅从 handler 函数结果中选取此数组中指定的键 */
+    pick?: string[]
+    /** 监听响应式源以自动刷新 */
+    watch?: WatchSource[]
 }
 
 interface AsyncDataType<DataT, ErrorT> {
@@ -89,7 +100,7 @@ export function deserializeState<T extends Record<string, unknown>>(state: strin
     try {
         // 如果是字符串类型，则尝试解析为JSON对象
         if (typeof state === 'string') {
-            return JSON.parse(state || '{}') as T
+            return destr<T>(state || '{}')
         }
         // 如果已经是对象类型，则直接返回
         return state
@@ -127,21 +138,52 @@ export function getContext() {
  *
  * @param key - 数据的唯一标识符。
  * @param handler - 返回一个Promise的数据获取处理函数。
- * @param options - 配置选项，默认为{ server: !!needSSR }。开启ssr时为true, 未开启是为false
+ * @param options - 配置选项
  *
  * @returns 返回一个AsyncData对象，包含数据、错误信息、加载状态和刷新方法。
  */
 export function useAsyncData<DataT, ErrorT = unknown>(
     key: string,
     handler: () => Promise<DataT>,
-    options: AsyncDataOptions = { server: false },
+    options: AsyncDataOptions<DataT> = {},
 ): AsyncData<DataT, ErrorT> {
+    const {
+        server = false,
+        default: defaultFn,
+        transform,
+        pick,
+        watch = [],
+        immediate = true,
+    } = options
+
     // 初始化异步数据对象
     const asyncData: AsyncDataType<DataT, ErrorT> = {
-        data: ref(null),
+        data: ref<DataT | null>(defaultFn ? defaultFn() : null) as Ref<DataT | null>,
         error: ref(null),
         loading: ref(false),
         refresh: async () => {},
+    }
+
+    // 数据转换函数
+    const transformData = (rawData: DataT): any => {
+        let result: any = rawData
+
+        // 应用 pick
+        if (pick && Array.isArray(pick) && rawData && typeof rawData === 'object') {
+            result = {}
+            for (const key of pick) {
+                if (key in (rawData as object)) {
+                    result[key] = (rawData as any)[key]
+                }
+            }
+        }
+
+        // 应用 transform
+        if (transform) {
+            result = transform(result)
+        }
+
+        return result
     }
 
     // 获取应用实例和初始状态
@@ -170,7 +212,7 @@ export function useAsyncData<DataT, ErrorT = unknown>(
         })
             .then((result) => {
                 // 数据获取成功后更新asyncData.data和initialState
-                asyncData.data.value = result
+                asyncData.data.value = transformData(result)
                 asyncData.error.value = null
                 instance.config.globalProperties.initialState[key] = asyncData.data.value
             })
@@ -192,19 +234,34 @@ export function useAsyncData<DataT, ErrorT = unknown>(
     const initialFetch = () => asyncData.refresh()
 
     // 根据配置决定是否在服务端获取数据
-    const fetchOnServer = options.server !== false
+    const fetchOnServer = server !== false
 
-    // 在服务端且配置允许的情况下执行数据获取
-    if (isSSR && fetchOnServer) {
-        const p = initialFetch()
-        if (instance) {
-            onServerPrefetch(() => p)
-        }
+    // 监听依赖变化
+    if (watch.length > 0) {
+        watchEffect(() => {
+            for (const source of watch) {
+                // 触发重新获取
+                if (unref(source) !== undefined) {
+                    initialFetch()
+                    break
+                }
+            }
+        })
     }
 
-    // 在客户端且配置不允许服务端获取的情况下执行数据获取
-    if (!isSSR && !fetchOnServer) {
-        initialFetch()
+    // 立即执行（非懒加载模式）
+    if (immediate) {
+        // 在服务端且配置允许的情况下执行数据获取
+        if (isSSR && fetchOnServer) {
+            const p = initialFetch()
+            if (instance) {
+                onServerPrefetch(() => p)
+            }
+        }
+        // 在客户端且配置不允许服务端获取的情况下执行数据获取
+        if (!isSSR && !fetchOnServer) {
+            initialFetch()
+        }
     }
 
     // 将asyncData包装成一个Promise对象并返回

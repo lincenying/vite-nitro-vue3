@@ -62,6 +62,7 @@
 
 <script setup lang="ts">
 import type { ElAffixType } from '~/types/global.types'
+import type { ProductCategory } from '~/types/pinia.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { appName } from '~/constants'
 import { scrollToNav } from '~/utils'
@@ -102,6 +103,21 @@ const payload = computed(() => {
         tag,
         page,
     }
+})
+
+const { data: posts, pending, error } = await _useAsyncData({
+    key: 'user-data',
+    handler: async () => {
+        return await $api.get<ProductCategory[]>('/home/category?category=1')
+    },
+})
+
+watch([posts, pending, error], () => {
+    console.log('%c[posts] >> ', 'color: red', posts.value)
+    console.log('%c[pending] >> ', 'color: red', pending.value)
+    console.log('%c[error] >> ', 'color: red', error.value)
+}, {
+    immediate: true,
 })
 
 const navigation = ref<HTMLElement>()

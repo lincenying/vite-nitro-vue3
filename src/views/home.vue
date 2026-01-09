@@ -84,7 +84,7 @@ import { scrollToNav } from '~/utils'
 defineOptions({
     name: 'RouterHome',
     asyncData(ctx) {
-        const { store, route, api } = ctx
+        const { store, route, api } = ctx!
         const {
             params: { category, tag },
         } = route
@@ -122,8 +122,8 @@ const payload = computed(() => {
     }
 })
 
-const { data } = await useAsyncData('productLists', () => {
-    return $api.get<ProductCategory[]>('/home/category')
+const { data } = await useAsyncData('productCategory', () => {
+    return $api.get<ProductCategory[]>('/home/category?category=2')
 })
 
 console.log('%c[data.value] >> ', 'color: red')
@@ -151,22 +151,29 @@ onActivated(() => {
     affix.value?.updateRoot()
 })
 
-emitter.on('change-category', (newCategoryId) => {
-    console.log('%c[newCategoryId] >> ', 'color: red', newCategoryId)
-})
-
 useHead({
     title: `产品展示 - ${appName}`,
 })
 
 useSaveScroll()
 
-onUnmounted(() => {
-    emitter.off('change-category')
-})
+let unsubscribe: () => void
 
 onMounted(() => {
     console.log(`onMounted`)
+
+    emitter.on('change-category', (newCategoryId) => {
+        console.log('%c[newCategoryId1] >> ', 'color: red', newCategoryId)
+    })
+
+    unsubscribe = changeCategory.on((newCategoryId) => {
+        console.log('%c[newCategoryId2] >> ', 'color: red', newCategoryId)
+    })
     ctx.$notify.success('This is a success message.')
+})
+
+onUnmounted(() => {
+    emitter.off('change-category')
+    unsubscribe()
 })
 </script>

@@ -21,7 +21,7 @@ function cutSec(value: string) {
 function arrToStr(value: any[] | string) {
     try {
         if (typeof value === 'string') {
-            value = JSON.parse(value)
+            value = destr(value)
         }
         else if (Array.isArray(value)) {
             return value.join(', ')

@@ -20,9 +20,9 @@
                                     <el-skeleton-item variant="text" class="!w-1/2 !h-44px" />
                                     <el-skeleton-item variant="text" class="!w-50% !h-21px mt-16px" />
                                 </div>
-                                <div v-for="i in 6" :key="i" mt-21px>
+                                <div v-for="index in 6" :key="index" mt-21px>
                                     <el-skeleton-item variant="text" class="!h-21px ml-32px !w-80%" />
-                                    <el-skeleton-item v-for="item in 4" :key="`${i}-${item}`" variant="text" class="!h-21px mt-6px" />
+                                    <el-skeleton-item v-for="item in 4" :key="`${index}-${item}`" variant="text" class="!h-21px mt-6px" />
                                 </div>
                             </div>
                         </template>
@@ -95,8 +95,6 @@ const loading = ref(false)
 
 const commentStore = useCommentStore()
 
-const ctx = getCurrentInstance()
-console.log(ctx)
 async function initFunc() {
     loading.value = true
     await Promise.all([

@@ -1,6 +1,6 @@
-import type { RouteRecordRaw } from 'vue-router'
-import type { CusRouteComponent } from '~/types/global.types'
+import type { Router, RouteRecordRaw } from 'vue-router'
 
+import type { CusRouteComponent } from '~/types/global.types'
 import ls from 'store2'
 import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
 
@@ -23,42 +23,46 @@ Object.keys(views).forEach((path: string) => {
 routes = routes.concat([{ path: '/:pathMatch(.*)', redirect: '/' }])
 
 const router = createRouter({
-    history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
+    history: isSSR ? createMemoryHistory() : createWebHistory(),
     routes,
 })
 
-router.beforeResolve(async (to, from) => {
-    const token = ls.get('token')
-    if (!token && to.path !== '/login') {
-        return { path: '/login' }
-    }
-    if (token && to.path === '/login') {
-        return { path: '/' }
-    }
+routerBeforeResolve(router)
 
-    let diffed = false
-    const activated = to.matched.filter((c, i) => {
-        return diffed || (diffed = from.matched[i] !== c) || from.path !== to.path
+export function routerBeforeResolve(router: Router) {
+    router.beforeResolve(async (to, from) => {
+        const token = ls.get('token')
+        if (!token && to.path !== '/login') {
+            return { path: '/login' }
+        }
+        if (token && to.path === '/login') {
+            return { path: '/' }
+        }
+
+        let diffed = false
+        const activated = to.matched.filter((c, i) => {
+            return diffed || (diffed = from.matched[i] !== c) || from.path !== to.path
+        })
+
+        if (!activated.length && to.fullPath === from.fullPath) {
+            return false
+        }
+
+        await Promise.all(
+            activated.map((c) => {
+                const routeComponent = c.components?.default as CusRouteComponent
+                if (routeComponent.asyncData) {
+                    return routeComponent.asyncData({
+                        store: piniaInit,
+                        route: to,
+                        api: $api,
+                    })
+                }
+
+                return true
+            }),
+        )
     })
-
-    if (!activated.length && to.fullPath === from.fullPath) {
-        return false
-    }
-
-    await Promise.all(
-        activated.map((c) => {
-            const routeComponent = c.components?.default as CusRouteComponent
-            if (routeComponent.asyncData) {
-                return routeComponent.asyncData({
-                    store: piniaInit,
-                    route: to,
-                    api: $api,
-                })
-            }
-
-            return true
-        }),
-    )
-})
+}
 
 export default router

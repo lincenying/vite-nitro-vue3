@@ -19,9 +19,14 @@
 
 <script setup lang="ts">
 import ls from 'store2'
+import { appName } from '~/constants'
 
 defineOptions({
     name: 'Login',
+})
+
+useHead({
+    title: `登录 - ${appName}`,
 })
 
 const { ctx } = useGlobal()

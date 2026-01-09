@@ -54,7 +54,8 @@ async function handleSubmit() {
         ElMessage.success('评论成功')
         form.content = ''
         form.user = ''
-        emitter.emit(`refresh-${props.type}-comment`)
+        // emitter.emit(`refresh-${props.type}-comment`)
+        commentEvent[props.type].emit(props.type)
     }
     else {
         ElMessage.error('评论失败')

@@ -28,7 +28,10 @@ const { categoryId } = toRefs(props)
 const productStore = useProductStore()
 const { category } = storeToRefs(productStore)
 
-// setTimeout(() => {
-//     emitter.emit('change-category', category.value[0].id)
-// }, 2000)
+onMounted(() => {
+    setTimeout(() => {
+    // emitter.emit('change-category', category.value[0].id)
+        changeCategory.emit(category.value[0].id)
+    }, 2000)
+})
 </script>

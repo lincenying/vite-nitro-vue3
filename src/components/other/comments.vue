@@ -1,5 +1,5 @@
 <template>
-    <div ref="commnetBox" class="global-box" w="full" mb-24px p-24px bg="hex-fff" b-rd-6px>
+    <div ref="commnetBox" class="global-box" w-full mb-24px p-24px bg="hex-fff" b-rd-6px>
         <div class="global-box-title" m="0 b-24px" pl-16px text="1rem hex-202935" font-bold b-l="6px bolid hex-007bff">评论列表</div>
         <div class="global-box-content">
             <ul>
@@ -43,6 +43,7 @@ import type { CommentCategoryType } from '~/types/components.types'
 import type { ListType } from '~/types/global.types'
 import type { InitType } from '~/types/home.types'
 import { defaultList } from '~/constants'
+import { scrollToComment } from '~/utils'
 
 defineOptions({
     name: 'CommentLists',
@@ -74,15 +75,21 @@ async function currentChange(newPage: number) {
     initFn('change-page')
 }
 
-function emitterFn() {
+function emitterFn(type: CommentCategoryType) {
     page = 1
     commentStore.getComment({ type, id, page }, $api)
     initFn('change-data')
 }
 
-emitter.on(`refresh-${props.type}-comment`, emitterFn)
+let unsubscribe: () => void
+
+onMounted(() => {
+    // emitter.on(`refresh-${props.type}-comment`, emitterFn)
+    unsubscribe = commentEvent[props.type].on(emitterFn)
+})
 
 onUnmounted(() => {
-    emitter.off(`refresh-${props.type}-comment`, emitterFn)
+    // emitter.off(`refresh-${props.type}-comment`, emitterFn)
+    unsubscribe()
 })
 </script>
