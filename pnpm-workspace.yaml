@@ -5,7 +5,12 @@ catalogMode: prefer
 ignoreWorkspaceRootCheck: true
 
 # npm 包注册表的基本 URL（包括尾部斜杠）
-registry: https://registry.npmmirror.com
+registry: https://registry.npmmirror.com/
+registries:
+  default: https://registry.npmmirror.com/
+
+# 定义了版本发布后 pnpm 安装之前必须经过的最少分钟数
+minimumReleaseAge: 0
 
 # 是否强制提升所有依赖
 shamefullyHoist: true
@@ -31,79 +36,81 @@ catalogs:
   prod:
     '@lincy/async-validation': ^1.4.0
     '@lincy/utils': ^0.7.3
-    '@tanstack/vue-query': ^5.92.9
-    '@tato30/vue-pdf': ^2.0.2
-    '@unhead/vue': ^2.1.12
-    '@vueuse/core': ^14.2.1
-    '@vueuse/router': ^14.2.1
+    '@tanstack/vue-query': ^5.100.11
+    '@tato30/vue-pdf': ^2.1.0
+    '@unhead/vue': ^3.1.0
+    '@vueuse/core': ^14.3.0
+    '@vueuse/router': ^14.3.0
     alova: ^3.5.1
-    better-sqlite3: ^12.8.0
+    better-sqlite3: ^12.10.0
     default-passive-events: ^4.0.0
     destr: ^2.0.5
-    element-plus: ^2.13.5
+    element-plus: ^2.14.0
     highlight.js: ^11.11.1
-    lodash: ^4.17.23
+    lodash: ^4.18.1
     markdown-it-link-attributes: ^4.0.1
-    md-editor-v3: ^6.4.0
+    md-editor-v3: ^6.5.1
     mitt: ^3.0.1
-    nitropack: ^2.13.1
+    nitropack: ^2.13.4
     ofetch: ^1.5.1
     pinia: ^3.0.4
-    qs: ^6.15.0
+    qs: ^6.15.2
     store2: ^2.14.4
-    twig: ^2.0.0
-    vue: ^3.5.30
-    vue-router: ^5.0.3
+    twig: ^3.0.0
+    vue: ^3.5.34
+    vue-router: ^5.0.7
 
   icons:
     '@element-plus/icons-vue': ^2.3.2
-    '@iconify-json/carbon': ^1.2.19
+    '@iconify-json/carbon': ^1.2.22
     '@iconify-json/fad': ^1.2.1
     '@iconify-json/svg-spinners': ^1.2.4
-    '@iconify-json/vscode-icons': ^1.2.45
+    '@iconify-json/vscode-icons': ^1.2.50
 
   lint:
-    '@lincy/eslint-config': ^6.5.2
+    '@lincy/eslint-config': ^7.2.0
     '@lincy/stylelint-config': ^2.2.2
-    '@unocss/eslint-plugin': ^66.6.6
-    eslint: ^10.0.3
+    '@unocss/eslint-plugin': ^66.7.0
+    eslint: ^10.4.0
     eslint-plugin-format: ^2.0.1
-    stylelint: ^17.4.0
+    stylelint: ^17.12.0
 
   types:
     '@types/markdown-it-link-attributes': ^3.0.5
     '@types/mockjs': ^1.0.10
-    '@types/node': ^25.5.0
+    '@types/node': ^25.9.1
     '@types/polyfill-library': ^3.108.4
-    '@types/qs': ^6.15.0
+    '@types/qs': ^6.15.1
     '@types/twig': ^1.12.17
 
   dev:
-    '@lincy/unocss-base-config': ^2.6.2
-    '@vitejs/plugin-vue': ^6.0.5
+    '@lincy/unocss-base-config': ^2.7.1
+    '@vitejs/plugin-vue': ^6.0.7
     '@vitejs/plugin-vue-jsx': ^5.1.5
     '@vue-macros/define-props': ^3.1.2
     '@vue-macros/define-props-refs': ^3.1.2
     '@vue-macros/reactivity-transform': ^3.1.2
     '@vue-macros/volar': ^3.1.2
     cross-env: ^10.1.0
-    jiti: ^2.6.1
+    jiti: ^2.7.0
     lint-staged: ^16.4.0
     mockjs: ^1.1.0
     polyfill-library: ^4.8.0
-    sass-embedded: ^1.98.0
+    sass-embedded: ^1.100.0
     typescript: ~5.9.3
-    unocss: ^66.6.6
+    unocss: ^66.7.0
     unplugin-auto-import: ^21.0.0
     unplugin-icons: ^23.0.1
-    unplugin-vue-components: ^31.0.0
-    vite: ^7.3.1
+    unplugin-vue-components: ^32.1.0
+    vite: ^7.3.3
     vite-plugin-inspect: ^11.3.3
     vite-plugin-progress: ^0.0.7
     vue-macros: ^3.1.2
-    vue-tsc: ^3.2.5
+    vue-tsc: ^3.3.1
 
-onlyBuiltDependencies:
-  - better-sqlite3
-  - esbuild
-  - vue-demi
+allowBuilds:
+  '@parcel/watcher': true
+  better-sqlite3: true
+  esbuild: true
+  oxc-resolver: true
+  vue-demi: true
