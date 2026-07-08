@@ -1,4 +1,4 @@
-import { ElMessage, ElMessageBox } from '@/config/element'
+import { ElMessage, ElMessageBox } from '~/config/element'
 
 type MessageType = 'success' | 'warning' | 'info' | 'error'
 type ConfigType = string | { content: string, type: MessageType }
@@ -12,7 +12,7 @@ type ConfigType = string | { content: string, type: MessageType }
  * ```
  */
 export function showMsg(config: ConfigType) {
-    let content: string, type: MessageType
+    let content, type: MessageType
     if (!config) {
         content = '接口返回数据错误'
         type = 'error'
@@ -28,18 +28,44 @@ export function showMsg(config: ConfigType) {
     ElMessage[type](content)
 }
 
-/**
- * 提示登录弹窗
- * @param content 登录弹窗内容
- * @param pathname 登录后跳转路径
- */
-export function loginMsgBox(content: string, pathname: string) {
+export function loginMsgBox(content: string) {
     ElMessageBox.alert(content, '提示', {
         confirmButtonText: '确定',
         showClose: false,
         callback: () => {
-            window.$$lock = false
-            window.location.href = `/login?callback=${pathname}`
+            window.location.href = `/login`
         },
     })
+}
+
+export function confirmMsg(content: string, callback: AnyFn) {
+    ElMessageBox.confirm(content, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        showClose: false,
+        buttonSize: 'small',
+        callback: (btn: 'confirm' | 'close' | 'cancel') => {
+            if (callback && callback instanceof Function) {
+                btn === 'confirm' && callback()
+            }
+        },
+    })
+}
+
+export function promptMsg(content: string, callback: AnyFn) {
+    ElMessageBox.prompt(content, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: '输入不能为空',
+        type: 'warning',
+        inputType: 'password',
+        showClose: false,
+        buttonSize: 'small',
+    }).then(({ value }) => {
+        if (callback && callback instanceof Function) {
+            callback(value)
+        }
+    }).catch(() => { })
 }

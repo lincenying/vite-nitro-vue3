@@ -3,7 +3,7 @@ import type { CasesType } from '~/types/cases.types'
 import type { CommentList } from '~/types/comments.types'
 import type { FaqsType } from '~/types/faqs.types'
 import type { ListType } from '~/types/global.types'
-import type { ProductsType } from '~/types/home.types'
+import type { ProductDetailType, ProductsType } from '~/types/home.types'
 import type { NewsType } from '~/types/news.types'
 
 export interface GlobalState {
@@ -25,7 +25,7 @@ export interface ProductState {
     index: ListType<ProductsType>
     category: ProductCategory[]
     detail: {
-        [key: string]: NewsType
+        [key: string]: ProductDetailType
     }
     recommend: ProductsType[]
     relatedRecom: ArticleType[]

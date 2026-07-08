@@ -13,6 +13,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ArticleDialogPost: typeof import('./components/article/dialog-post.vue')['default']
+    ArticleRecommend: typeof import('./components/article/recommend.vue')['default']
+    CasesRecommend: typeof import('./components/cases/recommend.vue')['default']
+    ContentDetailContent: typeof import('./components/content/detail-content.vue')['default']
+    ContentDetailSkeleton: typeof import('./components/content/detail-skeleton.vue')['default']
     ElAffix: typeof import('element-plus/es')['ElAffix']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDialog: typeof import('element-plus/es')['ElDialog']
@@ -29,6 +33,7 @@ declare module 'vue' {
     ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
     ElSkeletonItem: typeof import('element-plus/es')['ElSkeletonItem']
     EmptyComponents: typeof import('./components/empty-components.vue')['default']
+    FaqsRecommend: typeof import('./components/faqs/recommend.vue')['default']
     GlobalClientOnly: typeof import('./components/global/client-only.vue')['default']
     GlobalDialog: typeof import('./components/global/dialog.vue')['default']
     GlobalDigital: typeof import('./components/global/digital.tsx')['default']
@@ -46,11 +51,18 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
+  export interface GlobalDirectives {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }
 
 // For TSX support
 declare global {
   const ArticleDialogPost: typeof import('./components/article/dialog-post.vue')['default']
+  const ArticleRecommend: typeof import('./components/article/recommend.vue')['default']
+  const CasesRecommend: typeof import('./components/cases/recommend.vue')['default']
+  const ContentDetailContent: typeof import('./components/content/detail-content.vue')['default']
+  const ContentDetailSkeleton: typeof import('./components/content/detail-skeleton.vue')['default']
   const ElAffix: typeof import('element-plus/es')['ElAffix']
   const ElButton: typeof import('element-plus/es')['ElButton']
   const ElDialog: typeof import('element-plus/es')['ElDialog']
@@ -67,6 +79,7 @@ declare global {
   const ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
   const ElSkeletonItem: typeof import('element-plus/es')['ElSkeletonItem']
   const EmptyComponents: typeof import('./components/empty-components.vue')['default']
+  const FaqsRecommend: typeof import('./components/faqs/recommend.vue')['default']
   const GlobalClientOnly: typeof import('./components/global/client-only.vue')['default']
   const GlobalDialog: typeof import('./components/global/dialog.vue')['default']
   const GlobalDigital: typeof import('./components/global/digital.tsx')['default']

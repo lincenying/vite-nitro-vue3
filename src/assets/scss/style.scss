@@ -1,11 +1,12 @@
 @use 'global/layout';
 @use 'global/element';
 @use 'global/markdown';
+@use 'global/transitions';
 @use 'login/login';
 @use 'pages/wrap';
 @use 'pages/home';
 @use 'pages/cases';
 @use 'pages/news';
 @use 'pages/faqs';
-@use 'pages/pdf';
 @use 'pages/editor';
+@use 'pages/error';

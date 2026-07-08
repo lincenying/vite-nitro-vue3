@@ -14,7 +14,7 @@ export interface AsyncDataConfig {
     store: Pinia
     route: RouteLocationNormalized
     api: ApiType
-    req?: any
+    req?: Request
 }
 
 export type CusRouteComponent = RouteComponent & { asyncData: (payload: AsyncDataConfig) => Promise<any> }

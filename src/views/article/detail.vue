@@ -1,51 +1,44 @@
 <template>
-    <div class="global-wrap index-wrap">
+    <div v-loading="loading" class="global-wrap index-wrap">
         <OtherTopBanner title="SQLite文章" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div ref="navigation" class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
-            <div max-w-1294px flex-auto text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » <router-link to="/article">SQLite文章</router-link> » 文章详情</div>
+            <div max-w-1294px flex-auto text-hex-8a8a8a lt-s1366="mx-24px">当前位置：<NuxtLink to="/">首页</NuxtLink> » <NuxtLink to="/article">SQLite文章</NuxtLink> » 文章详情</div>
         </div>
-        <div flex="~ justify-center" mt-24px lt-m1360="mx-24px">
-            <div flex="~ auto justify-between" max-w-1294px>
-                <div class="sidebar" w-320px>
-                    <el-affix :offset="104">
+        <div flex="~ justify-center" mt-24px lt-s1366="mx-24px">
+            <div class="page-layout">
+                <div class="page-sidebar">
+                    <el-affix ref="affix" :offset="104">
                         <HomeRecommend></HomeRecommend>
-                        <NewsRecommend></NewsRecommend>
+                        <ArticleRecommend></ArticleRecommend>
                     </el-affix>
                 </div>
-                <div class="main" w-1px ml-24px flex="auto">
+                <div class="page-main">
                     <el-skeleton :loading="loading" animated>
                         <template #template>
-                            <div bg="hex-fff" mb-24px p-32px>
-                                <div flex="~ items-center col">
-                                    <el-skeleton-item variant="text" class="!w-1/2 !h-44px" />
-                                    <el-skeleton-item variant="text" class="!w-50% !h-21px mt-16px" />
-                                </div>
-                                <div v-for="i in 6" :key="i" mt-21px>
-                                    <el-skeleton-item variant="text" class="!h-21px ml-32px !w-80%" />
-                                    <el-skeleton-item v-for="item in 4" :key="`${i}-${item}`" variant="text" class="!h-21px mt-6px" />
-                                </div>
-                            </div>
+                            <ContentDetailSkeleton />
                         </template>
                         <template #default>
-                            <div b-rd-6px mb-24px p-32px bg="hex-fff">
+                            <div mb-24px b-rd-6px p-32px bg="hex-fff">
                                 <h1 font-bold text="center hex-202935 28px">{{ articleDetail.title }}</h1>
-                                <div flex="~ justify-center items-center" mt-16px text="hex-8a8a8a">
-                                    <i class="i-carbon-user-avatar" w-14px h-14px mr-5px></i>
+                                <div class="detail-meta" flex="~ justify-center items-center" mt-16px text="hex-8a8a8a">
+                                    <i class="i-carbon-user-avatar" mr-5px h-14px w-14px></i>
                                     <span mr-20px>{{ articleDetail.author }}</span>
-                                    <i class="i-carbon-time" w-14px h-14px mr-5px></i>
+                                    <i class="i-carbon-time" mr-5px h-14px w-14px></i>
                                     <span mr-20px>{{ articleDetail.date }}</span>
-                                    <i class="i-carbon-collapse-categories" w-14px h-14px mr-5px></i>
+                                    <i class="i-carbon-collapse-categories" mr-5px h-14px w-14px></i>
                                     <span mr-20px>{{ articleDetail.category }}</span>
                                     <span mr-20px>阅读({{ articleDetail.views }})</span>
                                     <span cursor-pointer @click="handleModify">编辑</span>
                                 </div>
-                                <div class="article-content" pt-24px text="hex-202935 16px" lh-28px v-html="nl2br(articleDetail.content)"></div>
+                                <div class="article-content" pt-24px text="hex-202935 16px" lh-28px v-html="sanitizedContent"></div>
                             </div>
                         </template>
                     </el-skeleton>
                     <OtherRelatedRecom column="article"></OtherRelatedRecom>
-                    <OtherComments v-if="articleDetail.id" :id="articleDetail.id" type="article"></OtherComments>
-                    <OtherCommentPost v-if="articleDetail.id" :id="articleDetail.id" type="article"></OtherCommentPost>
+                    <template v-if="articleDetail.id">
+                        <OtherComments :id="articleDetail.id" type="article"></OtherComments>
+                        <OtherCommentPost :id="articleDetail.id" type="article"></OtherCommentPost>
+                    </template>
                 </div>
             </div>
         </div>
@@ -59,12 +52,12 @@ import type { GlobalDialogLayer } from '~/types/components.types'
 import type { ElAffixType } from '~/types/global.types'
 import topBannerImg from '@/assets/images/home/page-banner.jpg'
 import { appName } from '~/constants'
-import { nl2br, scrollToNav } from '~/utils'
+import { nl2br, scrollToElement } from '~/utils'
+import { sanitizeHtml } from '~/utils/sanitize'
 
 defineOptions({
     name: 'RouterArticleDetail',
     asyncData(ctx) {
-        console.log('RouterArticleDetail-asyncData')
         const { store, route, api } = ctx
         const {
             query: { id },
@@ -94,6 +87,8 @@ const { detail } = storeToRefs(articleStore)
 
 const articleDetail = computed(() => detail.value[id] || {})
 
+const sanitizedContent = computed(() => sanitizeHtml(nl2br(articleDetail.value.content || '')))
+
 const navigation = ref<HTMLElement>()
 
 const loading = ref(false)
@@ -107,10 +102,14 @@ async function initFunc() {
         commentStore.getComment({ type: 'article', id, page: 1 }),
     ])
     loading.value = false
-    scrollToNav(navigation, -80)
+    scrollToElement(navigation, -80)
 }
 
-watch(() => id, initFunc)
+watch(() => id, (newId) => {
+    if (newId) {
+        initFunc()
+    }
+})
 
 const affix = ref<ElAffixType>()
 onActivated(() => {

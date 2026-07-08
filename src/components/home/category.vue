@@ -1,6 +1,6 @@
 <template>
-    <div class="global-box" w="full" mb-24px p-24px bg="hex-fff" b-rd-6px>
-        <div class="global-box-title" m="0 b-24px" pl-16px text="1rem hex-202935" font-bold b-l="6px bolid hex-007bff">产品展示</div>
+    <div class="global-box" w="full" bg="hex-fff" mb-24px b-rd-6px p-24px>
+        <div class="global-box-title" m="0 b-24px" pl-16px text="14px hex-202935" font-bold b-l="6px bolid hex-007bff">产品展示</div>
         <div class="global-box-content">
             <ul class="cat-list">
                 <li
@@ -27,11 +27,4 @@ const { categoryId } = toRefs(props)
 
 const productStore = useProductStore()
 const { category } = storeToRefs(productStore)
-
-onMounted(() => {
-    setTimeout(() => {
-    // emitter.emit('change-category', category.value[0].id)
-        changeCategory.emit(category.value[0].id)
-    }, 2000)
-})
 </script>

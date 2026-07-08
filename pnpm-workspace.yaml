@@ -36,57 +36,58 @@ catalogs:
   prod:
     '@lincy/async-validation': ^1.4.0
     '@lincy/utils': ^0.7.3
-    '@tanstack/vue-query': ^5.100.11
+    '@tanstack/vue-query': ^5.101.2
     '@tato30/vue-pdf': ^2.1.0
-    '@unhead/vue': ^3.1.0
+    '@unhead/vue': ^3.1.7
     '@vueuse/core': ^14.3.0
     '@vueuse/router': ^14.3.0
     alova: ^3.5.1
-    better-sqlite3: ^12.10.0
+    better-sqlite3: ^12.11.1
     default-passive-events: ^4.0.0
     destr: ^2.0.5
-    element-plus: ^2.14.0
+    dompurify: ^3.4.11
+    element-plus: ^2.14.2
     highlight.js: ^11.11.1
     lodash: ^4.18.1
     markdown-it-link-attributes: ^4.0.1
-    md-editor-v3: ^6.5.1
+    md-editor-v3: ^6.5.3
     mitt: ^3.0.1
     nitropack: ^2.13.4
     ofetch: ^1.5.1
     pinia: ^3.0.4
-    qs: ^6.15.2
+    qs: ^6.15.3
     store2: ^2.14.4
     twig: ^3.0.0
-    vue: ^3.5.34
-    vue-router: ^5.0.7
+    vue: ^3.5.39
+    vue-router: ^5.1.0
 
   icons:
     '@element-plus/icons-vue': ^2.3.2
-    '@iconify-json/carbon': ^1.2.22
+    '@iconify-json/carbon': ^1.2.24
     '@iconify-json/fad': ^1.2.1
     '@iconify-json/svg-spinners': ^1.2.4
-    '@iconify-json/vscode-icons': ^1.2.50
+    '@iconify-json/vscode-icons': ^1.2.65
 
   lint:
     '@lincy/eslint-config': ^7.2.0
-    '@lincy/stylelint-config': ^2.2.2
-    '@unocss/eslint-plugin': ^66.7.0
-    eslint: ^10.4.0
+    '@lincy/stylelint-config': ^2.2.3
+    '@unocss/eslint-plugin': ^66.7.4
+    eslint: ^10.6.0
     eslint-plugin-format: ^2.0.1
-    stylelint: ^17.12.0
+    stylelint: ^17.14.0
 
   types:
     '@types/markdown-it-link-attributes': ^3.0.5
     '@types/mockjs': ^1.0.10
-    '@types/node': ^25.9.1
+    '@types/node': ^26.1.0
     '@types/polyfill-library': ^3.108.4
     '@types/qs': ^6.15.1
     '@types/twig': ^1.12.17
 
   dev:
-    '@lincy/unocss-base-config': ^2.7.1
+    '@lincy/unocss-base-config': ^2.7.4
     '@vitejs/plugin-vue': ^6.0.7
-    '@vitejs/plugin-vue-jsx': ^5.1.5
+    '@vitejs/plugin-vue-jsx': ^5.1.6
     '@vue-macros/define-props': ^3.1.2
     '@vue-macros/define-props-refs': ^3.1.2
     '@vue-macros/reactivity-transform': ^3.1.2
@@ -97,16 +98,16 @@ catalogs:
     mockjs: ^1.1.0
     polyfill-library: ^4.8.0
     sass-embedded: ^1.100.0
-    typescript: ~5.9.3
-    unocss: ^66.7.0
+    typescript: ~6.0.3
+    unocss: ^66.7.4
     unplugin-auto-import: ^21.0.0
     unplugin-icons: ^23.0.1
     unplugin-vue-components: ^32.1.0
-    vite: ^7.3.3
-    vite-plugin-inspect: ^11.3.3
+    vite: ^7.3.6
+    vite-plugin-inspect: ^11.4.1
     vite-plugin-progress: ^0.0.7
     vue-macros: ^3.1.2
-    vue-tsc: ^3.3.1
+    vue-tsc: ^3.3.6
 
 allowBuilds:
   '@parcel/watcher': true

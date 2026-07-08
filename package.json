@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@11.2.2",
+  "packageManager": "pnpm@11.10.0",
   "engines": {
     "node": ">=22.0.0"
   },
@@ -20,8 +20,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:ts": "vue-tsc --noEmit",
-    "lint:css": "stylelint '**/*.{css,scss}' --fix",
-    "lint-staged": "lint-staged"
+    "lint:css": "stylelint '**/*.{css,scss}' --fix"
   },
   "dependencies": {
     "@lincy/async-validation": "catalog:prod",
@@ -35,6 +34,7 @@
     "better-sqlite3": "catalog:prod",
     "default-passive-events": "catalog:prod",
     "destr": "catalog:prod",
+    "dompurify": "catalog:prod",
     "element-plus": "catalog:prod",
     "highlight.js": "catalog:prod",
     "lodash": "catalog:prod",
@@ -76,7 +76,6 @@
     "eslint": "catalog:lint",
     "eslint-plugin-format": "catalog:lint",
     "jiti": "catalog:dev",
-    "lint-staged": "catalog:dev",
     "mockjs": "catalog:dev",
     "polyfill-library": "catalog:dev",
     "sass-embedded": "catalog:dev",
@@ -94,14 +93,5 @@
   },
   "resolutions": {
     "h3": "1.15.4"
-  },
-  "simple-git-hooks[-del]": {
-    "pre-commit": "npm run lint-staged"
-  },
-  "lint-staged[-del]": {
-    "*.{[jt]s?(x),vue,md}": [
-      "eslint --fix"
-    ],
-    "*.{css,scss}": "stylelint --fix --allow-empty-input"
   }
 }

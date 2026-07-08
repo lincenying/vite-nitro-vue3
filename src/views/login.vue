@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import ls from 'store2'
+import { loginUser } from '~/api/user'
 import { appName } from '~/constants'
 
 defineOptions({
@@ -30,57 +30,38 @@ useHead({
 })
 
 const { ctx } = useGlobal()
-
-// pinia 状态管理 ===>
-// const { counter, name } = storeToRefs(globalStore)
-// const tmpCount = computed(() => globalStore.counter)
-// 监听状态变化
-// globalStore.$subscribe((mutation, state) => {
-//     console.log('mutation :>> ', mutation)
-//     console.log('state :>> ', JSON.stringify(state))
-// })
-// pinia 状态管理 <===
-
-// 全局组件通信 ===>
-// const onLogin = inject(onLoginKey, () => {})
-// 全局组件通信 <===
+const userStore = useUserStore()
+const router = useRouter()
 
 const [loading, toggleLoading] = useToggle(false)
 
 const form = reactive({
-    name: 'admin',
-    password: '123456',
+    name: '',
+    password: '',
 })
 
-async function login(params: { name: string, password: string }) {
-    const { code, data } = await $api.post<{ token: string }>('/user/login', params)
-    if (code === 200 && data) {
-        return data.token
-    }
-    return null
-}
-
+/**
+ * 提交登录请求
+ */
 async function handleLogin() {
     if (!form.name || !form.password) {
         ctx.$message.error('请输入用户名密码!')
         return
     }
-    const config = {
+    toggleLoading(true)
+    const { code, data, message } = await loginUser($api, {
         name: form.name.trim(),
         password: form.password,
-    }
-    toggleLoading(true)
-    const token = await login(config)
-    if (!token) {
-        toggleLoading(false)
-        ctx.$message.error('用户名或密码错误!')
+    })
+    toggleLoading(false)
+
+    if (code !== 200 || !data) {
+        ctx.$message.error(message || '用户名或密码错误!')
         return
     }
-    ls.set('token', token)
+
+    userStore.setInfo(data)
     ctx.$message.success('登录成功!')
-    setTimeout(() => {
-        toggleLoading(false)
-        window.location.href = '/'
-    }, 500)
+    router.push('/')
 }
 </script>

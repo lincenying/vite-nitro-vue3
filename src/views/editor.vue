@@ -1,30 +1,30 @@
 <template>
-    <div class="global-wrap pdf-wrap">
+    <div class="global-wrap">
         <OtherTopBanner title="Markdown编辑器" intro="这是一段描述文字，可以自定义你想要的文字" :img="topBannerImg"></OtherTopBanner>
         <div class="navigation" flex="~ justify-center items-center" h-42px bg-hex-fff>
-            <div flex-auto max-w-1294px text-hex-8a8a8a lt-m1360="mx-24px">当前位置：<router-link to="/">首页</router-link> » 编辑器</div>
+            <div max-w-1294px flex-auto text-hex-8a8a8a lt-s1366="mx-24px">当前位置：<router-link to="/">首页</router-link> » 编辑器</div>
         </div>
-        <div flex="~ justify-center" my-24px lt-m1360="mx-24px">
-            <div w-1294px flex="~ justify-between col">
-                <global-client-only>
-                    <h5 text-16px hex-202935 mb-16px>Markdown编辑器</h5>
-                    <div h-700px>
+        <div flex="~ justify-center" my-24px lt-s1366="mx-24px">
+            <global-client-only>
+                <div class="editor-container" flex="~ justify-between col">
+                    <h5 hex-202935 mb-16px text-16px>Markdown编辑器</h5>
+                    <div class="editor-workspace" h-700px>
                         <MdEditor
                             v-model="text" :toolbars-exclude="['github', 'mermaid', 'katex']" theme="light" code-theme="atom"
                             @on-upload-img="onUploadImg" @on-html-changed="onHtmlChanged" @on-get-catalog="onGetCatalog"
                         />
                     </div>
-                    <h5 text-16px hex-202935 mt-24px mb-16px>Markdown内容预览</h5>
-                    <div flex="~ justify-between" bg-hex-fff rounded="10px">
-                        <div flex-auto w-1px p-20px b-r="1px solid hex-ccc">
-                            <MdPreview :id="id" :model-value="text" code-theme="atom" />
+                    <h5 hex-202935 mb-16px mt-24px text-16px>Markdown内容预览</h5>
+                    <div class="editor-preview-layout" flex="~ justify-between" bg-hex-fff rounded="10px">
+                        <div class="editor-preview-main" w-1px flex-auto p-20px b-r="1px solid hex-ccc">
+                            <MdPreview :id="id" :model-value="text" />
                         </div>
-                        <div w-200px flex-none>
+                        <div class="editor-preview-catalog" w-200px flex-none>
                             <MdCatalog :editor-id="id" :scroll-element="scrollElement" />
                         </div>
                     </div>
-                </global-client-only>
-            </div>
+                </div>
+            </global-client-only>
         </div>
     </div>
 </template>

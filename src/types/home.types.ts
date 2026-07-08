@@ -14,3 +14,10 @@ export interface ProductsType {
     category_id: number
     tag: string[]
 }
+
+export interface ProductDetailType extends ProductsType {
+    author: string
+    intro: string
+    content: string
+    views: number
+}

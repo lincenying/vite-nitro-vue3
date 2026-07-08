@@ -1,11 +1,11 @@
 <template>
-    <div class="global-box" w="full" mb-24px p-24px bg="hex-fff" b-rd-6px>
-        <div class="global-box-title" m="0 b-24px" pl-16px text="1rem hex-202935" font-bold b-l="6px bolid hex-007bff">产品推荐</div>
+    <div class="global-box" w="full" bg="hex-fff" mb-24px b-rd-6px p-24px>
+        <div class="global-box-title" m="0 b-24px" pl-16px text="14px hex-202935" font-bold b-l="6px bolid hex-007bff">产品推荐</div>
         <div class="global-box-content">
             <ul flex="~ wrap justify-between" mt--16px>
-                <li v-for="(item, index) in recommend" :key="index" w-128px mt-16px>
+                <li v-for="(item, index) in recommend" :key="index" mt-16px w-128px>
                     <router-link :to="`/home/detail?id=${item.id}`" block>
-                        <div relative w-full h-86px mb-4px b-rd-4px overflow-hidden>
+                        <div relative mb-4px h-86px w-full overflow-hidden b-rd-4px>
                             <img
                                 :src="item.imgUrl" :alt="item.title"
                                 w-full transition="all duration-.3s" hover="scale-110"
